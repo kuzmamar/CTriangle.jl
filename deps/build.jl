@@ -1,5 +1,8 @@
 using BinDeps
 
+#Remove deps.jl before build.
+isfile("deps.jl") && rm("deps.jl")
+
 @BinDeps.setup
     deps = [lib = library_dependency("lib", aliases = ["triangle.so"], runtime = false, os = :Unix)]
     rootdir = BinDeps.depsdir(lib)
