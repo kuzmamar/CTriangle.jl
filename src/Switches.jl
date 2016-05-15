@@ -1,7 +1,7 @@
 abstract AbstractSwitches
 
 getswitches(s::AbstractSwitches) = s.switches
-
+#test
 include("Switches/Switches.jl")
 include("Switches/NodesSwitches.jl")
 include("Switches/PSLGSwitches.jl")
