@@ -7,12 +7,13 @@ else
 	error("CTriangle is not properly installed. Please try to run\nPkg.build(\"CTriangle\")")
 end
 
-include("TriangulateIO.jl")
 include("Switches.jl")
 include("MappedTypes.jl")
+include("TriangulateIO.jl")
 include("Iterators.jl")
 include("Types.jl")
 include("Objects/Objects.jl")
+include("Files/Files.jl")
 include("Loaders/Loaders.jl")
 
 function truangulate(file::ASCIIString)
