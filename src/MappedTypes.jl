@@ -62,7 +62,7 @@ immutable Region
   p::Point
   attr::Cdouble
   maxarea::Cdouble
-  function Region(p::Point attr::Cdouble, maxarea::Cdouble)
+  function Region(p::Point, attr::Cdouble, maxarea::Cdouble)
     new(p, attr, maxarea)
   end
 end
