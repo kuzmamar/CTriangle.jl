@@ -6,22 +6,24 @@ hasmarker(i::AbstractInput) = hasmarker(i.sw)
 
 hasconvexhull(i::AbstractInput) = hasconvexhull(i.sw)
 
+hasneighbor(i::AbstractInput) = hasneighbor(i.sw)
+
 function create(i::AbstractInput, io::TriangulateIO)
- Triangulation(create(i, Nodes, io),
- 			   			 create(i, Triangles, io),
- 			   			 create(i, AbstractSegments, io),
- 			   			 create(i, AbstractEdges, io))
+ Triangulation(createnodes(i, io),
+ 			   			 createtriangles(i, io),
+ 			   			 createsegments(i, io),
+ 			   			 createedges(i, io))
 end
 
-function create(i::AbstractInput, ::Type{Nodes}, io::TriangulateIO)
+function createnodes(i::AbstractInput, io::TriangulateIO)
 	Nodes(getpoints(io),
 				createpointattrs(i, io),
 				createpointmarkers(i, io))
 end
 
-function create(i::AbstractInput, ::Type{AbstractEdges}, io::TriangulateIO)
+function createedges(i::AbstractInput, io::TriangulateIO)
 	if hasedge(i) && hasmarker(i)
-		Edges(getedges(io), Markers(getedgemarkers(io))
+		Edges(getedges(io), Markers(getedgemarkers(io)))
 	elseif hasedge(i)
 		Edges(getedges(io), NoMarkers())
 	else
@@ -29,7 +31,7 @@ function create(i::AbstractInput, ::Type{AbstractEdges}, io::TriangulateIO)
 	end
 end
 
-function create(i::AbstractInput, ::Type{AbstractSegments}, io::TriangulateIO)
+function createsegments(i::AbstractInput, io::TriangulateIO)
 	if hasconvexhull(i) && hasmarker(i)
 		Segments(getsegments(io), Markers(getsegmentmarkers(io)))
 	elseif hasconvexhull(i)
@@ -39,23 +41,29 @@ function create(i::AbstractInput, ::Type{AbstractSegments}, io::TriangulateIO)
 	end
 end
 
-function create(i::AbstractInput, ::Type{Triangles}, io::TriangulateIO)
-	Triangles(gettriangles(io), NoAttributes())
+function createtriangles(i::AbstractInput, io::TriangulateIO)
+	if hasneighbor(i)
+		Triangles(gettriangles(io),
+							NoAttributes(),
+							Neighbors(getneighbors(io)))
+	else
+		Triangles(gettriangles(io), NoAttributes(), NoNeighbors())
+	end
 end
 
 include("NodesInput.jl")
 
-function createpointmarkers(m::AbstractFileMarkers, ::Type{AbstractMarkers},
+function createpointmarkers(m::AbstractFileMarkers,
 													  sw::Switches, io::TriangulateIO)
 	NoMarkers()
 end
 
-function createsegmentmarkers(m::AbstractFileMarkers, ::Type{AbstractMarkers},
+function createsegmentmarkers(m::AbstractFileMarkers,
 													    sw::Switches, io::TriangulateIO)
 	NoMarkers()
 end
 
-function createpointmarkers(m::FileMarkers, ::Type{AbstractMarkers},
+function createpointmarkers(m::FileMarkers,
 													  sw::Switches, io::TriangulateIO)
 	if hasmarker(sw)
 		Markes(getpointmarkers(io))
@@ -64,7 +72,7 @@ function createpointmarkers(m::FileMarkers, ::Type{AbstractMarkers},
 	end
 end
 
-function createsegmentmarkers(m::FileMarkers, ::Type{AbstractMarkers},
+function createsegmentmarkers(m::FileMarkers,
 													    sw::Switches, io::TriangulateIO)
 	if hasmarker(sw)
 		Markes(getsegmentmarkers(io))

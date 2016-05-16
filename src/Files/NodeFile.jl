@@ -27,8 +27,8 @@ end
 
 function initio!(f::NodeFile, io::TriangulateIO)
   setpoints!(io, f.points)
-  setpointattrs!(o.a, io)
-  setpointmarkers!(o.m, io)
+  setpointattrs!(f.a, io)
+  setpointmarkers!(f.m, io)
 end
 
 immutable NoNodeFile <: AbstractNodeFile end

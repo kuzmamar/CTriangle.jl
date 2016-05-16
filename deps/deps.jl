@@ -9,7 +9,7 @@ macro checked_lib(libname, path)
 end
 
 # Load dependencies
-@checked_lib _jl_libtriangle "/home/martin/.julia/v0.5/CTriangle/deps/usr/lib/triangle.so"
+@checked_lib _jl_libtriangle "/home/borec/CTriangle.jl/deps/usr/lib/triangle.so"
 
 # Load-hooks
 

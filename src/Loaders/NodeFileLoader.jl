@@ -55,15 +55,15 @@ function load!(l::NodeFileLoader, s::IOStream)
   else
     if hasattrs(h) && hasmarkers(h)
       l.s = NodeFileStrategy(size, FileAttributesStrategy(h.cnt * h.attrcnt,
-                                                          h.attrcnt, 3),
-                             FileMarkersStrategy(h.cnt, 3 + h.attrcnt), l.sw)
+                                                          h.attrcnt, 4),
+                             FileMarkersStrategy(h.cnt, 4 + h.attrcnt), l.sw)
     elseif hasattrs(h)
       l.s = NodeFileStrategy(size, FileAttributesStrategy(h.cnt * h.attrcnt,
-                                                          h.attrcnt, 3, l.sw),
+                                                          h.attrcnt, 4),
                              NoFileMarkersStrategy(), l.sw)
     elseif hasmarkers(h)
       l.s = NodeFileStrategy(size, NoFileAttributesStrategy(),
-                                   FileMarkersStrategy(h.cnt, 3), l.sw)
+                                   FileMarkersStrategy(h.cnt, 4), l.sw)
     else
       l.s = NodeFileStrategy(size, NoFileAttributesStrategy(),
                                    NoFileMarkersStrategy(), l.sw)

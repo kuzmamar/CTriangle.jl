@@ -7,6 +7,8 @@ else
 	error("CTriangle is not properly installed. Please try to run\nPkg.build(\"CTriangle\")")
 end
 
+import Base.getindex
+
 include("Exceptions.jl")
 include("Switches.jl")
 include("MappedTypes.jl")
@@ -37,7 +39,8 @@ function triangulate(file::String)
 end
 
 function triangulate(file::String, sw::NodesSwitches)
-	ctriangulate(NodesInput(NodeFileLoader(removeext(file), sw)), sw)
+	l::NodeFileLoader = NodeFileLoader(removeext(file), getswitches(sw))
+	ctriangulate(NodesInput(load!(l), getswitches(sw)))
 end
 
 #==function triangulate(file::String, sw::PSLGSwitches)

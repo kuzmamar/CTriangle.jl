@@ -1,8 +1,8 @@
 # Represents a Node with a possible boundary marker and attributes.
 type Node
   a::Point
-  marker::Cint
   i::AbstractAttributeIterator
+  marker::Cint
 end
 
 getattributes(n::Node) = n.i
@@ -115,6 +115,7 @@ function Base.getindex(i::Triangles, index::Integer)
     throw(TriangleNotFoundException(index))
   else
   t.triangles[index]
+  end
 end
 
 Base.length(i::Triangles) = length(i.triangles)
@@ -207,7 +208,6 @@ getneighbors(t::Triangle) = t.neighbors
 type TrianglesIterator <: AbstractIterable{Triangle}
   n::Nodes
   t::Triangles
-  n::AbstractNeighbors
 end
 
 function getindex(i::TrianglesIterator, index::Integer)
@@ -232,7 +232,7 @@ getsegments(t::Triangulation) = SegmentsIterator(t.nodes, t.s)
 
 getedges(t::Triangulation) = EdgesIterator(t.nodes, t.e)
 
-gettiangles(t::Triangulation) = TriangleIterator(t.nodes, t.triangles)
+gettriangles(t::Triangulation) = TriangleIterator(t.nodes, t.triangles)
 
 function gettriangle(t::Triangulation, index::Cint)
   t::IndexedTriangle = t.t[index]

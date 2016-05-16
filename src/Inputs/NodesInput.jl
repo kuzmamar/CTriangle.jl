@@ -19,8 +19,8 @@ function createpointattrs(f::NodeFile, io::TriangulateIO)
 	createpointattrs(f.a, io::TriangulateIO)
 end
 
-function createpointmarkers(f::NodeFile, t::Type{AbstractMarkers}, sw::Switches,
-													  io::TriangulateIO)
+function createpointmarkers(f::NodeFile, sw::Switches,
+														io::TriangulateIO)
 	createpointmarkers(f.m, sw, io)
 end
 

@@ -128,7 +128,7 @@ function gettriangles(io::TriangulateIO)
 end
 
 
-function gettriangleneighbors(io::TriangulateIO)
+function getneighbors(io::TriangulateIO)
   ptr::Ptr{IndexedTriangleNeighbors} = reinterpret(Ptr{IndexedTriangleNeighbors},
                                                    io.neighborlist)
   pointer_to_array(ptr, io.numberoftriangles, true)  

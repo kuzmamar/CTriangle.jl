@@ -48,24 +48,26 @@ abstract AbstractFileAttributesStrategy <: AbstractLineParserStrategy
 type FileAttributesStrategy <: AbstractFileAttributesStrategy
   attrs::Vector{Cdouble}
   attrcnt::Cint
-  offset::Int
+  firstattr::Int
 end
 
-function FileAttributesStrategy(size::Cint, attrcnt, offset::Int)
-  FileAttributesStrategy(Vector{Cdouble}(size), attrcnt, offset)
+function FileAttributesStrategy(size::Cint, attrcnt::Cint, firstattr::Int)
+  FileAttributesStrategy(Vector{Cdouble}(size), attrcnt, firstattr)
 end
 
 function load!(ls::FileAttributesStrategy,
                parts::Vector{SubString{String}},
                index::Cint)
-  last::Cint =  index * ls.attrcnt + ls.offset
-  first::Cint = last - ls.attrcnt + 1
-  for current::Cint in first:last
-    ls.attrs[current - ls.offset] = parse(Cdouble, parts[current])
+  firstattr::Cint = ls.firstattr 
+  lastattr::Cint = firstattr + ls.attrcnt - 1
+  attrindex::Cint = ls.attrcnt == 1 ? index : index + index - 1
+  @inbounds for i::Cint in firstattr:lastattr
+    ls.attrs[attrindex] = parse(Cdouble, parts[i])
+    attrindex = attrindex + 1
   end
 end
 
-load(ls::FileAttributesStrategy) = FileAttributes(ls.attrs. ls.attrcnt)
+load(ls::FileAttributesStrategy) = FileAttributes(ls.attrs, ls.attrcnt)
 
 immutable NoFileAttributesStrategy <: AbstractFileAttributesStrategy end
 
@@ -75,17 +77,17 @@ abstract AbstractFileMarkersStrategy <: AbstractLineParserStrategy
 
 type FileMarkersStrategy <: AbstractFileMarkersStrategy
   markers::Vector{Cint}
-  offset::Int
+  firstmarker::Int
 end
 
-function FileMarkersStrategy(size::Cint, offset::Int)
-  FileMarkersStrategy(Vector{Cint}(size), offset)
+function FileMarkersStrategy(size::Cint, firstmarker::Int)
+  FileMarkersStrategy(Vector{Cint}(size), firstmarker)
 end
 
 function load!(ls::FileMarkersStrategy,
                parts::Vector{SubString{String}},
                index::Cint)
-  ls.markers[index] = parse(Cint, parts[index + ls.offset])
+  ls.markers[index] = parse(Cint, parts[ls.firstmarker])
 end
 
 load(ls::FileMarkersStrategy) = FileMarkers(ls.markers)
