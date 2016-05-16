@@ -12,7 +12,6 @@ include("Switches.jl")
 include("MappedTypes.jl")
 include("TriangulateIO.jl")
 include("Iterators.jl")
-include("Types.jl")
 include("Objects/Objects.jl")
 include("Files/Files.jl")
 include("Loaders/Loaders.jl")
@@ -41,7 +40,7 @@ function triangulate(file::String, sw::NodesSwitches)
 	ctriangulate(NodesInput(NodeFileLoader(removeext(file), sw)), sw)
 end
 
-function triangulate(file::String, sw::PSLGSwitches)
+#==function triangulate(file::String, sw::PSLGSwitches)
 
 end
 
@@ -51,7 +50,7 @@ end
 
 function triangulate(file::String, sw::ConstrainedTriangulationSwitches)
 
-end
+end==#
 
 export triangulate
 
