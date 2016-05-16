@@ -31,24 +31,7 @@ function initio!(f::NodeFile, io::TriangulateIO)
   setpointmarkers!(o.m, io)
 end
 
-function createpointattrs(f::NodeFile, io::TriangulateIO)
-	createpointattrs(f.a, io::TriangulateIO)
-end
-
-function createpointmarkers(f::NodeFile, t::Type{AbstractMarkers}, sw::Switches,
-													  io::TriangulateIO)
-	createpointmarkers(f.m, sw, io)
-end
-
 immutable NoNodeFile <: AbstractNodeFile end
 
-function createpointattrs(f::NoNodeFile, io::TriangulateIO)
-	NoAttributes()
-end
-
-function createpointmarkers(f::NoNodeFile, sw::Switches,
-														io::TriangulateIO)
-	NoMarkers()
-end
 
 is_empty(f::NoNodeFile) = true

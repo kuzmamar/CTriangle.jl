@@ -44,3 +44,47 @@ function create(i::AbstractInput, ::Type{Triangles}, io::TriangulateIO)
 end
 
 include("NodesInput.jl")
+
+function createpointmarkers(m::AbstractFileMarkers, ::Type{AbstractMarkers},
+													  sw::Switches, io::TriangulateIO)
+	NoMarkers()
+end
+
+function createsegmentmarkers(m::AbstractFileMarkers, ::Type{AbstractMarkers},
+													    sw::Switches, io::TriangulateIO)
+	NoMarkers()
+end
+
+function createpointmarkers(m::FileMarkers, ::Type{AbstractMarkers},
+													  sw::Switches, io::TriangulateIO)
+	if hasmarker(sw)
+		Markes(getpointmarkers(io))
+	else
+		NoMarkers()
+	end
+end
+
+function createsegmentmarkers(m::FileMarkers, ::Type{AbstractMarkers},
+													    sw::Switches, io::TriangulateIO)
+	if hasmarker(sw)
+		Markes(getsegmentmarkers(io))
+	else
+		NoMarkers()
+	end
+end
+
+function createpointattrs(a::AbstractFileAttributes, io::TriangulateIO)
+	NoAttributes()
+end
+
+function createtriangleattrs(a::AbstractFileAttributes, io::TriangulateIO)
+	NoAttributes()
+end
+
+function createpointattrs(a::FileAttributes, io::TriangulateIO)
+	Attributes(getpointattrs(io), io.numberofpointattributes)
+end
+
+function createtriangleattrs(a::FileAttributes, io::TriangulateIO)
+	Attributes(gettriangleattrs(io), io.numberoftriangleattributes)
+end
