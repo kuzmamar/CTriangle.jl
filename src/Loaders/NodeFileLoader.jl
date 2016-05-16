@@ -31,7 +31,7 @@ end
 
 load(ls::NodeFileStrategy) = NodeFile(ls.points, load(ls.as), load(ls.ms))
 
-type NoNodeFileStrategy <: AbstractNodeFileStrategy end
+immutable NoNodeFileStrategy <: AbstractNodeFileStrategy end
 
 load!(ls::NoNodeFileStrategy, line::String, index::Cint) = return
 
