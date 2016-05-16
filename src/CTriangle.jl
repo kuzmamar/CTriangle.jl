@@ -15,7 +15,7 @@ include("Iterators.jl")
 include("Objects/Objects.jl")
 include("Files/Files.jl")
 include("Loaders/Loaders.jl")
-include("Trangulation/Trangulation.jl")
+include("Triangulation/Triangulation.jl")
 include("Inputs/Inputs.jl")
 
 function ctriangulate(i::AbstractInput)
