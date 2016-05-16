@@ -1,10 +1,16 @@
 type NodesInput <: AbstractInput
-  n::FileNodes
+  nf::AbstractNodeFile
   sw::Switches
 end
 
 getswitches(i::NodesInput) = getswitches(i.sw)
 
-initio!(i::NodesInput, io::TriangulateIO) = initio!(i.n, io)
+initio!(i::NodesInput, io::TriangulateIO) = initio!(i.nf, io)
 
-create(i::NodesInput, io::TriangulateIO) = io
+function createpointattrs(i::NodesInput, io::TriangulateIO)
+	createpointattrs(i.nf, io)
+end
+
+function createpointmarkers(i::NodesInput, io::TriangulateIO)
+	createpointmarkers(i.nf, i.sw, io)
+end

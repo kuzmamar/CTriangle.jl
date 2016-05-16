@@ -11,7 +11,7 @@
   @test CTriangle.getindex(s, Cint(0)) == Cint(1)
   CTriangle.unsetzero!(s)
   CTriangle.setnumbering!(s, Cint(0)) == Cint(0)
-  @test isa(CTriangle.getswitches(s), ASCIIString)
+  @test isa(CTriangle.getswitches(s), String)
   CTriangle.setneighbor!(ns)
   CTriangle.setedge!(ns)
   CTriangle.setnomarker!(ns)

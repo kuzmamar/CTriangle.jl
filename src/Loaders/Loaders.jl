@@ -1,9 +1,9 @@
-removeext(file::ASCIIString) = splitext(file)[1]
+removeext(file::String) = splitext(file)[1]
 
 readclearline(s::IOStream) = readclearline(readline(s), s)
 
-function readclearline(line::ASCIIString, stream::IOStream)
-	tmp::ASCIIString = line
+function readclearline(line::String, stream::IOStream)
+	tmp::String = line
 	while searchindex(tmp, "#", 1) == 1
 		tmp = readline(stream)
 	end
@@ -19,8 +19,6 @@ function load!(l::AbstractFileLoader)
   f
 end
 
-abstract AbstractObjectLoader
-
 abstract AbstractLineLoaderStrategy
 
 function load!(ls::AbstractLineLoaderStrategy, s::IOStream, size::Cint)
@@ -34,14 +32,14 @@ function loadheader(ls::AbstractLineLoaderStrategy, s::IOStream)
   createheader(ls, split(readclearline(s)))
 end
 
-function load!(ls::AbstractLineLoaderStrategy, line::ASCIIString, index::Cint)
+function load!(ls::AbstractLineLoaderStrategy, line::String, index::Cint)
   load!(ls, split(line), index)
 end
 
 abstract AbstractLineParserStrategy
 
 function load!(ls::AbstractLineParserStrategy,
-               parts::Vector{SubString{ASCIIString}},
+               parts::Vector{SubString{String}},
                index::Cint)
 end
 
@@ -58,7 +56,7 @@ function FileAttributesStrategy(size::Cint, attrcnt, offset::Int)
 end
 
 function load!(ls::FileAttributesStrategy,
-               parts::Vector{SubString{ASCIIString}},
+               parts::Vector{SubString{String}},
                index::Cint)
   last::Cint =  index * ls.attrcnt + ls.offset
   first::Cint = last - ls.attrcnt + 1
@@ -85,7 +83,7 @@ function FileMarkersStrategy(size::Cint, offset::Int)
 end
 
 function load!(ls::FileMarkersStrategy,
-               parts::Vector{SubString{ASCIIString}},
+               parts::Vector{SubString{String}},
                index::Cint)
   ls.markers[index] = parse(Cint, parts[index + ls.offset])
 end
@@ -96,4 +94,4 @@ immutable NoFileMarkersStrategy <: AbstractFileMarkersStrategy end
 
 load(ls::NoFileMarkersStrategy) = NoFileMarkers()
 
-include("NodeFileLoaders.jl")
+include("NodeFileLoader.jl")

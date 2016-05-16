@@ -1,21 +1,21 @@
 #Common interface for all iterable vector objects.
-abstract IIterable{T}
+abstract AbstractIterable{T}
 
 #All objects must implement Base.length.
-Base.length{T}(i::IIterable{T}) = error("$i must implement Base.length.")
+Base.length{T}(i::AbstractIterable{T}) = 0
 
-Base.start{T}(i::IIterable{T}) = 1
+Base.start{T}(i::AbstractIterable{T}) = 1
 
 #All objects must implement Base.getindex.
-function Base.getindex{T}(i::IIterable{T}, index::Integer)
+function Base.getindex{T}(i::AbstractIterable{T}, index::Integer)
   error("$i must implement Base.getindex.")
 end
 
-Base.next{T}(i::IIterable{T}, index::Int) = (i[index], index + 1)
+Base.next{T}(i::AbstractIterable{T}, index::Int) = (i[index], index + 1)
 
-Base.done{T}(i::IIterable{T}, index::Int) = index > length(i)
+Base.done{T}(i::AbstractIterable{T}, index::Int) = index > length(i)
 
-Base.eltype{T}(i::IIterable{T}) = T
+Base.eltype{T}(i::AbstractIterable{T}) = T
 
 # common interface for TriangulateIO.pointattributelist or
 # TriangulateIO.triangleattributelist
@@ -40,8 +40,6 @@ Base.done(i::AttributeIterator,  index::Int) = index > length(i.attrs)
 # Represents no TriangulateIO.pointattributelist or
 # no TriangulateIO.triangleattributelist
 immutable NoAttributeIterator <: AbstractAttributeIterator end
-
-Base.length(i::NoAttributeIterator) = 0
 
 Base.getindex(i::NoAttributeIterator, index::Integer) = Cdouble(0.0)
 

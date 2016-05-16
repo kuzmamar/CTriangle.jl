@@ -15,21 +15,6 @@ function hasindex(t::IndexedTriangle, index::Integer)
 	t.a == index || t.b == index || t.c == index
 end
 
-function addneighbor!(neighbors::Vector{Cint}, index::Integer, neighbor::Cint)
-  if neighbor != index
-    push!(neighbors, neighbor)
-  end
-end
-
-function addneighbors!(t::IndexedTriangle, neighbors::Vector{Cint},
-                       index::Integer)
-  if hasindex(t, index)
-    addneighbor!(neighbors, index, t.a)
-    addneighbor!(neighbors, index, t.b)
-    addneighbor!(neighbors, index, t.c)
-  end
-end
-
 # Represents a segment, which has indices into Triangle's pointlist vector.
 immutable IndexedSegment
   a::Cint
@@ -45,16 +30,18 @@ immutable IndexedTriangleNeighbors
 	c::Cint
 end
 
-function getindexes(n::IndexedTriangleNeighbors)
-	ret::Vector{Cint} = Vector{Cint}(length(n))
-	j::Cint = 1
-	for i::Symbol = Symbol[:a, :b, :c]
-		if n.(i) > -1
-			ret[j] = n.(i)
-			j = j + 1
-		end
-	end
-	ret
+function addneighbor!(neighbors::Vector{Cint}, index::Integer, neighbor::Cint)
+  if neighbor > -1
+    push!(neighbors, neighbor)
+  end
+end
+
+function getneighbors(t::IndexedTriangleNeighbors, index::Integer)
+  neighbors::Vector{Cint} = Cint[]
+  addneighbor!(neighbors, index, t.a)
+  addneighbor!(neighbors, index, t.b)
+  addneighbor!(neighbors, index, t.c)
+  neighbors
 end
 
 # Represents a Region
