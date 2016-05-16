@@ -9,7 +9,7 @@ type FileAttributes <: AbstractFileAttributes
   attrcnt::Cint
 end
 
-function initio!(a::AbstractFileAttributes, io::TriangulateIO)
+function initio!(a::FileAttributes, io::TriangulateIO)
   setpointattrs!(io, a.attrs, a.attrcnt)
 end
 

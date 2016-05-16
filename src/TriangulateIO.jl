@@ -28,7 +28,7 @@ type TriangulateIO
 end
 
 function setpoints!(io::TriangulateIO, points::Vector{Point})
-  io.pointlist = pointer(reinterpret(Ptr{Cdouble}, pointer(points)))
+  io.pointlist = reinterpret(Ptr{Cdouble}, pointer(points))
   io.numberofpoints = Cint(length(points))
 end
 

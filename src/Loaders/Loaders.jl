@@ -1,4 +1,4 @@
-removeext(file::ASCIIString) = splitext(path)[1]
+removeext(file::ASCIIString) = splitext(file)[1]
 
 readclearline(s::IOStream) = readclearline(readline(s), s)
 

@@ -15,25 +15,43 @@ include("Types.jl")
 include("Objects/Objects.jl")
 include("Files/Files.jl")
 include("Loaders/Loaders.jl")
+include("Inputs/Inputs.jl")
 
-function truangulate(file::ASCIIString)
+function ctriangulate(i::AbstractInput)
+	input::TriangulateIO = TriangulateIO()
+	output::TriangulateIO = TriangulateIO()
+	initio!(i, input)
+	ccall((:triangulate, _jl_libtriangle),
+ 		  Void,
+		  (Ptr{UInt8}, Ref{TriangulateIO}, Ref{TriangulateIO}, Ptr{TriangulateIO}),
+		  getswitches(i),
+		  Ref(input),
+		  Ref(output),
+		  C_NULL)
+	create(i, output)
+end
+
+function triangulate(file::ASCIIString)
 	triangulate(file, NodesSwitches())
 end
 
-function truangulate(file::ASCIIString, sw::NodesSwitches)
-	load!(NodesLoader(removeext(file), sw))
+function triangulate(file::ASCIIString, sw::NodesSwitches)
+	ctriangulate(NodesInput(load!(NodesLoader(removeext(file), getswitches(sw))),
+						 	 getswitches(sw)))
 end
 
-function truangulate(file::ASCIIString, sw::PSLGSwitches)
-
-end
-
-function truangulate(file::ASCIIString, sw::TriangulationSwitches)
+function triangulate(file::ASCIIString, sw::PSLGSwitches)
 
 end
 
-function truangulate(file::ASCIIString, sw::ConstrainedTriangulationSwitches)
+function triangulate(file::ASCIIString, sw::TriangulationSwitches)
 
 end
+
+function triangulate(file::ASCIIString, sw::ConstrainedTriangulationSwitches)
+
+end
+
+export triangulate
 
 end

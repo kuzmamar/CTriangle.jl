@@ -7,6 +7,12 @@ type NodeFileStrategy <: AbstractNodeFileStrategy
   sw::Switches
 end
 
+function NodeFileStrategy(size::Cint, as::AbstractFileAttributesStrategy,
+                          ms::AbstractFileMarkersStrategy,
+                          sw::Switches)
+  NodeFileStrategy(Vector{Point}(size), as, ms, sw)
+end
+
 function createheader(ls::AbstractNodeFileStrategy,
                       parts::Vector{SubString{ASCIIString}})
   NodesHeader(parse(Cint, parts[1]),
@@ -15,15 +21,9 @@ function createheader(ls::AbstractNodeFileStrategy,
               parse(Cint, parts[4]))
 end
 
-function NodeFileStrategy(size::Cint, as::AbstractFileAttributesStrategy,
-                          ms::AbstractFileMarkersStrategy,
-                          sw::Switches)
-  NodeFileStrategy(Vector{Point}(size), as, ms, sw)
-end
-
 function load!(ls::NodeFileStrategy, parts::Vector{SubString{ASCIIString}},
                index::Cint)
-  setnumbering!(ls.s, parse(Cint, parts[1]))
+  setnumbering!(ls.sw, parse(Cint, parts[1]))
   ls.points[index] = Point(parse(Cdouble, parts[2]), parse(Cdouble, parts[3]))
   load!(ls.as, parts, index)
   load!(ls.ms, parts, index)
@@ -54,16 +54,19 @@ function load!(l::NodeFileLoader, s::IOStream)
     l.s = NoNodeFileStrategy()
   else
     if hasattrs(h) && hasmarkers(h)
-      l.s = NodeFileStrategy(size, FileAttrubutesStrategy(h.cnt * h.attrcnt,
+      l.s = NodeFileStrategy(size, FileAttributesStrategy(h.cnt * h.attrcnt,
                                                           h.attrcnt, 3),
-                             FileMarkersStrategy(h.cnt, 3 + h.attrcnt))
+                             FileMarkersStrategy(h.cnt, 3 + h.attrcnt), l.sw)
     elseif hasattrs(h)
-      l.s = NodeFileStrategy(size, FileAttrubutesStrategy(h.cnt * h.attrcnt,
-                                                          h.attrcnt, 3),
-                             NoFileMarkersStrategy())
+      l.s = NodeFileStrategy(size, FileAttributesStrategy(h.cnt * h.attrcnt,
+                                                          h.attrcnt, 3, l.sw),
+                             NoFileMarkersStrategy(), l.sw)
+    elseif hasmarkers(h)
+      l.s = NodeFileStrategy(size, NoFileAttributesStrategy(),
+                                   FileMarkersStrategy(h.cnt, 3), l.sw)
     else
-      l.s = NodeFileStrategy(size, NoFileAttrubutesStrategy(),
-                                   FileMarkersStrategy(h.cnt, 3))
+      l.s = NodeFileStrategy(size, NoFileAttributesStrategy(),
+                                   NoFileMarkersStrategy(), l.sw)
     end
   end
   load!(l.s, s, size)
