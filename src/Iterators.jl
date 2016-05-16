@@ -19,7 +19,7 @@ Base.eltype{T}(i::AbstractIterable{T}) = T
 
 # common interface for TriangulateIO.pointattributelist or
 # TriangulateIO.triangleattributelist
-abstract AbstractAttributeIterator <: IIterable{Cdouble}
+abstract AbstractAttributeIterator <: AbstractIterable{Cdouble}
 
 # Represents an existing TriangulateIO.pointattributelist or
 # TriangulateIO.triangleattributelist
