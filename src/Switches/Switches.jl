@@ -148,6 +148,8 @@ hasedge(s::Switches) = haskey(s.switches, s.edge)
 
 hasconvexhull(s::Switches) = haskey(s.switches, s.convexhull)
 
+hasmarker(s::Switches) = haskey(s.switches, s.nomarker) == true
+
 function getswitches(s::Switches)
   tmp::Vector{String} = Vector{String}(length(s.switches))
   i::Int = 1
