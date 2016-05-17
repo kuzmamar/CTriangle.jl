@@ -34,24 +34,24 @@ function ctriangulate(i::AbstractInput)
 	create(i, output)
 end
 
-function triangulate(file::AbstractString)
+function triangulate(file::String)
 	triangulate(file, NodesSwitches())
 end
 
-function triangulate(file::AbstractString, sw::NodesSwitches)
+function triangulate(file::String, sw::NodesSwitches)
 	l::NodeFileLoader = NodeFileLoader(removeext(file), getswitches(sw))
 	ctriangulate(NodesInput(load!(l), getswitches(sw)))
 end
 
-#==function triangulate(file::AbstractString, sw::PSLGSwitches)
+#==function triangulate(file::String, sw::PSLGSwitches)
 
 end
 
-function triangulate(file::AbstractString, sw::TriangulationSwitches)
+function triangulate(file::String, sw::TriangulationSwitches)
 
 end
 
-function triangulate(file::AbstractString, sw::ConstrainedTriangulationSwitches)
+function triangulate(file::String, sw::ConstrainedTriangulationSwitches)
 
 end==#
 

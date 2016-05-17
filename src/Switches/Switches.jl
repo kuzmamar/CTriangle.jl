@@ -13,10 +13,10 @@ type Switches
   fixedmaxarea::Int
   edge::Int
   convexhull::Int
-  switches::Dict{Int, AbstractString}
+  switches::Dict{Int, String}
   function Switches()
     s::Switches = new(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                      Dict{Int, AbstractString}())
+                      Dict{Int, String}())
     setquiet!(s)
     s
   end
@@ -151,16 +151,16 @@ hasconvexhull(s::Switches) = haskey(s.switches, s.convexhull)
 hasmarker(s::Switches) = haskey(s.switches, s.nomarker) == true
 
 function getswitches(s::Switches)
-  tmp::Vector{AbstractString} = Vector{AbstractString}(length(s.switches))
+  tmp::Vector{String} = Vector{String}(length(s.switches))
   i::Int = 1
-  for (k::Int, a::AbstractString) in s.switches
+  for (k::Int, a::String) in s.switches
     tmp[i] = a
     i = i + 1
   end
   join(tmp, "")
 end
 
-function setswitch!(s::Switches, index::Int, switch::AbstractString)
+function setswitch!(s::Switches, index::Int, switch::String)
   s.switches[index] = switch
 end
 
