@@ -1,1 +1,1 @@
-# CTriangle
+# Wrapper around Jonathan Shewchuk's Triangle library
