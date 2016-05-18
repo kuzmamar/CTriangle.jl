@@ -83,7 +83,7 @@ end
 
 function Nodes(points::Vector{Point}, a::AbstractAttributes,
                m::AbstractMarkers)
-  orders::Dict{Point, Cint}
+  orders::Dict{Point, Cint} = Dict{Point, Cint}()
   index::Cint = 1
   for p::Point in points
     orders[p] = index
@@ -96,7 +96,7 @@ function Base.getindex(i::Nodes, index::Integer)
   Node(i.points[index], i.a[index], i.m[index])
 end
 
-function Base.findindex(i::Nodes, n::Node)
+function findindex(i::Nodes, n::Node)
   if haskey(i.orders, n.p)
     i.orders[n.p]
   else
@@ -135,20 +135,20 @@ end
 
 function Triangles(triangles::Vector{IndexedTriangle}, a::AbstractAttributes,
                n::AbstractNeighbors)
-  orders::Dict{Point, Cint}
+  orders::Dict{IndexedTriangle, Cint} = Dict{IndexedTriangle, Cint}()
   index::Cint = 1
   for t::IndexedTriangle in triangles
     orders[t] = index
     index = index + 1
   end
-  Nodes(triangles, a, n, orders)
+  Triangles(triangles, a, n, orders)
 end
 
 function Base.getindex(i::Triangles, index::Integer)
   i.triangles[index]
 end
 
-function Base.findindex(i::Triangles, t::IndexedTriangle)
+function findindex(i::Triangles, t::IndexedTriangle)
   if haskey(i.orders, t)
     i.orders[t]
   else
@@ -280,17 +280,22 @@ function getneighbors(t::Triangulation, tr::Triangle)
   try
     aindex::Cint = findindex(t.n, tr.a)
     bindex::Cint = findindex(t.n, tr.b)
-    cindex::Cint = findindex(t.n, tr.c)  
-  catch e::NodeNotFoundException
-    throw(TriangleNotFoundException())
+    cindex::Cint = findindex(t.n, tr.c)
+    tindex::Cint = findindex(t.t, IndexedTriangle(aindex, bindex, cindex))
+    n::IndexedTriangleNeighbors = getneighbors(t.t, tindex)
+    neighbors::Vector{Cint} = getneighbors(n)
+    for i::Cint in neighbors
+      t1::IndexedTriangle = t.t[i]
+      push!(result, Triangle(t.n[t1.a], t.n[t1.b], t.n[t1.c], getattrs(t.t, i)))
+    end  
+  catch e
+    if isa(e, NodeNotFoundException)
+      throw(TriangleNotFoundException())
+    else
+      throw(e)
+    end
   end
-  tindex::Cint = findindex(t.t, IndexedTriangle(aindex, bindex, cindex))
-  n::IndexedTriangleNeighbors = getneighbors(t.t, tindex)
-  neighbors::Vector{Cint} = getneighbors(n)
-  for i::Cint in neighbors
-    t1::IndexedTriangle = t.t[i]
-    push!(Triangle(t.n[t1.a], t.n[t1.b], t.n[t1.c], getattrs(t.t, i)))
-  end 
+  result 
 end
 
 export Segment
@@ -308,6 +313,8 @@ export getsegments
 export getedges
 
 export gettriangles
+
+export getneighbors
 
 export getattrs
 

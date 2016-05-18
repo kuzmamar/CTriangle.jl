@@ -1,6 +1,9 @@
-module CTriangle, Combinatorics
+module CTriangle
+
+using Combinatorics
 
 depsjl = joinpath(dirname(@__FILE__), "..", "deps", "deps.jl")
+
 if isfile(depsjl)
 	include(depsjl)
 else
@@ -43,6 +46,14 @@ function triangulate(file::String, sw::NodesSwitches)
 	ctriangulate(NodesInput(load!(l), getswitches(sw)))
 end
 
+function example()
+	s = NodesSwitches()
+	setneighbor!(s)
+	setedge!(s)
+	setconvexhull!(s)
+	t = triangulate(joinpath(dirname(@__FILE__), "examples", "example.node"), s)
+end
+
 #==function triangulate(file::String, sw::PSLGSwitches)
 
 end
@@ -56,5 +67,7 @@ function triangulate(file::String, sw::ConstrainedTriangulationSwitches)
 end==#
 
 export triangulate
+
+export example
 
 end

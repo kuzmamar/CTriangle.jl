@@ -36,17 +36,17 @@ immutable IndexedTriangleNeighbors
 	c::Cint
 end
 
-function addneighbor!(neighbors::Vector{Cint}, index::Integer, neighbor::Cint)
+function addneighbor!(neighbors::Vector{Cint}, neighbor::Cint)
   if neighbor > -1
     push!(neighbors, neighbor)
   end
 end
 
-function getneighbors(t::IndexedTriangleNeighbors, index::Integer)
+function getneighbors(t::IndexedTriangleNeighbors)
   neighbors::Vector{Cint} = Cint[]
-  addneighbor!(neighbors, index, t.a)
-  addneighbor!(neighbors, index, t.b)
-  addneighbor!(neighbors, index, t.c)
+  addneighbor!(neighbors, t.a)
+  addneighbor!(neighbors, t.b)
+  addneighbor!(neighbors, t.c)
   neighbors
 end
 
