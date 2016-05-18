@@ -47,7 +47,7 @@ function triangulate(file::String)
 end
 
 """
-    triangulate(file::String)
+    triangulate(file::String, sw::NodesSwitches)
 
 Generates a Delaunay triangulation of a set of points.
 """
