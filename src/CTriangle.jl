@@ -1,4 +1,4 @@
-module CTriangle
+module CTriangle, Combinatorics
 
 depsjl = joinpath(dirname(@__FILE__), "..", "deps", "deps.jl")
 if isfile(depsjl)

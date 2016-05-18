@@ -1,13 +1,13 @@
 # Represents a Node with a possible boundary marker and attributes.
 type Node
-  a::Point
+  p::Point
   i::AbstractAttributeIterator
   marker::Cint
 end
 
-getattributes(n::Node) = n.i
+getattrs(n::Node) = n.i
 
-getpoint(n::Node) = n.a
+getpoint(n::Node) = n.p
 
 getmarker(n::Node) = n.marker
 
@@ -68,6 +68,8 @@ end
 
 Base.getindex(i::Markers, index::Integer) = i.markers[index]
 
+Base.length(i::Markers) = length(i.markers)
+
 immutable NoMarkers <: AbstractMarkers end
 
 #-------------------------------------------------------------------------------
@@ -76,10 +78,30 @@ type Nodes <: AbstractIterable{Node}
   points::Vector{Point}
   a::AbstractAttributes
   m::AbstractMarkers
+  orders::Dict{Point, Cint}
+end
+
+function Nodes(points::Vector{Point}, a::AbstractAttributes,
+               m::AbstractMarkers)
+  orders::Dict{Point, Cint}
+  index::Cint = 1
+  for p::Point in points
+    orders[p] = index
+    index = index + 1
+  end
+  Nodes(points, a, m, orders)
 end
 
 function Base.getindex(i::Nodes, index::Integer)
   Node(i.points[index], i.a[index], i.m[index])
+end
+
+function Base.findindex(i::Nodes, n::Node)
+  if haskey(i.orders, n.p)
+    i.orders[n.p]
+  else
+    throw(NodeNotFoundException())
+  end
 end
 
 Base.length(i::Nodes) = length(i.points)
@@ -108,19 +130,35 @@ type Triangles <: AbstractIterable{IndexedTriangle}
   triangles::Vector{IndexedTriangle}
   a::AbstractAttributes
   n::AbstractNeighbors
+  orders::Dict{IndexedTriangle, Cint}
+end
+
+function Triangles(triangles::Vector{IndexedTriangle}, a::AbstractAttributes,
+               n::AbstractNeighbors)
+  orders::Dict{Point, Cint}
+  index::Cint = 1
+  for t::IndexedTriangle in triangles
+    orders[t] = index
+    index = index + 1
+  end
+  Nodes(triangles, a, n, orders)
 end
 
 function Base.getindex(i::Triangles, index::Integer)
-  if index > length(i.triangles) && index < 1
-    throw(TriangleNotFoundException(index))
+  i.triangles[index]
+end
+
+function Base.findindex(i::Triangles, t::IndexedTriangle)
+  if haskey(i.orders, t)
+    i.orders[t]
   else
-  t.triangles[index]
+    throw(TriangleNotFoundException())
   end
 end
 
 Base.length(i::Triangles) = length(i.triangles)
 
-getattributes(i::Triangles, index::Integer) = i.a[index]
+getattrs(i::Triangles, index::Integer) = i.a[index]
 
 getneighbors(i::Triangles, index::Integer) = i.n[index]
 
@@ -168,53 +206,56 @@ Base.getindex(i::NoSegments, index::Integer) = IndexedSegment(0, 0)
 
 #-------------------------------------------------------------------------------
 
-type SegmentsIterator <: AbstractIterable{Segment}
+type SegmentIterator <: AbstractIterable{Segment}
   n::Nodes
   s::AbstractSegments
 end
 
-function getindex(i::SegmentsIterator, index::Integer)
+
+Base.length(i::SegmentIterator) = length(i.s)
+
+function Base.getindex(i::SegmentIterator, index::Integer)
   s::IndexedSegment = i.s[index]
   Segment(i.n[s.a], i.n[s.b], getmarker(i.s, index))  
 end
 
 #-------------------------------------------------------------------------------
 
-type EdgesIterator <: AbstractIterable{Segment}
+type EdgeIterator <: AbstractIterable{Edge}
   n::Nodes
   e::AbstractEdges
 end
 
-function getindex(i::EdgesIterator, index::Integer)
-  s::IndexedEdge = i.e[index]
+Base.length(i::EdgeIterator) = length(i.e)
+
+function Base.getindex(i::EdgeIterator, index::Integer)
+  e::IndexedEdge = i.e[index]
+  println(e)
   Edge(i.n[e.a], i.n[e.b], getmarker(i.e, index))  
 end
 
 #-------------------------------------------------------------------------------
 # Represents a Triangle with attributes and neighbors.
 type Triangle
-  index::Cint
   a::Node
   b::Node
   c::Node
   ai::AbstractAttributeIterator
-  neighbors::Vector{Cint}
 end
 
-getattributes(t::Triangle) = t.ai
+getattrs(t::Triangle) = t.ai
 
-getneighbors(t::Triangle) = t.neighbors
-
-type TrianglesIterator <: AbstractIterable{Triangle}
+type TriangleIterator <: AbstractIterable{Triangle}
   n::Nodes
   t::Triangles
 end
 
-function getindex(i::TrianglesIterator, index::Integer)
+Base.length(i::TriangleIterator) = length(i.t)
+
+function getindex(i::TriangleIterator, index::Integer)
   t::IndexedTriangle = i.t[index]
   ai::AbstractAttributeIterator = getattrs(i.t, index)
-  n::IndexedTriangleNeighbors = getneighbors(i.t, index) 
-  Triangle(i.n[t.a], i.n[t.b], i.n[t.c], ai, getneighbors(n, index))  
+  Triangle(i.n[t.a], i.n[t.b], i.n[t.c], ai)  
 end
 
 #-------------------------------------------------------------------------------
@@ -228,18 +269,37 @@ end
 
 getnodes(t::Triangulation) = t.n
 
-getsegments(t::Triangulation) = SegmentsIterator(t.nodes, t.s)
+getsegments(t::Triangulation) = SegmentIterator(t.n, t.s)
 
-getedges(t::Triangulation) = EdgesIterator(t.nodes, t.e)
+getedges(t::Triangulation) = EdgeIterator(t.n, t.e)
 
-gettriangles(t::Triangulation) = TriangleIterator(t.nodes, t.triangles)
+gettriangles(t::Triangulation) = TriangleIterator(t.n, t.t)
 
-function gettriangle(t::Triangulation, index::Cint)
-  t::IndexedTriangle = t.t[index]
-  ai::AbstractAttributeIterator = getattrs(t.t, index)
-  n::IndexedTriangleNeighbors = getneighbors(t.t, index) 
-  Triangle(i.n[t.a], i.n[t.b], i.n[t.c], ai, getneighbors(n, index))
+function getneighbors(t::Triangulation, tr::Triangle)
+  result::Vector{Triangle} = []
+  try
+    aindex::Cint = findindex(t.n, tr.a)
+    bindex::Cint = findindex(t.n, tr.b)
+    cindex::Cint = findindex(t.n, tr.c)  
+  catch e::NodeNotFoundException
+    throw(TriangleNotFoundException())
+  end
+  tindex::Cint = findindex(t.t, IndexedTriangle(aindex, bindex, cindex))
+  n::IndexedTriangleNeighbors = getneighbors(t.t, tindex)
+  neighbors::Vector{Cint} = getneighbors(n)
+  for i::Cint in neighbors
+    t1::IndexedTriangle = t.t[i]
+    push!(Triangle(t.n[t1.a], t.n[t1.b], t.n[t1.c], getattrs(t.t, i)))
+  end 
 end
+
+export Segment
+
+export Edge
+
+export Node
+
+export Triangle
 
 export getnodes
 
@@ -249,7 +309,7 @@ export getedges
 
 export gettriangles
 
-export getattributes
+export getattrs
 
 export getmarker
 

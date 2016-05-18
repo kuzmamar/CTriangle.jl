@@ -15,6 +15,12 @@ function hasindex(t::IndexedTriangle, index::Integer)
 	t.a == index || t.b == index || t.c == index
 end
 
+function getsorted(t::IndexedTriangle)
+  sort!(first(permutations([t.a, t.b, t.c])))
+end
+
+Base.hash(t::IndexedTriangle, h::UInt) = hash(getsorted(t), h)
+
 # Represents a segment, which has indices into Triangle's pointlist vector.
 immutable IndexedSegment
   a::Cint
