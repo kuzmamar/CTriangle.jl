@@ -37,10 +37,20 @@ function ctriangulate(i::AbstractInput)
 	create(i, output)
 end
 
+"""
+    triangulate(file::String)
+
+Generates a Delaunay triangulation of a set of points.
+"""
 function triangulate(file::String)
 	triangulate(file, NodesSwitches())
 end
 
+"""
+    triangulate(file::String)
+
+Generates a Delaunay triangulation of a set of points.
+"""
 function triangulate(file::String, sw::NodesSwitches)
 	l::NodeFileLoader = NodeFileLoader(removeext(file), getswitches(sw))
 	ctriangulate(NodesInput(load!(l), getswitches(sw)))
