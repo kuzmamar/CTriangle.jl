@@ -1,4 +1,4 @@
-julia 0.5
+julia nightly
 BinDeps
 BaseTestNext
 Combinatorics
