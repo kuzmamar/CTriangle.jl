@@ -39,7 +39,7 @@ end
 abstract AbstractLineParserStrategy
 
 function load!(ls::AbstractLineParserStrategy,
-               parts::Vector{SubASCIIString{ASCIIString}},
+               parts::Vector{SubString{ASCIIString}},
                index::Cint)
 end
 
@@ -56,7 +56,7 @@ function FileAttributesStrategy(size::Cint, attrcnt::Cint, firstattr::Int)
 end
 
 function load!(ls::FileAttributesStrategy,
-               parts::Vector{SubASCIIString{ASCIIString}},
+               parts::Vector{SubString{ASCIIString}},
                index::Cint)
   firstattr::Cint = ls.firstattr 
   lastattr::Cint = firstattr + ls.attrcnt - 1
@@ -85,7 +85,7 @@ function FileMarkersStrategy(size::Cint, firstmarker::Int)
 end
 
 function load!(ls::FileMarkersStrategy,
-               parts::Vector{SubASCIIString{ASCIIString}},
+               parts::Vector{SubString{ASCIIString}},
                index::Cint)
   ls.markers[index] = parse(Cint, parts[ls.firstmarker])
 end

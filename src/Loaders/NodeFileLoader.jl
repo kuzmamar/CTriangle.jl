@@ -14,14 +14,14 @@ function NodeFileStrategy(size::Cint, as::AbstractFileAttributesStrategy,
 end
 
 function createheader(ls::AbstractNodeFileStrategy,
-                      parts::Vector{SubASCIIString{ASCIIString}})
+                      parts::Vector{SubString{ASCIIString}})
   NodesHeader(parse(Cint, parts[1]),
               parse(Cint, parts[2]),
               parse(Cint, parts[3]),
               parse(Cint, parts[4]))
 end
 
-function load!(ls::NodeFileStrategy, parts::Vector{SubASCIIString{ASCIIString}},
+function load!(ls::NodeFileStrategy, parts::Vector{SubString{ASCIIString}},
                index::Cint)
   setnumbering!(ls.sw, parse(Cint, parts[1]))
   ls.points[index] = Point(parse(Cdouble, parts[2]), parse(Cdouble, parts[3]))
