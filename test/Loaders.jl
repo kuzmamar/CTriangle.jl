@@ -1,7 +1,7 @@
 println("Loading node file")
-s::CTriangle.NodesSwitches = CTriangle.NodesSwitches()
-l::CTriangle.AbstractFileLoader = CTriangle.NodeFileLoader("test_files/nodes1", getswitches(s))
-f::CTriangle.AbstractFile = CTriangle.NoNodeFile()
+s = CTriangle.NodesSwitches()
+l = CTriangle.NodeFileLoader("test_files/nodes1", getswitches(s))
+f = CTriangle.NoNodeFile()
 for i::Int = 1:6
   l.file = "test_files/nodes$(i)"
   f = CTriangle.load!(l)

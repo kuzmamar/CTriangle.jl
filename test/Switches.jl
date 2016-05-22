@@ -1,6 +1,6 @@
 println("Switches Tests")
-ns::CTriangle.AbstractSwitches = NodesSwitches()
-s::CTriangle.Switches = getswitches(ns)
+ns = NodesSwitches()
+s = getswitches(ns)
 CTriangle.setminangle!(s)
 CTriangle.setfixedmaxarea!(ns, 0.5)
 CTriangle.setminangle!(ns, 28.6)
