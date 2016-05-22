@@ -38,20 +38,20 @@ function ctriangulate(i::AbstractInput)
 end
 
 """
-    triangulate(file::String)
+    triangulate(file::ASCIIString)
 
 Generates a Delaunay triangulation of a set of points.
 """
-function triangulate(file::String)
+function triangulate(file::ASCIIString)
 	triangulate(file, NodesSwitches())
 end
 
 """
-    triangulate(file::String, sw::NodesSwitches)
+    triangulate(file::ASCIIString, sw::NodesSwitches)
 
 Generates a Delaunay triangulation of a set of points.
 """
-function triangulate(file::String, sw::NodesSwitches)
+function triangulate(file::ASCIIString, sw::NodesSwitches)
 	l::NodeFileLoader = NodeFileLoader(removeext(file), getswitches(sw))
 	ctriangulate(NodesInput(load!(l), getswitches(sw)))
 end
@@ -64,15 +64,15 @@ function example()
 	t = triangulate(joinpath(dirname(@__FILE__), "examples", "example.node"), s)
 end
 
-#==function triangulate(file::String, sw::PSLGSwitches)
+#==function triangulate(file::ASCIIString, sw::PSLGSwitches)
 
 end
 
-function triangulate(file::String, sw::TriangulationSwitches)
+function triangulate(file::ASCIIString, sw::TriangulationSwitches)
 
 end
 
-function triangulate(file::String, sw::ConstrainedTriangulationSwitches)
+function triangulate(file::ASCIIString, sw::ConstrainedTriangulationSwitches)
 
 end==#
 

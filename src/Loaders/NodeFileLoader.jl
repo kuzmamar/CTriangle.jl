@@ -14,14 +14,14 @@ function NodeFileStrategy(size::Cint, as::AbstractFileAttributesStrategy,
 end
 
 function createheader(ls::AbstractNodeFileStrategy,
-                      parts::Vector{SubString{String}})
+                      parts::Vector{SubASCIIString{ASCIIString}})
   NodesHeader(parse(Cint, parts[1]),
               parse(Cint, parts[2]),
               parse(Cint, parts[3]),
               parse(Cint, parts[4]))
 end
 
-function load!(ls::NodeFileStrategy, parts::Vector{SubString{String}},
+function load!(ls::NodeFileStrategy, parts::Vector{SubASCIIString{ASCIIString}},
                index::Cint)
   setnumbering!(ls.sw, parse(Cint, parts[1]))
   ls.points[index] = Point(parse(Cdouble, parts[2]), parse(Cdouble, parts[3]))
@@ -33,17 +33,17 @@ load(ls::NodeFileStrategy) = NodeFile(ls.points, load(ls.as), load(ls.ms))
 
 immutable NoNodeFileStrategy <: AbstractNodeFileStrategy end
 
-load!(ls::NoNodeFileStrategy, line::String, index::Cint) = return
+load!(ls::NoNodeFileStrategy, line::ASCIIString, index::Cint) = return
 
 load(ls::NoNodeFileStrategy) = NoNodeFile()
 
 type NodeFileLoader <: AbstractFileLoader
-  file::String
+  file::ASCIIString
   s::AbstractNodeFileStrategy
   sw::Switches
 end
 
-function NodeFileLoader(file::String, sw::Switches)
+function NodeFileLoader(file::ASCIIString, sw::Switches)
   NodeFileLoader(file, NoNodeFileStrategy(), sw)
 end
 

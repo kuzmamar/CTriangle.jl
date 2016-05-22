@@ -1,16 +1,15 @@
-@testset "Loading node file" begin
-  s::CTriangle.NodesSwitches = CTriangle.NodesSwitches()
-  l::CTriangle.AbstractFileLoader = CTriangle.NodeFileLoader("test_files/nodes1", getswitches(s))
-  f::CTriangle.AbstractFile = CTriangle.NoNodeFile()
-  for i::Int = 1:6
-    l.file = "test_files/nodes$(i)"
-    f = CTriangle.load!(l)
-    @test isa(f, CTriangle.NodeFile) == true
-  end
-  l.file = "test_files/nodes7"
+println("Loading node file")
+s::CTriangle.NodesSwitches = CTriangle.NodesSwitches()
+l::CTriangle.AbstractFileLoader = CTriangle.NodeFileLoader("test_files/nodes1", getswitches(s))
+f::CTriangle.AbstractFile = CTriangle.NoNodeFile()
+for i::Int = 1:6
+  l.file = "test_files/nodes$(i)"
   f = CTriangle.load!(l)
-  @test isa(f, CTriangle.NoNodeFile) == true
+  @test isa(f, CTriangle.NodeFile) == true
 end
+l.file = "test_files/nodes7"
+f = CTriangle.load!(l)
+@test isa(f, CTriangle.NoNodeFile) == true
 
 #==@testset "Loading Areas" begin
   l::CTriangle.IFileLoader = CTriangle.AreasFileLoader("test_files/areas1")

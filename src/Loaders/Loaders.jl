@@ -1,9 +1,9 @@
-removeext(file::String) = splitext(file)[1]
+removeext(file::ASCIIString) = splitext(file)[1]
 
 readclearline(s::IOStream) = readclearline(readline(s), s)
 
-function readclearline(line::String, stream::IOStream)
-	tmp::String = line
+function readclearline(line::ASCIIString, stream::IOStream)
+	tmp::ASCIIString = line
 	while searchindex(tmp, "#", 1) == 1
 		tmp = readline(stream)
 	end
@@ -32,14 +32,14 @@ function loadheader(ls::AbstractLineLoaderStrategy, s::IOStream)
   createheader(ls, split(readclearline(s)))
 end
 
-function load!(ls::AbstractLineLoaderStrategy, line::String, index::Cint)
+function load!(ls::AbstractLineLoaderStrategy, line::ASCIIString, index::Cint)
   load!(ls, split(line), index)
 end
 
 abstract AbstractLineParserStrategy
 
 function load!(ls::AbstractLineParserStrategy,
-               parts::Vector{SubString{String}},
+               parts::Vector{SubASCIIString{ASCIIString}},
                index::Cint)
 end
 
@@ -56,7 +56,7 @@ function FileAttributesStrategy(size::Cint, attrcnt::Cint, firstattr::Int)
 end
 
 function load!(ls::FileAttributesStrategy,
-               parts::Vector{SubString{String}},
+               parts::Vector{SubASCIIString{ASCIIString}},
                index::Cint)
   firstattr::Cint = ls.firstattr 
   lastattr::Cint = firstattr + ls.attrcnt - 1
@@ -85,7 +85,7 @@ function FileMarkersStrategy(size::Cint, firstmarker::Int)
 end
 
 function load!(ls::FileMarkersStrategy,
-               parts::Vector{SubString{String}},
+               parts::Vector{SubASCIIString{ASCIIString}},
                index::Cint)
   ls.markers[index] = parse(Cint, parts[ls.firstmarker])
 end
