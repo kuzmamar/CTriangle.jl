@@ -1,6 +1,3 @@
-using Base.Test
-using CTriangle
+using Base.Test, CTriangle
 
-include("Switches.jl")
-include("Loaders.jl")
-include("Triangulations.jl")
+include("FileNames.jl")
