@@ -3,8 +3,7 @@ language: julia
 os:
   - linux
   #- osx
-julia:
-  - release
+  
 notifications:
   email: false
 # uncomment the following lines to override the default test script
