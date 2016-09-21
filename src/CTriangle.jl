@@ -14,6 +14,7 @@ end
 #import Base.getindex
 
 include("FileNames.jl")
+include("Files.jl")
 
 #include("Exceptions.jl")
 #include("Switches.jl")
