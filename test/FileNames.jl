@@ -1,3 +1,4 @@
+        #comment
 function execute_tests(inputs, handler)
   for input in inputs
     handler(input)

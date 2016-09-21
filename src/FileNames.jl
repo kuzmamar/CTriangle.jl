@@ -4,24 +4,18 @@ const POLY_EXT = "poly"
 
 const DOT = '.'
 
-function remove_extension(filename::String, extension::String)
-  if endswith(filename, "$(DOT)$(extension)")
-    rsplit(filename, DOT; limit = 2)[1]
-  else
-    filename
-  end
-end
+remove_extension(filename::String) = splitext(filename)[1]
 
 abstract FileName
 
 type NodeFileName <: FileName
   filename::String
-  NodeFileName(filename::String) = new(remove_extension(filename, NODE_EXT))
+  NodeFileName(filename::String) = new(remove_extension(filename))
 end
 
 type PolyFileName <: FileName
   filename::String
-  PolyFileName(filename::String) = new(remove_extension(filename, POLY_EXT))
+  PolyFileName(filename::String) = new(remove_extension(filename))
 end
 
 get_name(::FileName) = error("Implement get_name method.")

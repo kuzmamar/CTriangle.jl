@@ -4,8 +4,10 @@ type NodeFile <: File
   s::NodeSection
 end
 
+type NoNodeFile <: NodeFile end
+
 type PolyFile <: File
-  ns::NodeSection
+  nf::NodeFile
   ss::SegmentSection
   hs::HoleSection
   rs::RegionSection
