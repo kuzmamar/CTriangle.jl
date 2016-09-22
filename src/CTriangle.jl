@@ -10,11 +10,9 @@ else
 	error("CTriangle is not properly installed. Please try to run\nPkg.build(\"CTriangle\")")
 end
 
-###
-#import Base.getindex
-
-include("FileNames.jl")
-include("Files.jl")
+include("UtilMethods.jl")
+include("FileSectionTypes.jl")
+include("FileSectionMethods.jl")
 
 #include("Exceptions.jl")
 #include("Switches.jl")
