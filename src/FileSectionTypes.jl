@@ -8,11 +8,11 @@ abstract HoleSection <: FileSection
 
 abstract RegionSection <: FileSection
 
-immutable NoNodeSection <: NodeSection
+immutable NoNodeSection <: NodeSection end
 
 type DefaultNodeSection <: NodeSection
   cnt::Cint
-  points::Vector{Cint}
+  points::Vector{Cdouble}
   attrs::Vector{Cdouble}
   attr_cnt::Cint
   markers::Vector{Cint}

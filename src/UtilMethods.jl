@@ -38,7 +38,7 @@ function parse_attrs(
   end
 end
 
-function parse_marker(
+function parse_markers(
   markers::Vector{Cint}, line::Vector{SubString{String}}, index::Cint,
   start::Cint
 )

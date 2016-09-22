@@ -10,9 +10,21 @@ else
 	error("CTriangle is not properly installed. Please try to run\nPkg.build(\"CTriangle\")")
 end
 
-include("UtilMethods.jl")
+include("FileNameTypes.jl")
+include("FileStreamTypes.jl")
 include("FileSectionTypes.jl")
+include("FileTypes.jl")
+
+include("UtilMethods.jl")
+
+include("FileNameMethods.jl")
+include("FileStreamMethods.jl")
 include("FileSectionMethods.jl")
+include("FileMethods.jl")
+
+function test(file_name::String)
+	read(NodeFileName(file_name, true))
+end
 
 #include("Exceptions.jl")
 #include("Switches.jl")

@@ -1,7 +1,15 @@
+Base.close(fs::FileStream) = close(get_stream(fs))
+
 read(::FileStream) = error("Implement method read")
 
+get_stream(::FileStream) = error("Implement method get_stream")
+
+get_stream(fs::NodeFileStream) = fs.fs
+
+get_stream(fs::PolyFileStream) = fs.fs
+
 function read_header(fs::NodeFileStream)
-  line = read_file_line(fs.is)
+  line = read_file_line(fs.fs)
   (parse(Cint, line[1]), parse(Cint, line[2]),
    parse(Cint, line[3]), parse(Cint, line[4]))
 end
@@ -14,21 +22,21 @@ function read(fs::NodeFileStream)
     file = NodeFile(
       DefaultNodeSection(
         cnt, Vector{Cint}(2 * cnt), Vector{Cdouble}(cnt * attr_cnt), attr_cnt,
-        fs.read_marker == true && marker > 0 ? Vector{Cint}(cnt) :
-                                               Vector{Cint}[]))
+        fs.read_markers == true && marker > 0 ? Vector{Cint}(cnt) :
+                                                Vector{Cint}[]))
   end
-  read(file, fs.is)
+  read(file, fs.fs)
   file
 end
 
 function read(fs::PolyFileStream)
-  nf = read(NodeFileStream(fs.is, fs.read_marker))
+  nf = read(NodeFileStream(fs.fs, fs.read_marker))
   if is_empty(nf)
-    nfs = create_stream(NodeFileName(fs.filename))
+    nfs = create_stream(NodeFileName(fs.file_name))
     nf = read(nfs)
   end
-  ss = read(SegmentSection(fs.is))
-  hs = read(HoleSection(fs.is))
-  rs = read(RegionSection(fs.is))
+  ss = read(SegmentSection(fs.fs))
+  hs = read(HoleSection(fs.fs))
+  rs = read(RegionSection(fs.fs))
   PolyFile(get_section(nf), ss, hs, rs)
 end

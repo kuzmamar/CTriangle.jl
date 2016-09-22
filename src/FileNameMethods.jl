@@ -1,8 +1,17 @@
+function read(n::FileName)
+  fs = open(n)
+  f = read(fs)
+  close(fs)
+  f
+end
+
 get_name(::FileName) = error("Implement get_name method.")
 
 get_extension(::FileName) = error("Implement get_extension method.")
 
 get_options(::FileName) = ()
+
+get_options(n::NodeFileName) = (n.read_markers)
 
 function Base.open(n::FileName)
   create_stream(
@@ -15,7 +24,7 @@ get_name(n::NodeFileName) = n.file_name
 get_extension(n::NodeFileName) = NODE_EXT
 
 function create_stream(n::NodeFileName, s::IOStream, read_markers::Bool)
-  NodeFileStream(n.file_name, s, read_markers)
+  NodeFileStream(s, read_markers)
 end
 
 get_name(n::PolyFileName) = n.file_name
