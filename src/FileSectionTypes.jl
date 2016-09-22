@@ -39,6 +39,6 @@ end
 
 type Parser
   func::Function
-  args::Tuple{Cint}
+  args::Tuple{Vararg{Cint}}
   vector::Symbol
 end
