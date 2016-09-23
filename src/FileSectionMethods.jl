@@ -30,13 +30,11 @@ end
 function read(fs::DefaultNodeSection, fis::IOStream)
   has_markers = length(fs.markers) > 0
   has_attrs = fs.attr_cnt > 0
-  attrs_end = Cint(4 + fs.attr_cnt)
-
   if has_attrs == true && has_markers == true
     read(fs, fis, [
       Parser(parse_points, (Cint(2), ), :points),
       Parser(parse_attrs, (Cint(4), fs.attr_cnt), :attrs),
-      Parser(parse_markers, (attrs_end + 1, ), :markers)
+      Parser(parse_markers, (Cint(4 + fs.attr_cnt), ), :markers)
     ])
   elseif has_attrs == true
     read(fs, fis, [

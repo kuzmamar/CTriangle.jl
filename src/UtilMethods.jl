@@ -42,5 +42,6 @@ function parse_markers(
   markers::Vector{Cint}, line::Vector{SubString{String}}, index::Cint,
   start::Cint
 )
+	println(index)
   markers[index] = parse(Cint, line[start])
 end
