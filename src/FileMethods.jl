@@ -1,9 +1,3 @@
-is_empty(f::NodeFile) = is_empty(f.s)
+get_start_index(f::NodeFile) = get_start_index(f.ns)
 
-read(f::File, fs::IOStream) = error("Implement read")
-
-read(f::NodeFile, fs::IOStream) = read(f.s, fs)
-
-function read(f::PolyFile, fs::IOStream)
-  # todo
-end
+get_start_index(f::PolyFile) = get_start_index(f.ns)

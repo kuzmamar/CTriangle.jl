@@ -1,3 +1,49 @@
+get_extension(::FileName) = error("Implement get_extension method.")
+
+get_extension(::NodeFileName) = NODE_EXT
+
+get_extension(::PolyFileName) = POLY_EXT
+
+get_extension(::EleFileName) = ELE_EXT
+
+get_extension(::AreaFileName) = AREA_EXT
+
+get_options(::FileName) = ()
+
+get_options(n::NodeFileName) = (n.read_markers)
+
+get_options(n::PolyFileName) = (n.read_markers, n.read_holes, n.read_regions)
+
+function create_stream(::FileName, fs::IOStream, options::Tuple{Vararg{Bool}})
+  error("Implement create_stream method")
+end
+
+function create_stream(
+  n::NodeFileName, fs::IOStream, options::Tuple{Vararg{Bool}}
+)
+  NodeFileStream(fs, options...)
+end
+
+function create_stream(
+  n::PolyFileName, fs::IOStream, options::Tuple{Vararg{Bool}}
+)
+  PolyFileStream(fs, n.filename, options...)
+end
+
+function create_stream(
+  n::EleFileName, fs::IOStream, options::Tuple{Vararg{Bool}}
+)
+  EleFileStream(fs, n.start_index, options...)
+end
+
+function create_stream(
+  n::AreaFileName, fs::IOStream, options::Tuple{Vararg{Bool}}
+)
+  AreaFileStream(fs, options...)
+end
+
+get_name(n::FileName) = n.file_name
+
 function read(n::FileName)
   fs = open(n)
   f = read(fs)
@@ -5,35 +51,8 @@ function read(n::FileName)
   f
 end
 
-get_name(::FileName) = error("Implement get_name method.")
-
-get_extension(::FileName) = error("Implement get_extension method.")
-
-get_options(::FileName) = ()
-
-get_options(n::NodeFileName) = (n.read_markers)
-
 function Base.open(n::FileName)
   create_stream(
     n, open("$(get_name(n))$(DOT)$(get_extension(n))"), get_options(n)...
   )
-end
-
-get_name(n::NodeFileName) = n.file_name
-
-get_extension(n::NodeFileName) = NODE_EXT
-
-function create_stream(n::NodeFileName, s::IOStream, read_markers::Bool)
-  NodeFileStream(s, read_markers)
-end
-
-get_name(n::PolyFileName) = n.file_name
-
-get_extension(n::PolyFileName) = POLY_EXT
-
-function create_stream(
-  n::PolyFileName, s::IOStream, read_markers::Bool, read_holes::Bool,
-  read_regions::Bool
-)
-  PolyFileStream(n.filename, s, read_markers, read_holes, read_regions)
 end

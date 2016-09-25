@@ -1,12 +1,20 @@
 abstract File
 
 type NodeFile <: File
-  s::NodeSection
+  ns::NodeSection
 end
 
 type PolyFile <: File
-  nf::NodeFile
+  ns::NodeSection
   ss::SegmentSection
   hs::HoleSection
   rs::RegionSection
+end
+
+type EleFile <: File
+  es::ElementSection
+end
+
+type AreaFile <: File
+  as::AreaSection
 end

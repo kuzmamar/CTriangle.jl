@@ -22,7 +22,11 @@ include("FileStreamMethods.jl")
 include("FileSectionMethods.jl")
 include("FileMethods.jl")
 
-function test(file_name::String)
+function delaunay(file_name::String)
+	read(NodeFileName(file_name, true))
+end
+
+function delaunay(file_name::String, ::Options)
 	read(NodeFileName(file_name, true))
 end
 
