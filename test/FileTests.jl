@@ -41,6 +41,56 @@ end
             @test 0 == length(file.nodeSection.attrs)
           end
     ],
+    [
+      CTriangle.FakeNodeName([
+        "2 2 1 0\n",
+        "1 0 0 0.5\n",
+        "2 0 1 0.7\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test [Cdouble(0), Cdouble(0),
+                   Cdouble(0), Cdouble(1)] == file.nodeSection.points
+            @test [Cdouble(0.5), Cdouble(0.7)] == file.nodeSection.attrs
+            @test 0 == length(file.nodeSection.markers)
+          end
+    ],
+    [
+      CTriangle.FakeNodeName([
+        "2 2 2 0\n",
+        "1 0 0 0.5 0.4\n",
+        "2 0 1 0.7 0.3\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test [Cdouble(0), Cdouble(0),
+                   Cdouble(0), Cdouble(1)] == file.nodeSection.points
+            @test [Cdouble(0.5), Cdouble(0.4),
+                   Cdouble(0.7), Cdouble(0.3)] == file.nodeSection.attrs
+            @test 0 == length(file.nodeSection.markers)
+          end
+    ],
+    [
+      CTriangle.FakeNodeName([
+        "2 2 2 1\n",
+        "1 0 0 0.5 0.4 0\n",
+        "2 0 1 0.7 0.3 0\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test [Cdouble(0), Cdouble(0),
+                   Cdouble(0), Cdouble(1)] == file.nodeSection.points
+            @test [Cdouble(0.5), Cdouble(0.4),
+                   Cdouble(0.7), Cdouble(0.3)] == file.nodeSection.attrs
+            @test [Cint(0), Cint(0)] == file.nodeSection.markers
+          end
+    ],
+    [
+      CTriangle.FakeNodeName([
+        "2 2 0 1\n",
+        "1 0 0 1\n",
+        "2 0 1 2\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test [Cdouble(0), Cdouble(0),
+                   Cdouble(0), Cdouble(1)] == file.nodeSection.points
+            @test 0 == length(file.nodeSection.attrs)
+            @test [Cint(1), Cint(2)] == file.nodeSection.markers
+          end
+    ],
   ]
 
   function handler(input)
