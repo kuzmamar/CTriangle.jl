@@ -1,29 +1,53 @@
-#function execute_tests(inputs, handler)
-#  for input in inputs
-#    handler(input)
-#  end
-#end
+function executeTests(inputs, handler)
+  for input in inputs
+    handler(input)
+  end
+end
 
-#@testset "File Name Unit Tests" begin
+@testset "File Name Unit Tests" begin
+  inputs = [
+    ["./test_files/nodes1.node", "./test_files/nodes1"],
+    ["./test_files/nodes1", "./test_files/nodes1"],
+  ]
 
-#  inputs = [
-#    ["./test_files/nodes1.node", "./test_files/nodes1"],
-#    ["./test_files/nodes1", "./test_files/nodes1"],
-#  ]
+  function handler(input)
+    name = CTriangle.removeExtension(input[1])
+    @test name == input[2]
+  end
 
-#  function handler(input)
-#    name = CTriangle.removeExtension(input[1])
-#    @test name == input[2]
-#  end
+  executeTests(inputs, handler)
 
-#  execute_tests(inputs, handler)
+end
 
-#end
+@testset "Reading File Unit Tests" begin
+  inputs = [
+    [
+      CTriangle.FakeNodeName([
+        "0 2 0 0\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test isa(file, CTriangle.NodeFile) == true
+            @test CTriangle.isEmpty(file.nodeSection) == true
+          end
+    ],
+    [
+      CTriangle.FakeNodeName([
+        "2 2 0 0\n",
+        "1 0 0\n",
+        "2 0 1\n"
+      ]), function(file::CTriangle.NodeFile)
+            @test [Cdouble(0), Cdouble(0),
+                   Cdouble(0), Cdouble(1)] == file.nodeSection.points
+            @test 0 == length(file.nodeSection.markers)
+            @test 0 == length(file.nodeSection.attrs)
+          end
+    ],
+  ]
 
-#@testset "Reading File Unit Tests" begin
+  function handler(input)
+    fileHandler = CTriangle.NodeHandler(input[1])
+    file = CTriangle.read(fileHandler)
+    input[2](file)
+  end
 
-#  n = CTriangle.FakeFileName()
-#  f = CTriangle.read(n)
-#  @test isa(f, CTriangle.File) == true
-
-#end
+  executeTests(inputs, handler)
+end
