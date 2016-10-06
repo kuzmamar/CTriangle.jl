@@ -1,7 +1,5 @@
 module CTriangle
 
-#using Combinatorics
-
 depsjl = joinpath(dirname(@__FILE__), "..", "deps", "deps.jl")
 
 if isfile(depsjl)
@@ -10,25 +8,36 @@ else
 	error("CTriangle is not properly installed. Please try to run\nPkg.build(\"CTriangle\")")
 end
 
-include("FileNameTypes.jl")
-include("FileStreamTypes.jl")
-include("FileSectionTypes.jl")
-include("FileTypes.jl")
+include("Includes.jl")
 
-include("UtilMethods.jl")
+#include("FileNameTypes.jl")
+#include("FileStreamTypes.jl")
+#include("SectionTypes.jl")
+#include("SectionStreamTypes.jl")
+#include("FileTypes.jl")
 
-include("FileNameMethods.jl")
-include("FileStreamMethods.jl")
-include("FileSectionMethods.jl")
-include("FileMethods.jl")
+#include("UtilMethods.jl")
 
-function delaunay(file_name::String)
-	read(NodeFileName(file_name, true))
+#include("FileNameMethods.jl")
+#include("FileStreamMethods.jl")
+#include("SectionStreamMethods.jl")
+#include("SectionMethods.jl")
+#include("FileMethods.jl")
+
+function triangulate(fileName::String, options::String)
+	commandLine::CommandLine = CommandLine()
+	execute(
+		createCommand(commandLine, parseOptions(commandLine, options),fileName)
+	)
 end
 
-function delaunay(file_name::String, ::Options)
-	read(NodeFileName(file_name, true))
-end
+#function delaunay(fileName::String)
+#	read(NodeFileName(fileName, true))
+#end
+
+#function delaunay(fileName::String, ::Options)
+#	read(NodeFileName(fileName, true))
+#end
 
 #include("Exceptions.jl")
 #include("Switches.jl")

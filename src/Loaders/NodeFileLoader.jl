@@ -47,7 +47,7 @@ function NodeFileLoader(file::ASCIIString, sw::Switches)
   NodeFileLoader(file, NoNodeFileStrategy(), sw)
 end
 
-function load!(l::NodeFileLoader, s::IOStream)
+function load!(l::NodeFileLoader, s::IO)
   h::NodesHeader = loadheader(l.s, s)
   size::Cint = length(h)
   if size == 0

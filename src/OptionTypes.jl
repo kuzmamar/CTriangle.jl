@@ -7,7 +7,7 @@ type DefaultOptions
 end
 
 type DelaunayOptions
-
+  o::DefaultOptions
 end
 
 type ConstrainedDelaunayOptions

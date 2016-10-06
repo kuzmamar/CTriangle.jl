@@ -1,26 +1,26 @@
 const COMMENT = '#'
 
-remove_extension(file_name::String) = splitext(file_name)[1]
+removeExtension(fileName::String) = splitext(fileName)[1]
 
-read_line(s::IOStream) = strip(readline(s))
+readLine(s::IO) = strip(readline(s))
 
-read_clear_line(s::IOStream) = read_clear_line(read_line(s), s)
+readClearLine(s::IO) = readClearLine(readLine(s), s)
 
-function read_clear_line(line::String, s::IOStream)
+function readClearLine(line::String, s::IO)
 	tmp = line
 	while searchindex(tmp, COMMENT, 1) == 1
-		tmp = read_line(s)
+		tmp = readLine(s)
 	end
 	tmp
 end
 
-read_file_line(is::IOStream) = split(read_clear_line(is))
+readFileLine(is::IO) = split(readClearLine(is))
 
-function get_index(start_index::Cint, index::Cint)
-	start_index > Cint(0) ? index : Cint(index + 1)
+function getIndex(startIndex::Cint, index::Cint)
+	startIndex > Cint(0) ? index : Cint(index + 1)
 end
 
-function parse_points(
+function parsePoints(
   points::Vector{Cdouble}, line::Vector{SubString{String}}, index::Cint,
   start::Cint
 )
@@ -29,12 +29,12 @@ function parse_points(
   points[second] = parse(Cdouble, line[start + 1])
 end
 
-function parse_attrs(
+function parseAttrs(
   attrs::Vector{Cdouble}, line::Vector{SubString{String}}, index::Cint,
-  start::Cint, attr_cnt::Cint
+  start::Cint, attrCnt::Cint
 )
-  last = attr_cnt * index
-  first = last - attr_cnt + 1
+  last = attrCnt * index
+  first = last - attrCnt + 1
   current = start
   for i in first:last
     attrs[i] = parse(Cdouble, line[current])
@@ -42,23 +42,23 @@ function parse_attrs(
   end
 end
 
-function parse_markers(
+function parseMarkers(
   markers::Vector{Cint}, line::Vector{SubString{String}}, index::Cint,
   start::Cint
 )
   markers[index] = parse(Cint, line[start])
 end
 
-function parse_segments(
+function parseSegments(
 	segments::Vector{Cint}, line::Vector{SubString{String}}, index::Cint,
-	start::Cint, start_index::Cint
+	start::Cint, startIndex::Cint
 )
 	second = 2 * index
-	segments[second - 1] = get_index(start_index, parse(Cint, line[start]))
-	segments[second] = get_index(start_index, parse(Cint, line[start + 1]))
+	segments[second - 1] = getIndex(startIndex, parse(Cint, line[start]))
+	segments[second] = getIndex(startIndex, parse(Cint, line[start + 1]))
 end
 
-function parse_holes(
+function parseHoles(
 	holes::Vector{Cdouble}, line::Vector{SubString{String}}, index::Cint,
 	start::Cint
 )
@@ -67,7 +67,7 @@ function parse_holes(
 	holes[second] = parse(Cdouble, line[start + 1])
 end
 
-function parse_regions(
+function parseRegions(
 	regions::Vector{Cdouble}, line::Vector{SubString{String}}, index::Cint,
 	start::Cint
 )
@@ -83,29 +83,29 @@ function parse_regions(
 	end
 end
 
-function parse_elems(
+function parseElems(
 	elems::Vector{Cint}, line::Vector{SubString{String}}, index::Cint,
-	start::Cint, corner_cnt::Cint, start_index::Cint
+	start::Cint, cornerCnt::Cint, startIndex::Cint
 )
-	last = index * corner_cnt
-	first = last - corner_cnt + 1
+	last = index * cornerCnt
+	first = last - cornerCnt + 1
 	current = start
 	for i in first:last
-		elems[i] = get_index(start_index, parse(Cint, line[current]))
+		elems[i] = getIndex(startIndex, parse(Cint, line[current]))
 		current = current + 1
 	end
 end
 
-function parse_areas(
+function parseAreas(
 	areas::Vector{Cdouble}, line::Vector{SubString{String}}, index::Cint,
 	start::Cint
 )
 	areas[index] = parse(Cdouble, line[start])
 end
 
-function create_markers(read_markers::Bool, marker::Cint)
-	if read_markers == true && marker > Cint(0)
-		Vector{Cint}(cnt)
+function createMarkers(marker::Cint, markerCnt::Cint)
+	if marker > Cint(0)
+		Vector{Cint}(markerCnt)
 	else
 		Vector{Cint}[]
 	end

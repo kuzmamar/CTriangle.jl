@@ -1,8 +1,8 @@
 removeext(file::ASCIIString) = splitext(file)[1]
 
-readclearline(s::IOStream) = readclearline(readline(s), s)
+readclearline(s::IO) = readclearline(readline(s), s)
 
-function readclearline(line::ASCIIString, stream::IOStream)
+function readclearline(line::ASCIIString, stream::IO)
 	tmp::ASCIIString = line
 	while searchindex(tmp, "#", 1) == 1
 		tmp = readline(stream)
@@ -13,7 +13,7 @@ end
 abstract AbstractFileLoader
 
 function load!(l::AbstractFileLoader)
-  s::IOStream = open("$(l.file).$(getextension(l))")
+  s::IO = open("$(l.file).$(getextension(l))")
   f::AbstractFile = load!(l, s)
   close(s)
   f
@@ -21,14 +21,14 @@ end
 
 abstract AbstractLineLoaderStrategy
 
-function load!(ls::AbstractLineLoaderStrategy, s::IOStream, size::Cint)
+function load!(ls::AbstractLineLoaderStrategy, s::IO, size::Cint)
   for index::Cint in 1:size
     load!(ls, readclearline(s), index)
   end
   load(ls)
 end
 
-function loadheader(ls::AbstractLineLoaderStrategy, s::IOStream)
+function loadheader(ls::AbstractLineLoaderStrategy, s::IO)
   createheader(ls, split(readclearline(s)))
 end
 

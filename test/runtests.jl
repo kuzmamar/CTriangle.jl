@@ -1,3 +1,3 @@
 using Base.Test, CTriangle
 
-include("FileNames.jl")
+include("FileTests.jl")
