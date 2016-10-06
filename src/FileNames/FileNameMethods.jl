@@ -31,17 +31,17 @@ function Base.open(::FileNameInterface, fileName::String)
 end
 
 function Base.open(name::FakeNodeName, fileName::String)
-  FakeIO(name.lines)
+  createFakeIO(name.lines)
 end
 
 function Base.open(name::FakePolyName, fileName::String)
-  FakeIO(name.lines)
+  createFakeIO(name.lines)
 end
 
 function Base.open(name::FakeEleName, fileName::String)
-  FakeIO(name.lines)
+  createFakeIO(name.lines)
 end
 
 function Base.open(name::FakeAreaName, fileName::String)
-  FakeIO(name.lines)
+  createFakeIO(name.lines)
 end

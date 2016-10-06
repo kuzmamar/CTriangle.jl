@@ -36,16 +36,16 @@ end
 function createDefaultSection(sectionStream::HoleSectionStream, header::Tuple{Vararg{Cint}})
   cnt, = header
   if sectionStream.useHoles
-    HoleSection(Vector{Cdouble}(2 * cnt))
+    HoleSection(cnt, Vector{Cdouble}(2 * cnt))
   else
-    SkipDefaultHoleSection(cnt)
+    SkipHoleSection(cnt)
   end
 end
 
 function createDefaultSection(sectionStream::RegionSectionStream, header::Tuple{Vararg{Cint}})
   cnt, = header
   if sectionStream.useRegions === true
-    RegionSection(Vector{Cdouble}(4 * cnt))
+    RegionSection(cnt, Vector{Cdouble}(4 * cnt))
   else
     createNoSection(sectionStream)
   end
@@ -64,7 +64,7 @@ function createDefaultSection(sectionStream::AreaSectionStream, header::Tuple{Va
 end
 
 function parseHeader(::SectionStreamInterface, line::Vector{SubString{String}})
-  (parse(Cint, line[1]))
+  (parse(Cint, line[1]), )
 end
 
 function parseHeader(
@@ -86,7 +86,7 @@ function parseHeader(sectionStream::RegionSectionStream,
   line::Vector{SubString{String}}
 )
   if length(line) > 0
-    (parse(Cint, line[1]))
+    (parse(Cint, line[1]), )
   else
     (Cint(0), )
   end

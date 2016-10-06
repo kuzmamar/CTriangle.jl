@@ -30,11 +30,9 @@ function createStream(fileHandler::NodeHandler, fileStream::IO)
 end
 
 function createStream(fileHandler::PolyHandler, fileStream::IO)
-  PolyStream(fileStream, fileStream.nodeHandler,
-    NodeSectionStream(fileStream),
-    SegmentSectionStream(fileStream, Cint(1)),
-    HoleSectionStream(fileStream, fileHandler.useHoles),
-    RegionSectionStream(fileStream, fileHandler.useRegions)
+  PolyStream(
+    fileStream, fileHandler.nodeHandler, fileHandler.useHoles,
+    fileHandler.useRegions
   )
 end
 

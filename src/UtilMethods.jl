@@ -79,6 +79,7 @@ function parseRegions(
 		regions[first + 2] = parse(Cdouble, line[start + 2])
 		regions[first + 3] = parse(Cdouble, line[start + 3])
 	else
+		regions[first + 2] = Cdouble(0)
 		regions[first + 3] = parse(Cdouble, line[start + 2])
 	end
 end
@@ -109,4 +110,8 @@ function createMarkers(marker::Cint, markerCnt::Cint)
 	else
 		Vector{Cint}[]
 	end
+end
+
+function createFakeIO(lines::Vector{String})
+	FakeIO(lines)
 end

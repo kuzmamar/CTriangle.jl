@@ -12,9 +12,15 @@ function Base.read(fileStream::PolyStream)
     nodeFile = read(fileStream.nodeHandler)
     nodeSection = nodeFile.nodeSection
   end
-  segmentSection = read(SegmentSectionStream(fileStream.fileStream, nodeSection.startIndex))
-  holeSection = read(HoleSectionStream(fileStream.fileStream, fileStream.useHoles))
-  regionSection = read(RegionSectionStream(fileStream.fileStream, fileStream.useRegions))
+  if isEmpty(nodeSection)
+    segmentSection = NoSegmentSection()
+    holeSection = NoHoleSection()
+    regionSection = NoRegionSection()
+  else
+    segmentSection = read(SegmentSectionStream(fileStream.fileStream, getStartIndex(nodeSection)))
+    holeSection = read(HoleSectionStream(fileStream.fileStream, fileStream.useHoles))
+    regionSection = read(RegionSectionStream(fileStream.fileStream, fileStream.useRegions))
+  end
   PolyFile(nodeSection, segmentSection, holeSection, regionSection)
 end
 

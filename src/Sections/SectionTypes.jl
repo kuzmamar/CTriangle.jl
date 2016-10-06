@@ -29,6 +29,7 @@ type SegmentSection <: SegmentSectionInterface
   cnt::Cint
   segments::Vector{Cint}
   markers::Vector{Cint}
+  startIndex::Cint
 end
 
 immutable NoHoleSection <: HoleSectionInterface end

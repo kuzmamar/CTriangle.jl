@@ -99,7 +99,7 @@ function Base.read(section::NodeSection, fileStream::IO)
 end
 
 function Base.read(section::SegmentSection, fileStream::IO)
-  if length(s.markers) > 0
+  if length(section.markers) > 0
     read(section, fileStream, [
       Parser(parseSegments, (Cint(2), section.startIndex), :segments),
       Parser(parseMarkers, (Cint(4), ), :markers)

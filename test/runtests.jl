@@ -1,3 +1,9 @@
 using Base.Test, CTriangle
 
-include("FileTests.jl")
+function executeTests(inputs, handler)
+  for input in inputs
+    handler(input)
+  end
+end
+
+include("Includes.jl")

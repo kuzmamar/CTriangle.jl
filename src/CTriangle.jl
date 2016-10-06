@@ -10,24 +10,10 @@ end
 
 include("Includes.jl")
 
-#include("FileNameTypes.jl")
-#include("FileStreamTypes.jl")
-#include("SectionTypes.jl")
-#include("SectionStreamTypes.jl")
-#include("FileTypes.jl")
-
-#include("UtilMethods.jl")
-
-#include("FileNameMethods.jl")
-#include("FileStreamMethods.jl")
-#include("SectionStreamMethods.jl")
-#include("SectionMethods.jl")
-#include("FileMethods.jl")
-
 function triangulate(fileName::String, options::String)
 	commandLine::CommandLine = CommandLine()
 	execute(
-		createCommand(commandLine, parseOptions(commandLine, options),fileName)
+		createCommand(commandLine, parseOptions(commandLine, options), fileName)
 	)
 end
 

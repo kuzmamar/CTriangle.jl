@@ -7,6 +7,8 @@ end
 type PolyStream <: FileStreamInterface
   fileStream::IO
   nodeHandler::NodeHandler
+  useHoles::Bool
+  useRegions::Bool
 end
 
 type EleStream <: FileStreamInterface
