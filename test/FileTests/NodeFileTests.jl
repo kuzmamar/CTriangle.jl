@@ -5,7 +5,6 @@
         "0 2 0 0\n"
       ]),
       function(file::CTriangle.NodeFile)
-        @test isa(file, CTriangle.NodeFile) == true
         @test CTriangle.isEmpty(file.nodeSection) == true
       end
     ],

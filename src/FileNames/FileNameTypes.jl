@@ -36,15 +36,13 @@ abstract EleNameInterface <: FileNameInterface
 
 immutable EleName <: EleNameInterface
   fileName::String
-  startIndex::Cint
-  function EleName(fileName::String, startIndex::Cint)
-    new(removeExtension(fileName), startIndex)
+  function EleName(fileName::String)
+    new(removeExtension(fileName))
   end
 end
 
 type FakeEleName <: EleNameInterface
   lines::Vector{String}
-  startIndex::Cint
 end
 
 abstract AreaNameInterface <: FileNameInterface

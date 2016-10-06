@@ -132,7 +132,7 @@
       end
     ],
     [
-      CTriangle.FakePolyName([ # Test that no holes are read even they exist.
+      CTriangle.FakePolyName([ # Test that no holes are read. We do not want to read them
         "2 2 0 0\n",
         "1 0 0\n",
         "2 1 0\n",

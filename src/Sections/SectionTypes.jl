@@ -63,7 +63,7 @@ type ElementSection <: ElementSectionInterface
   cnt::Cint
   elems::Vector{Cint}
   cornerCnt::Cint
-  attrs::Vector{Cint}
+  attrs::Vector{Cdouble}
   attrCnt::Cint
   startIndex::Cint
 end

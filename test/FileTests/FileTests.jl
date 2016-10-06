@@ -13,3 +13,5 @@ end
 
 include("NodeFileTests.jl")
 include("PolyFileTests.jl")
+include("AreaFileTests.jl")
+include("EleFileTests.jl")

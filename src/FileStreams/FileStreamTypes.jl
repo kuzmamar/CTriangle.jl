@@ -13,6 +13,7 @@ end
 
 type EleStream <: FileStreamInterface
   fileStream::IO
+  startIndex::Cint
 end
 
 type AreaStream <: FileStreamInterface
