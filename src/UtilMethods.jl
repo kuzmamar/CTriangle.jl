@@ -116,23 +116,26 @@ function createFakeIO(lines::Vector{String})
 	FakeIO(lines)
 end
 
-function createNodeHandler(fileName::String)
-	NodeHandler(NodeName(fileName))
+function createNodeHandler(fileName::NodeNameInterface)
+	NodeHandler(fileName)
 end
 
-function createPolyHandler(fileName::String, useHoles::Bool, useRegions::Bool)
+function createPolyHandler(
+	nodeName::NodeNameInterface, polyName::PolyNameInterface,
+	useHoles::Bool, useRegions::Bool
+)
 	PolyHandler(
-		PolyName(fileName),
-		createNodeHandler(fileName),
+		polyName,
+		createNodeHandler(nodeName),
 		useHoles,
 		useRegions
 	)
 end
 
-function createEleHandler(fileName::String, startIndex::Cint)
-	EleHandler(EleName(fileName), startIndex)
+function createEleHandler(fileName::EleNameInterface, startIndex::Cint)
+	EleHandler(fileName, startIndex)
 end
 
-function createAreaHandler(fileName::String, useAreas::Bool)
-	AreaHandler(AreaName(fileName), useAreas)
+function createAreaHandler(fileName::AreaNameInterface, useAreas::Bool)
+	AreaHandler(fileName, useAreas)
 end

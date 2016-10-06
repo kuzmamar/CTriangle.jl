@@ -6,24 +6,26 @@ createInput(::CommandInterface) = error("Implement createInput method.")
 
 function createInput(command::DelaunayFileCommand)
   DelaunayFileInput(
-    command.options, read(NodeHandler(NodeName(command.fileName)))
+    command.options, read(createNodeHandler(command.nodeName))
   )
 end
 
 function createInput(command::ConstrainedDelaunayFileCommand)
   ConstrainedDelaunayFileInput(command.options, read(
-      createPolyHandler(command.fileName, command.useHoles, command.useRegions)
+      createPolyHandler(
+        command.nodeName, command.polyName, command.useHoles, command.useRegions
+      )
     )
   )
 end
 
 function createInput(command::DelaunayRefinementFileCommand)
-  nodeFile::NodeFile = read(createNodeHandler(command.fileName))
+  nodeFile::NodeFile = read(createNodeHandler(command.nodeName))
   eleHandler::EleHandler = createEleHandler(
-    command.fileName, getStartIndex(nodeFile)
+    command.eleName, getStartIndex(nodeFile)
   )
   areaHandler::AreaHandler = createAreaHandler(
-    command.fileName, command.useAreas
+    command.areaName, command.useAreas
   )
   DelaunayRefinementFileInput(
     command.options,
@@ -35,13 +37,15 @@ end
 
 function createInput(command::ConstrainedDelaunayRefinementFileCommand)
   polyFile::PolyFile = read(
-    createPolyHandler(command.fileName, command.useHoles, command.useRegions)
+    createPolyHandler(
+      command.nodeName, command.polyName, command.useHoles, command.useRegions
+    )
   )
   eleHandler::EleHandler = createEleHandler(
-    command.fileName, getStartIndex(polyFile)
+    command.eleName, getStartIndex(polyFile)
   )
   areaHandler::AreaHandler = createAreaHandler(
-    command.fileName, command.useAreas
+    command.areaName, command.useAreas
   )
   ConstrainedDelaunayRefinementFileInput(
     command.options,

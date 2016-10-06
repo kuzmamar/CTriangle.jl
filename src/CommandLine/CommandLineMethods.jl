@@ -66,22 +66,31 @@ function createCommand(commandLine::CommandLine, options::String,
   if commandLine.delaunay && commandLine.refinement
     DelaunayRefinementFileCommand(
       options,
-      fileName,
+      NodeName(fileName),
+      EleName(fileName),
+      AreaName(fileName),
       commandLine.useAreas
     )
   elseif commandLine.constrainedDelaunay && commandLine.refinement
     ConstrainedDelaunayRefinementFileCommand(
       options,
-      fileName,
+      NodeName(fileName),
+      PolyName(fileName),
+      EleName(fileName),
+      AreaName(fileName),
       commandLine.useHoles,
       false, # regions are not applied during refinement
       commandLine.useAreas
     )
   elseif commandLine.delaunay
-    DelaunayFileCommand(options, fileName)
+    DelaunayFileCommand(options, NodeName(fileName))
   else
     ConstrainedDelaunayFileCommand(
-      options, fileName, commandLine.useHoles, commandLine.useRegions
+      options,
+      NodeName(fileName),
+      PolyName(fileName),
+      commandLine.useHoles,
+      commandLine.useRegions
     )
   end
 end
