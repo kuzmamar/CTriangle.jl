@@ -2,24 +2,26 @@ abstract CommandInterface
 
 immutable DelaunayFileCommand <: CommandInterface
   options::String
-  nodeHandler::NodeHandler
+  fileName::String
 end
 
 immutable ConstrainedDelaunayFileCommand <: CommandInterface
   options::String
-  polyHandler::PolyHandler
+  fileName::String
+  useHoles::Bool
+  useRegions::Bool
 end
 
 immutable DelaunayRefinementFileCommand <: CommandInterface
   options::String
-  nodeHandler::NodeHandler
-  eleHandler::EleHandler
-  areaHandler::AreaHandler
+  fileName::String
+  useAreas::Bool
 end
 
 immutable ConstrainedDelaunayRefinementFileCommand <: CommandInterface
   options::String
-  polyHandler::PolyHandler
-  eleHandler::EleHandler
-  areaHandler::AreaHandler
+  fileName::String
+  useHoles::Bool
+  useRegions::Bool
+  useAreas::Bool
 end

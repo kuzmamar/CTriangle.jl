@@ -22,6 +22,8 @@ const NO_MARKERS = "B"
 
 const IGNORE_HOLES = "O"
 
+const STEINER = "S"
+
 type CommandLine
   delaunay::Bool
   constrainedDelaunay::Bool

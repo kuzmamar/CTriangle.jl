@@ -34,7 +34,7 @@ end
 
 function createExtraOptions()
   return Set{String}(
-    String[QUALITY, CONVEX, DELAUNAY, JETTISON, EDGE, NEIGHBOR, NO_MARKERS]
+    String[QUALITY, CONVEX, DELAUNAY, JETTISON, EDGE, NEIGHBOR, NO_MARKERS, STEINER]
   )
 end
 
@@ -45,7 +45,7 @@ function parseOptions(commandLine::CommandLine, options::String)
   index = 1
   for option in options
     strOption = string(option)
-    if isdigit(strOption) === true
+    if isdigit(strOption) === true || strOption == "."
       parsedOptions[index] = strOption
     elseif in(strOption, extraOptions) === true
       parsedOptions[index] = strOption
@@ -57,7 +57,7 @@ function parseOptions(commandLine::CommandLine, options::String)
     end
     index = index + 1
   end
-  join(parsedOptions,"")
+  join(parsedOptions, "")
 end
 
 function createCommand(commandLine::CommandLine, options::String,
@@ -66,33 +66,22 @@ function createCommand(commandLine::CommandLine, options::String,
   if commandLine.delaunay && commandLine.refinement
     DelaunayRefinementFileCommand(
       options,
-      NodeHandler(NodeName(fileName)),
-      EleHandler(EleName(fileName), Cint(1)),
-      AreaHandler(AreaName(fileName), commandLine.useAreas)
+      fileName,
+      commandLine.useAreas
     )
   elseif commandLine.constrainedDelaunay && commandLine.refinement
     ConstrainedDelaunayRefinementFileCommand(
       options,
-      PolyHandler(
-        PolyName(fileName),
-        NodeHandler(NodeName(fileName)),
-        commandLine.useHoles,
-        commandLine.useRegions
-      ),
-      EleHandler(EleName(fileName), Cint(1)),
-      AreaHandler(AreaName(fileName), commandLine.useAreas)
+      fileName,
+      commandLine.useHoles,
+      false, # regions are not applied during refinement
+      commandLine.useAreas
     )
   elseif commandLine.delaunay
-    DelaunayFileCommand(options, NodeHandler(NodeName(fileName)))
+    DelaunayFileCommand(options, fileName)
   else
     ConstrainedDelaunayFileCommand(
-      options,
-      PolyHandler(
-        PolyName(fileName),
-        NodeHandler(NodeName(fileName)),
-        commandLine.useHoles,
-        commandLine.useRegions
-      )
+      options, fileName, commandLine.useHoles, commandLine.useRegions
     )
   end
 end
