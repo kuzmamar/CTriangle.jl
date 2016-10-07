@@ -34,7 +34,10 @@ end
 
 function createExtraOptions()
   return Set{String}(
-    String[QUALITY, CONVEX, DELAUNAY, JETTISON, EDGE, NEIGHBOR, NO_MARKERS, STEINER]
+    String[
+      QUALITY, CONVEX, DELAUNAY, JETTISON, EDGE, NEIGHBOR, NO_MARKERS, STEINER,
+      QUIET
+    ]
   )
 end
 

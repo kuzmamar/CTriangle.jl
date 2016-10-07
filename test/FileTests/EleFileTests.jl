@@ -6,7 +6,7 @@
       ]),
       Cint(1),
       function(file::CTriangle.EleFile)
-        @test isa(file.elementSection, CTriangle.NoElementSection) == true
+        @test isa(file.elementSection, CTriangle.NoElementFileSection) == true
       end
     ],
     [

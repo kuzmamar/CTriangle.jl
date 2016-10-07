@@ -24,6 +24,8 @@ const IGNORE_HOLES = "O"
 
 const STEINER = "S"
 
+const QUIET = "Q"
+
 type CommandLine
   delaunay::Bool
   constrainedDelaunay::Bool

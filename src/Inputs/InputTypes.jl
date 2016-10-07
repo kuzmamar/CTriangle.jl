@@ -1,8 +1,14 @@
 abstract InputInterface
 
-type DelaunayFileInput <: InputInterface
+abstract DelaunayInputInterface <: InputInterface
+
+type DelaunayFileInput <: DelaunayInputInterface
   options::String
   nodeFile::NodeFile
+end
+
+type DelaunayInput <: DelaunayInputInterface
+  # todo for user input
 end
 
 type ConstrainedDelaunayFileInput <: InputInterface

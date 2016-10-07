@@ -16,11 +16,13 @@ end
 
 function setPointAttrs(io::InputTriangulateIO, attrs::Vector{Cdouble}, attrCnt::Cint)
   io.pointattributelist = pointer(attrs)
-  io.numberofpointattributes = attrcnt
+  io.numberofpointattributes = attrCnt
 end
 
 function setPointMarkers(io::InputTriangulateIO, markers::Vector{Cint})
-  io.pointmarkerlist = pointer(markers)
+  if length(markers) > 0
+    io.pointmarkerlist = pointer(markers)
+  end
 end
 
 function setSegments(io::InputTriangulateIO, segments::Vector{Cint})
@@ -29,7 +31,9 @@ function setSegments(io::InputTriangulateIO, segments::Vector{Cint})
 end
 
 function setSegmentMarkers(io::InputTriangulateIO, markers::Vector{Cint})
-  io.segmentmarkerlist = pointer(markers)
+  if length(markers) > 0
+    io.segmentmarkerlist = pointer(markers)
+  end
 end
 
 function setHoles(io::InputTriangulateIO, holes::Vector{Cdouble})
@@ -44,8 +48,10 @@ function setElements(io::InputTriangulateIO, elements::Vector{Cint}, cornerCnt::
 end
 
 function setElementAttrs(io::InputTriangulateIO, attrs::Vector{Cdouble}, attrCnt::Cint)
-  io.triangleattributelist = pointer(attrs)
-  io.numberoftriangleattributes = attrcnt
+  if length(attrs) > 0
+    io.triangleattributelist = pointer(attrs)
+    io.numberoftriangleattributes = attrCnt
+  end
 end
 
 function setRegions(io::InputTriangulateIO, regions::Vector{Cdouble})
@@ -57,14 +63,11 @@ function setAreas(io::InputTriangulateIO, areas::Vector{Cdouble})
 end
 
 function getPoints(io::OutputTriangulateIO)
-  if io.pointlist === C_NULL
-    (Cdouble[], Cint(0))
+  if io.pointlist == C_NULL
+    Cdouble[]
   else
-    points = (
-      unsafe_wrap(
-        Array, io.pointlist, io.numberofpoints * 2, true
-      ),
-      io.numberofpoints
+    points::Vector{Cdouble} = unsafe_wrap(
+      Array, io.pointlist, io.numberofpoints * 2, true
     )
     io.pointlist = C_NULL
     points
@@ -72,18 +75,14 @@ function getPoints(io::OutputTriangulateIO)
 end
 
 function getPointAttrs(io::OutputTriangulateIO)
-  if io.pointattributelist === C_NULL
-    (Cdouble[], Cint(0), Cint(0))
+  if io.pointattributelist == C_NULL
+    Cdouble[]
   else
-    attrs = (
-      unsafe_wrap(
-        Array,
-        io.pointattributelist,
-        io.numberofpoints * io.numberofpointattributes,
-        true
-      ),
-      io.numberofpoints,
-      io.numberofpointattributes
+    attrs::Vector{Cdouble} = unsafe_wrap(
+      Array,
+      io.pointattributelist,
+      io.numberofpoints * io.numberofpointattributes,
+      true
     )
     io.pointattributelist = C_NULL
     attrs
@@ -91,14 +90,11 @@ function getPointAttrs(io::OutputTriangulateIO)
 end
 
 function getPointMarkers(io::OutputTriangulateIO)
-  if io.pointmarkerlist === C_NULL
-    (Cint[], Cint(0))
+  if io.pointmarkerlist == C_NULL
+    Cint[]
   else
-    markers = (
-      unsafe_wrap(
-        Array, io.pointmarkerlist, io.numberofpoints, true
-      ),
-      io.numberofpoints
+    markers::Vector{Cint} = unsafe_wrap(
+      Array, io.pointmarkerlist, io.numberofpoints, true
     )
     io.pointmarkerlist = C_NULL
     markers
@@ -106,14 +102,11 @@ function getPointMarkers(io::OutputTriangulateIO)
 end
 
 function getSegments(io::OutputTriangulateIO)
-  if io.segmentlist === C_NULL
-    (Cint[], Cint(0))
+  if io.segmentlist == C_NULL
+    Cint[]
   else
-    segments = (
-      unsafe_wrap(
-        Array, io.segmentlist, io.numberofsegments * 2, true
-      ),
-      io.numberofsegments
+    segments::Vector{Cint} = unsafe_wrap(
+      Array, io.segmentlist, io.numberofsegments * 2, true
     )
     io.segmentlist = C_NULL
     segments
@@ -121,14 +114,11 @@ function getSegments(io::OutputTriangulateIO)
 end
 
 function getSegmentMarkers(io::OutputTriangulateIO)
-  if io.segmentmarkerlist === C_NULL
-    (Cint[], Cint(0))
+  if io.segmentmarkerlist == C_NULL
+    Cint[]
   else
-    markers = (
-      unsafe_wrap(
-        Array, io.segmentmarkerlist, io.numberofsegments, true
-      ),
-      io.numberofsegments
+    markers::Vector{Cint} = unsafe_wrap(
+      Array, io.segmentmarkerlist, io.numberofsegments, true
     )
     io.segmentmarkerlist = C_NULL
     markers
@@ -136,11 +126,11 @@ function getSegmentMarkers(io::OutputTriangulateIO)
 end
 
 function getEdges(io::OutputTriangulateIO)
-  if io.edgelist === C_NULL
-    (Cint[], Cint(0))
+  if io.edgelist == C_NULL
+    Cint[]
   else
-    edges = (
-      unsafe_wrap(Array, io.edgelist, io.numberofedges, true), io.numberofedges
+    edges::Vector{Cint} = unsafe_wrap(
+      Array, io.edgelist, io.numberofedges * 2, true
     )
     io.edgelist = C_NULL
     edges
@@ -148,29 +138,23 @@ function getEdges(io::OutputTriangulateIO)
 end
 
 function getEdgeMarkers(io::OutputTriangulateIO)
-  if io.edgemarkerlist === C_NULL
-    (Cint[], Cint(0))
+  if io.edgemarkerlist == C_NULL
+    Cint[]
   else
-    markers = (
-      unsafe_wrap(
-        Array, io.edgemarkerlist, io.numberofedges, true
-      ),
-      io.numberofedges
+    markers::Vector{Cint} = unsafe_wrap(
+      Array, io.edgemarkerlist, io.numberofedges, true
     )
-    io.edgelist = C_NULL
+    io.edgemarkerlist = C_NULL
     markers
   end
 end
 
 function getHoles(io::OutputTriangulateIO)
-  if io.holelist === C_NULL
-    (Cdouble[], Cint(0))
+  if io.holelist == C_NULL
+    Cdouble[]
   else
-    holes = (
-      unsafe_wrap(
-        Array, io.holelist, io.numberofholes * 2, true
-      ),
-      io.numberofholes
+    holes::Vector{Cdouble} = unsafe_wrap(
+      Array, io.holelist, io.numberofholes * 2, true
     )
     io.holelist = C_NULL
     holes
@@ -178,14 +162,11 @@ function getHoles(io::OutputTriangulateIO)
 end
 
 function getRegions(io::OutputTriangulateIO)
-  if io.regionlist === C_NULL
-    (Cdouble[], Cint(0))
+  if io.regionlist == C_NULL
+    Cdouble[]
   else
-    regions = (
-      unsafe_wrap(
-        Array, io.regionlist, io.numberofregions * 4, true
-      ),
-      io.numberofregions
+    regions::Vector{Cdouble} = unsafe_wrap(
+      Array, io.regionlist, io.numberofregions * 4, true
     )
     io.regionlist = C_NULL
     regions
@@ -193,14 +174,11 @@ function getRegions(io::OutputTriangulateIO)
 end
 
 function getAreas(io::OutputTriangulateIO)
-  if io.trianglearealist === C_NULL
-    (Cdouble[], Cint(0))
+  if io.trianglearealist == C_NULL
+    Cdouble[]
   else
-    areas = (
-      unsafe_wrap(
-        Array, io.trianglearealist, io.numberoftriangles, true
-      ),
-      io.numberoftriangles
+    areas::Vector{Cdouble} = unsafe_wrap(
+      Array, io.trianglearealist, io.numberoftriangles, true
     )
     io.trianglearealist = C_NULL
     areas
@@ -208,33 +186,114 @@ function getAreas(io::OutputTriangulateIO)
 end
 
 function getElements(io::OutputTriangulateIO)
-  if io.trianglelist === C_NULL
-    (Cint[], Cint(0))
+  if io.trianglelist == C_NULL
+    Cint[]
   else
-    elems = (
-      unsafe_wrap(
-        Array, io.trianglelist, io.numberoftriangles * io.numberofcorners, true
-      ),
-      io.numberoftriangles,
-      io.numberofcorners
+    elems::Vector{Cint} = unsafe_wrap(
+      Array, io.trianglelist, io.numberoftriangles * io.numberofcorners, true
     )
     io.trianglelist = C_NULL
     elems
   end
 end
 
+function getElementAttrs(io::OutputTriangulateIO)
+  if io.triangleattributelist == C_NULL
+    Cdouble[]
+  else
+    attrs::Vector{Cdouble} = unsafe_wrap(
+      Array, io.triangleattributelist,
+      io.numberoftriangles * io.numberoftriangleattributes, true
+    )
+    io.triangleattributelist = C_NULL
+    attrs
+  end
+end
+
 
 function getNeighbors(io::OutputTriangulateIO)
-  if io.neighborlist === C_NULL
-    (Cint[], Cint(0))
+  if io.neighborlist == C_NULL
+    Cint[]
   else
-    neighbors = (
-      unsafe_wrap(
-        Array, io.neighborlist, io.numberoftriangles * 3, true
-      ),
-      io.numberoftriangles
+    neighbors::Vector{Cint} = unsafe_wrap(
+      Array, io.neighborlist, io.numberoftriangles * 3, true
     )
     io.neighborlist = C_NULL
     neighbors
+  end
+end
+
+function createNodeSection(io::OutputTriangulateIO)
+  points::Vector{Cdouble} = getPoints(io)
+  attrs::Vector{Cdouble} = getPointAttrs(io)
+  markers::Vector{Cint} = getPointMarkers(io)
+  NodeTriangulationSection(points, attrs, io.numberofpointattributes, markers)
+end
+
+function createSegmentSection(io::OutputTriangulateIO)
+  segments::Vector{Cint} = getSegments(io)
+  if length(segments) == 0
+    NoSegmentTriangulationSection()
+  else
+    markers::Vector{Cint} = getSegmentMarkers(io)
+    SegmentTriangulationSection(segments, markers)
+  end
+end
+
+function createHoleSection(io::OutputTriangulateIO)
+  holes::Vector{Cdouble} = getHoles(io)
+  if length(holes) == 0
+    NoHoleTriangulationSection()
+  else
+    HoleTriangulationSection(holes)
+  end
+end
+
+function createRegionSection(io::OutputTriangulateIO)
+  regions::Vector{Cdouble} = getRegions(io)
+  if length(regions) == 0
+    NoRegionTriangulationSection()
+  else
+    RegionTriangulationSection(regions)
+  end
+end
+
+function createElementSection(io::OutputTriangulateIO)
+  elems::Vector{Cint} = getElements(io)
+  if length(elems) == 0
+    NoElementTriangulationSection()
+  else
+    attrs::Vector{Cdouble} = getElementAttrs(io)
+    ElementTriangulationSection(
+      elems, io.numberofcorners, attrs, io.numberoftriangleattributes
+    )
+  end
+end
+
+function createAreaSection(io::OutputTriangulateIO)
+  areas::Vector{Cdouble} = getAreas(io)
+  if length(areas) == 0
+    NoAreaTriangulationSection()
+  else
+    AreaTriangulationSection(areas)
+  end
+end
+
+function createEdgeSection(io::OutputTriangulateIO)
+  edges::Vector{Cint} = getEdges(io)
+  if length(edges) == 0
+    NoEdgeTriangulationSection()
+  else
+    markers::Vector{Cint} = getEdgeMarkers(io)
+    EdgeTriangulationSection(edges, markers)
+  end
+end
+
+function createNeighborSection(io::OutputTriangulateIO)
+  neighbors::Vector{Cint} = getNeighbors(io)
+  if length(neighbors) == 0
+    NoNeighborTriangulationSection()
+  else
+    NeighborTriangulationSection(neighbors)
   end
 end

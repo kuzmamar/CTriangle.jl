@@ -6,7 +6,7 @@
       ]),
       true,
       function(file::CTriangle.AreaFile)
-        @test isa(file.areaSection, CTriangle.NoAreaSection) == true
+        @test isa(file.areaSection, CTriangle.NoAreaFileSection) == true
       end
     ],
     [
@@ -16,7 +16,7 @@
       ]),
       false,
       function(file::CTriangle.AreaFile)
-        @test isa(file.areaSection, CTriangle.NoAreaSection) == true
+        @test isa(file.areaSection, CTriangle.NoAreaFileSection) == true
       end
     ],
     [

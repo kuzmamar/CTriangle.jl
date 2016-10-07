@@ -10,12 +10,13 @@ end
 
 include("Includes.jl")
 
-function triangulate(fileName::String, options::String)
+function triangulate(fileName::String, options::String = "")
 	commandLine::CommandLine = CommandLine()
 	execute(
 		createCommand(commandLine, parseOptions(commandLine, options), fileName)
 	)
 end
+
 
 #function delaunay(fileName::String)
 #	read(NodeFileName(fileName, true))
@@ -89,7 +90,7 @@ function triangulate(file::ASCIIString, sw::ConstrainedTriangulationSwitches)
 
 end==#
 
-#export triangulate
+export triangulate
 
 #export example
 

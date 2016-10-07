@@ -12,9 +12,9 @@
     (false, false),
     function(file::CTriangle.PolyFile)
       @test CTriangle.isEmpty(file.nodeSection) == true
-      @test isa(file.segmentSection, CTriangle.NoSegmentSection)
-      @test isa(file.holeSection, CTriangle.NoHoleSection)
-      @test isa(file.regionSection, CTriangle.NoRegionSection)
+      @test isa(file.segmentSection, CTriangle.NoSegmentFileSection)
+      @test isa(file.holeSection, CTriangle.NoHoleFileSection)
+      @test isa(file.regionSection, CTriangle.NoRegionFileSection)
     end
     ],
     [
@@ -32,9 +32,9 @@
     (true, false),
     function(file::CTriangle.PolyFile)
       @test CTriangle.isEmpty(file.nodeSection) == true
-      @test isa(file.segmentSection, CTriangle.NoSegmentSection)
-      @test isa(file.holeSection, CTriangle.NoHoleSection)
-      @test isa(file.regionSection, CTriangle.NoRegionSection)
+      @test isa(file.segmentSection, CTriangle.NoSegmentFileSection)
+      @test isa(file.holeSection, CTriangle.NoHoleFileSection)
+      @test isa(file.regionSection, CTriangle.NoRegionFileSection)
     end
     ],
     [
@@ -51,7 +51,7 @@
       ]),
       (false, false),
       function(file::CTriangle.PolyFile)
-        @test isa(file.nodeSection, CTriangle.NodeSection) == true
+        @test isa(file.nodeSection, CTriangle.NodeFileSection) == true
       end
     ],
     [
@@ -66,7 +66,7 @@
       CTriangle.FakeNodeName([]),
       (false, false),
       function(file::CTriangle.PolyFile)
-        @test isa(file.nodeSection, CTriangle.NodeSection) == true
+        @test isa(file.nodeSection, CTriangle.NodeFileSection) == true
       end
     ],
     [
@@ -145,7 +145,7 @@
       CTriangle.FakeNodeName([]),
       (false, false),
       function(file::CTriangle.PolyFile)
-        @test isa(file.holeSection, CTriangle.SkipHoleSection)
+        @test isa(file.holeSection, CTriangle.SkipHoleFileSection)
       end
     ],
     [
@@ -208,8 +208,8 @@
       CTriangle.FakeNodeName([]),
       (false, true),
       function(file::CTriangle.PolyFile)
-        @test isa(file.holeSection, CTriangle.SkipHoleSection)
-        @test isa(file.regionSection, CTriangle.RegionSection)
+        @test isa(file.holeSection, CTriangle.SkipHoleFileSection)
+        @test isa(file.regionSection, CTriangle.RegionFileSection)
       end
     ],
     [
@@ -227,8 +227,8 @@
       CTriangle.FakeNodeName([]),
       (true, true),
       function(file::CTriangle.PolyFile)
-        @test isa(file.holeSection, CTriangle.NoHoleSection)
-        @test isa(file.regionSection, CTriangle.RegionSection)
+        @test isa(file.holeSection, CTriangle.NoHoleFileSection)
+        @test isa(file.regionSection, CTriangle.RegionFileSection)
       end
     ],
     [
@@ -248,7 +248,7 @@
       CTriangle.FakeNodeName([]),
       (true, false),
       function(file::CTriangle.PolyFile)
-        @test isa(file.regionSection, CTriangle.NoRegionSection)
+        @test isa(file.regionSection, CTriangle.NoRegionFileSection)
       end
     ],
     [
@@ -265,7 +265,7 @@
       CTriangle.FakeNodeName([]),
       (true, true),
       function(file::CTriangle.PolyFile)
-        @test isa(file.regionSection, CTriangle.NoRegionSection)
+        @test isa(file.regionSection, CTriangle.NoRegionFileSection)
       end
     ],
     [
@@ -285,8 +285,8 @@
       CTriangle.FakeNodeName([]),
       (false, false),
       function(file::CTriangle.PolyFile)
-        @test isa(file.holeSection, CTriangle.SkipHoleSection)
-        @test isa(file.regionSection, CTriangle.NoRegionSection)
+        @test isa(file.holeSection, CTriangle.SkipHoleFileSection)
+        @test isa(file.regionSection, CTriangle.NoRegionFileSection)
       end
     ],
   ]

@@ -1,0 +1,36 @@
+type DelaunayTriangulation
+  nodeSection::NodeTriangulationSection
+  segmentSection::SegmentTriangulationSectionInterface
+  elementSection::ElementTriangulationSectionInterface
+  edgeSection::EdgeTriangulationSectionInterface
+  neighborSection::NeighborTriangulationSectionInterface
+end
+
+type ConstrainedDelaunayTriangulation
+  nodeSection::NodeTriangulationSection
+  segmentSection::SegmentTriangulationSectionInterface
+  holeSection::HoleTriangulationSectionInterface
+  regionSection::RegionTriangulationSectionInterface
+  elementSection::ElementTriangulationSectionInterface
+  edgeSection::EdgeTriangulationSectionInterface
+  neighborSection::NeighborTriangulationSectionInterface
+end
+
+type DelaunayRefinementTriangulation
+  nodeSection::NodeTriangulationSection
+  segmentSection::SegmentTriangulationSectionInterface
+  elementSection::ElementTriangulationSectionInterface
+  areaSection::AreaTriangulationSectionInterface
+  edgeSection::EdgeTriangulationSectionInterface
+  neighborSection::NeighborTriangulationSectionInterface
+end
+
+type ConstrainedDelaunayRefinementTriangulation
+  nodeSection::NodeTriangulationSection
+  segmentSection::SegmentTriangulationSectionInterface
+  holeSection::HoleTriangulationSectionInterface
+  elementSection::ElementTriangulationSectionInterface
+  areaSection::AreaTriangulationSectionInterface
+  edgeSection::EdgeTriangulationSectionInterface
+  neighborSection::NeighborTriangulationSectionInterface
+end

@@ -139,3 +139,9 @@ end
 function createAreaHandler(fileName::AreaNameInterface, useAreas::Bool)
 	AreaHandler(fileName, useAreas)
 end
+
+function createNodeFileSection(
+	points::Vector{Cdouble}, pointCnt::Cint, attrs::Vector{Cdouble}, attrCnt::Cint,
+	markers::Vector{Cint}
+)
+end

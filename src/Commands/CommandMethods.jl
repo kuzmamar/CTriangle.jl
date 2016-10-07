@@ -1,5 +1,5 @@
 function execute(command::CommandInterface)
-  createInput(command)
+  triangulate(createInput(command))
 end
 
 createInput(::CommandInterface) = error("Implement createInput method.")

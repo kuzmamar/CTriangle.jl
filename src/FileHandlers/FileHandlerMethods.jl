@@ -19,7 +19,7 @@ function Base.read(fileHandler::AreaHandler)
   if fileHandler.useAreas
     readFile(fileHandler)
   else
-    AreaFile(NoAreaSection())
+    AreaFile(NoAreaFileSection())
   end
 end
 

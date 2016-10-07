@@ -1,20 +1,20 @@
 abstract FileInterface
 
 type NodeFile <: FileInterface
-  nodeSection::NodeSectionInterface
+  nodeSection::NodeFileSectionInterface
 end
 
 type PolyFile <: FileInterface
-  nodeSection::NodeSectionInterface
-  segmentSection::SegmentSectionInterface
-  holeSection::HoleSectionInterface
-  regionSection::RegionSectionInterface
+  nodeSection::NodeFileSectionInterface
+  segmentSection::SegmentFileSectionInterface
+  holeSection::HoleFileSectionInterface
+  regionSection::RegionFileSectionInterface
 end
 
 type EleFile <: FileInterface
-  elementSection::ElementSectionInterface
+  elementSection::ElementFileSectionInterface
 end
 
 type AreaFile <: FileInterface
-  areaSection::AreaSectionInterface
+  areaSection::AreaFileSectionInterface
 end
