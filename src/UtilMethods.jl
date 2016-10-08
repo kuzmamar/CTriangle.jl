@@ -198,7 +198,7 @@ function createNode(
 )
 	Node(
 		createPoint(points, index),
-		createAttrs(attrs, iterator.attrCnt, index),
+		createAttrs(attrs, attrCnt, index),
 		getMarker(markers, index)
 	)
 end

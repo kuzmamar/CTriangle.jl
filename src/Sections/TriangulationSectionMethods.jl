@@ -13,7 +13,7 @@ function getElements(
   elementSection::NoElementTriangulationSection,
   neighborSection::NeighborTriangulationSectionInterface
 )
-  Element[]
+  ()
 end
 
 function getElements(
@@ -98,12 +98,82 @@ function createNeighbors(
   ()
 end
 
-Base.length(section::ElementTriangulationSectionInterface) = 0
-
-getAttrs(section::ElementTriangulationSectionInterface) = Cdouble[]
-
-getAttrs(section::ElementTriangulationSection) = section.attrs
-
 function Base.length(section::ElementTriangulationSection)
   length(section.elems) / section.cornerCnt
+end
+
+function Base.length(section::SegmentTriangulationSection)
+  length(section.segments) / 2
+end
+
+function Base.length(section::EdgeTriangulationSection)
+  length(section.edges) / 2
+end
+
+function getSegments(
+  nodeSection::NodeTriangulationSection,
+  segmentSection::NoSegmentTriangulationSection
+)
+  ()
+end
+
+function getSegments(
+  nodeSection::NodeTriangulationSection,
+  segmentSection::SegmentTriangulationSection
+)
+  SegmentIterator(nodeSection, segmentSection)
+end
+
+function createSegment(
+  nodeSection::NodeTriangulationSection,
+  segmentSection::SegmentTriangulationSection,
+  index::Int
+)
+  if index > 0 && index <= length(segmentSection)
+    second::Int = index * 2
+    Segment(
+      index,
+      createPoint(nodeSection.points, Int(segmentSection.segments[second - 1])),
+      createPoint(nodeSection.points, Int(segmentSection.segments[second])),
+      getMarker(segmentSection.markers, index)
+    )
+  else
+    error("No segment found on index \"$index\".")
+  end
+end
+
+getHoles(::HoleTriangulationSectionInterface) = ()
+
+getHoles(section::HoleTriangulationSection) = PointIterator(section.holes)
+
+function getEdges(
+  nodeSection::NodeTriangulationSection,
+  edgeSection::NoEdgeTriangulationSection
+)
+  ()
+end
+
+function getEdges(
+  nodeSection::NodeTriangulationSection,
+  edgeSection::EdgeTriangulationSection
+)
+  EdgeIterator(nodeSection, edgeSection)
+end
+
+function createEdge(
+  nodeSection::NodeTriangulationSection,
+  edgeSection::EdgeTriangulationSection,
+  index::Int
+)
+  if index > 0 && index <= length(edgeSection)
+    second::Int = index * 2
+    Edge(
+      index,
+      createPoint(nodeSection.points, Int(edgeSection.edges[second - 1])),
+      createPoint(nodeSection.points, Int(edgeSection.edges[second])),
+      getMarker(edgeSection.markers, index)
+    )
+  else
+    error("No edge found on index \"$index\".")
+  end
 end

@@ -1,5 +1,7 @@
 abstract TriangulationInterface
 
+abstract ConstrainedTriangulationInterface <: TriangulationInterface
+
 type DelaunayTriangulation <: TriangulationInterface
   nodeSection::NodeTriangulationSection
   segmentSection::SegmentTriangulationSectionInterface
@@ -8,7 +10,7 @@ type DelaunayTriangulation <: TriangulationInterface
   neighborSection::NeighborTriangulationSectionInterface
 end
 
-type ConstrainedDelaunayTriangulation <: TriangulationInterface
+type ConstrainedDelaunayTriangulation <: ConstrainedTriangulationInterface
   nodeSection::NodeTriangulationSection
   segmentSection::SegmentTriangulationSectionInterface
   holeSection::HoleTriangulationSectionInterface
@@ -27,7 +29,7 @@ type DelaunayRefinementTriangulation <: TriangulationInterface
   neighborSection::NeighborTriangulationSectionInterface
 end
 
-type ConstrainedDelaunayRefinementTriangulation <: TriangulationInterface
+type ConstrainedDelaunayRefinementTriangulation <: ConstrainedTriangulationInterface
   nodeSection::NodeTriangulationSection
   segmentSection::SegmentTriangulationSectionInterface
   holeSection::HoleTriangulationSectionInterface

@@ -12,3 +12,17 @@ type ElementIterator <: VectorIteratorInterface
   elementSection::ElementTriangulationSection
   neighborSection::NeighborTriangulationSectionInterface
 end
+
+type SegmentIterator <: VectorIteratorInterface
+  nodeSection::NodeTriangulationSection
+  segmentSection::SegmentTriangulationSection
+end
+
+type PointIterator <: VectorIteratorInterface
+  points::Vector{Cdouble}
+end
+
+type EdgeIterator <: VectorIteratorInterface
+  nodeSection::NodeTriangulationSection
+  edgeSection::EdgeTriangulationSection
+end

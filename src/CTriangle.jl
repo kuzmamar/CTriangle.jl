@@ -28,10 +28,13 @@ function triangulate(points::Matrix{Int}, options::String = "")
 end
 
 export triangulate
-
 export getNode
 export getNodes
 export getElement
 export getElements
+export getNeighbors
+export getSegments
+export getHoles
+export getEdges
 
 end
