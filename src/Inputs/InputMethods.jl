@@ -22,6 +22,10 @@ function init(
     init(input.areaFile, ioIn)
 end
 
+function init(input::DelaunayUserInput, ioIn::InputTriangulateIO)
+    setPoints(ioIn, input.points)
+end
+
 getOptions(input::InputInterface) = input.options
 
 function createTriangulation(

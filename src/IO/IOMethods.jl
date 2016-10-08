@@ -154,10 +154,10 @@ function getHoles(io::OutputTriangulateIO)
     Cdouble[]
   else
     holes::Vector{Cdouble} = unsafe_wrap(
-      Array, io.holelist, io.numberofholes * 2, true
+      Array, io.holelist, io.numberofholes * 2, false
     )
     io.holelist = C_NULL
-    holes
+    copy(holes)
   end
 end
 
@@ -166,10 +166,10 @@ function getRegions(io::OutputTriangulateIO)
     Cdouble[]
   else
     regions::Vector{Cdouble} = unsafe_wrap(
-      Array, io.regionlist, io.numberofregions * 4, true
+      Array, io.regionlist, io.numberofregions * 4, false
     )
     io.regionlist = C_NULL
-    regions
+    copy(regions)
   end
 end
 

@@ -7,10 +7,6 @@ type DelaunayFileInput <: DelaunayInputInterface
   nodeFile::NodeFile
 end
 
-type DelaunayInput <: DelaunayInputInterface
-  # todo for user input
-end
-
 type ConstrainedDelaunayFileInput <: InputInterface
   options::String
   polyFile::PolyFile
@@ -28,4 +24,9 @@ type ConstrainedDelaunayRefinementFileInput <: InputInterface
   polyFile::PolyFile
   eleFile::EleFile
   areaFile::AreaFile
+end
+
+type DelaunayUserInput <: DelaunayInputInterface
+  options::String
+  points::Vector{Cdouble}
 end

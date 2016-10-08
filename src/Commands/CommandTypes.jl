@@ -1,11 +1,11 @@
 abstract CommandInterface
 
-immutable DelaunayFileCommand <: CommandInterface
+type DelaunayFileCommand <: CommandInterface
   options::String
   nodeName::NodeNameInterface
 end
 
-immutable ConstrainedDelaunayFileCommand <: CommandInterface
+type ConstrainedDelaunayFileCommand <: CommandInterface
   options::String
   nodeName::NodeNameInterface
   polyName::PolyNameInterface
@@ -13,7 +13,7 @@ immutable ConstrainedDelaunayFileCommand <: CommandInterface
   useRegions::Bool
 end
 
-immutable DelaunayRefinementFileCommand <: CommandInterface
+type DelaunayRefinementFileCommand <: CommandInterface
   options::String
   nodeName::NodeNameInterface
   eleName::EleNameInterface
@@ -21,7 +21,7 @@ immutable DelaunayRefinementFileCommand <: CommandInterface
   useAreas::Bool
 end
 
-immutable ConstrainedDelaunayRefinementFileCommand <: CommandInterface
+type ConstrainedDelaunayRefinementFileCommand <: CommandInterface
   options::String
   nodeName::NodeNameInterface
   polyName::PolyNameInterface
@@ -30,4 +30,9 @@ immutable ConstrainedDelaunayRefinementFileCommand <: CommandInterface
   useHoles::Bool
   useRegions::Bool
   useAreas::Bool
+end
+
+type DelaunayUserCommand <: CommandInterface
+  options::String
+  points::Vector{Cdouble}
 end

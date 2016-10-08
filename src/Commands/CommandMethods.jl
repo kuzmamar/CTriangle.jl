@@ -54,3 +54,7 @@ function createInput(command::ConstrainedDelaunayRefinementFileCommand)
     read(areaHandler)
   )
 end
+
+function createInput(command::DelaunayUserCommand)
+  DelaunayUserInput(command.options, command.points)
+end
