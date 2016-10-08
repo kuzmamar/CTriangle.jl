@@ -7,5 +7,5 @@ function getNode(section::NodeTriangulationSection, index::Int)
 end
 
 function getNodes(section::NodeTriangulationSection)
-  # todo
+  NodeIterator(section.points, section.attrs, section.attrCnt, section.markers)
 end
