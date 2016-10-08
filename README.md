@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kuzmamar/CTriangle.jl.svg?branch=fix)](https://travis-ci.org/kuzmamar/CTriangle.jl)
+[![Build Status](https://travis-ci.org/kuzmamar/CTriangle.jl.svg?branch=master)](https://travis-ci.org/kuzmamar/CTriangle.jl)
 
 #CTriangle
 CTriangle is a wrapper around Jonathan Shewchuk's Triangle [library](https://www.cs.cmu.edu/~quake/triangle.html).
@@ -6,5 +6,5 @@ It generates Delaunay triangulation of a set of points and possibly a convex hul
 
 #Instalation
 ```julia
-julia> Pkg.clone("https://github.com/kuzmamar/CTriangle.jl/tree/fix")
+julia> Pkg.clone("https://github.com/kuzmamar/CTriangle.jl")
 ```
