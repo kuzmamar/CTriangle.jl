@@ -145,3 +145,47 @@ function createNodeFileSection(
 	markers::Vector{Cint}
 )
 end
+
+function createPoint(points::Vector{Cdouble}, index::Int)
+	secondIndex::Int = index * 2
+	firstIndex::Int = secondIndex - 1
+	size::Int = length(points)
+	if (firstIndex > 0 && secondIndex > 0) &&
+		 (firstIndex <= size && secondIndex <= size)
+		 Point(index, points[firstIndex], points[secondIndex])
+	else
+		error("No point found on index \"$index\"")
+	end
+end
+
+function createAttrs(attrs::Vector{Cdouble}, attrCnt::Cint, index::Int)
+	size::Int = attrCnt == 0 ? 0 : length(attrs) / attrCnt
+	if size == 0
+		return ()
+	end
+	if index > 0 && index <= size
+		lastAttr::Int = index * attrCnt
+		firstAttr::Int = lastAttr - attrCnt + 1
+		tmpAttrs::Vector{Cdouble} = Vector{Cdouble}(attrCnt)
+		current::Int = 1
+		for i::Int in firstAttr:lastAttr
+			tmpAttrs[current] = attrs[i]
+			current = current + 1
+		end
+		tuple(tmpAttrs...)
+	else
+		error("No attributes found on index \"$index\"")
+	end
+end
+
+function getMarker(markers::Vector{Cint}, index::Int)
+	size::Int = length(markers)
+	if size == 0
+		return Cint(0)
+	end
+	if index > 0 && index <= size
+		markers[index]
+	else
+		error("No marker found on index \"$index\"")
+	end
+end

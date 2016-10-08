@@ -1,3 +1,4 @@
+include("DataTypes/DataTypes.jl")
 include("Sections/FileSectionTypes.jl")
 include("Sections/TriangulationSectionTypes.jl")
 include("Triangulations/TriangulationTypes.jl")

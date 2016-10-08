@@ -30,4 +30,9 @@ end
 export triangulate
 export delaunay
 
+export getNode
+export getNodes
+export getElement
+export getElements
+
 end
