@@ -12,12 +12,23 @@ Base.length(iterator::VectorIteratorInterface) = 0
 
 Base.length(iterator::NodeIterator) = length(iterator.points) / 2
 
+Base.length(iterator::ElementIterator) = length(iterator.elementSection)
+
 function getElement(iterator::NodeIterator, index::Int)
-  Node(
-    createPoint(iterator.points, index),
-    createAttrs(iterator.attrs, iterator.attrCnt, index),
-    getMarker(iterator.markers, index)
+  createNode(
+    iterator.points, iterator.attrs, iterator.attrCnt, iterator.markers, index
+  )
+end
+
+function getElement(iterator::ElementIterator, index::Int)
+  createElement(
+    iterator.nodeSection,
+    iterator.elementSection,
+    iterator.neighborSection,
+    index
   )
 end
 
 getElementType(::NodeIterator) = Node
+
+getElementType(::ElementIterator) = Element

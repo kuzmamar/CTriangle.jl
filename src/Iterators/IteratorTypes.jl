@@ -6,3 +6,9 @@ type NodeIterator <: VectorIteratorInterface
   attrCnt::Cint
   markers::Vector{Cint}
 end
+
+type ElementIterator <: VectorIteratorInterface
+  nodeSection::NodeTriangulationSection
+  elementSection::ElementTriangulationSection
+  neighborSection::NeighborTriangulationSectionInterface
+end

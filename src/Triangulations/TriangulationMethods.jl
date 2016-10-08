@@ -7,9 +7,13 @@ function getNodes(triangulation::TriangulationInterface)
 end
 
 function getElement(triangulation::TriangulationInterface, index::Int)
-  getElement(triangulation.elementSection, index)
+  getElement(triangulation.nodeSection, triangulation.elementSection, triangulation.neighborSection, index)
 end
 
 function getElements(triangulation::TriangulationInterface)
-  getElements(triangulation.elementSection)
+  getElements(
+    triangulation.nodeSection,
+    triangulation.elementSection,
+    triangulation.neighborSection
+  )
 end

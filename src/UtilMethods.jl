@@ -189,3 +189,28 @@ function getMarker(markers::Vector{Cint}, index::Int)
 		error("No marker found on index \"$index\"")
 	end
 end
+
+function createNode(
+	points::Vector{Cdouble},
+	attrs::Vector{Cdouble}, attrCnt::Cint,
+	markers::Vector{Cint},
+	index::Int
+)
+	Node(
+		createPoint(points, index),
+		createAttrs(attrs, iterator.attrCnt, index),
+		getMarker(markers, index)
+	)
+end
+
+function filterNeighbors(neighbors::Vector{Cint}, index::Int)
+	last::Int = index * 3
+	first::Int = last - 2
+	filtered::Vector{Int} = Int[]
+	for i::Int in first:last
+		if neighbors[i] !== Cint(-1)
+			push!(filtered, Int(neighbors[i]))
+		end
+	end
+	filtered
+end

@@ -14,7 +14,7 @@ immutable Element
   index::Int
   points::Tuple{Vararg{Point}}
   attrs::Tuple{Vararg{Cdouble}}
-  neighbors::Tuple{Vararg{Element}}
+  neighbors::Tuple{Vararg{Int}}
 end
 
 immutable Segment

@@ -17,18 +17,17 @@ function triangulate(fileName::String, options::String = "")
 	)
 end
 
-function delaunay(points::Matrix{Cdouble}, options::String = "")
+function triangulate(points::Matrix{Cdouble}, options::String = "")
 	execute(DelaunayUserCommand(
 		parseOptions(CommandLine(), options), vec(points))
 	)
 end
 
-function delaunay(points::Matrix{Int}, options::String = "")
-	delaunay(convert(Matrix{Cdouble}, points), options)
+function triangulate(points::Matrix{Int}, options::String = "")
+	triangulate(convert(Matrix{Cdouble}, points), options)
 end
 
 export triangulate
-export delaunay
 
 export getNode
 export getNodes
