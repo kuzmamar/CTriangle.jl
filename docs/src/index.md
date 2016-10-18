@@ -1,5 +1,3 @@
-{docs}
-triangulate(file::String)
-
-{docs}
-triangulate(file::String, sw::NodesSwitches)
+```@docs
+triangulate(fileName::String, options::String = "")
+```
