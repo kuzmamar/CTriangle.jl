@@ -11,9 +11,12 @@
   )
 end
 
-@testset "File Comments Unit Tests" begin
-  fakeIO = CTriangle.FakeIO([ # Test that commented lines are skipped.
+@testset "Skip File Comments and Empty Lines Unit Tests" begin
+  fakeIO = CTriangle.FakeIO([ # Test that commented lines and empty are skipped.
+    "\n",
+    "\n",
     "# first line\n",
+    "\n",
     "second line\n",
     "# third line\n",
     "# fourth line\n",

@@ -14,7 +14,16 @@ function readClearLine(line::String, s::IO)
 	tmp
 end
 
-readFileLine(is::IO) = split(readClearLine(is))
+function readFileLine(is::IO)
+	line::String = ""
+	while true
+		line = readClearLine(is)
+		if eof(is) == true || length(line) > 0
+			break
+		end
+	end
+	split(line)
+end
 
 function getIndex(startIndex::Cint, index::Cint)
 	startIndex > Cint(0) ? index : Cint(index + 1)

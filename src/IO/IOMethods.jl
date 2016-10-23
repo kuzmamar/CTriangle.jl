@@ -1,5 +1,5 @@
 function Base.readline(io::FakeIO)
-  if io.lineNumber > io.lineCnt
+  if eof(io) == true
     return ""
   end
   line = io.lines[io.lineNumber]
@@ -8,6 +8,8 @@ function Base.readline(io::FakeIO)
 end
 
 Base.close(::FakeIO) = return
+
+Base.eof(io::FakeIO) = return io.lineNumber > io.lineCnt
 
 function setPoints(io::InputTriangulateIO, points::Vector{Cdouble})
   io.pointlist = pointer(points)
