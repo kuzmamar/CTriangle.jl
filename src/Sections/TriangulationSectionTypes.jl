@@ -1,11 +1,13 @@
-type NodeTriangulationSection
+abstract TriangulationSectionOutputInterface
+
+type NodeTriangulationSection <: TriangulationSectionOutputInterface
   points::Vector{Cdouble}
   attrs::Vector{Cdouble}
   attrCnt::Cint
   markers::Vector{Cint}
 end
 
-abstract SegmentTriangulationSectionInterface
+abstract SegmentTriangulationSectionInterface <: TriangulationSectionOutputInterface
 
 immutable NoSegmentTriangulationSection <: SegmentTriangulationSectionInterface
 end
@@ -32,7 +34,7 @@ type RegionTriangulationSection <: RegionTriangulationSectionInterface
   regions::Vector{Cdouble}
 end
 
-abstract ElementTriangulationSectionInterface
+abstract ElementTriangulationSectionInterface <: TriangulationSectionOutputInterface
 
 immutable NoElementTriangulationSection <: ElementTriangulationSectionInterface
 end
@@ -52,7 +54,7 @@ type AreaTriangulationSection <: AreaTriangulationSectionInterface
   areas::Vector{Cdouble}
 end
 
-abstract EdgeTriangulationSectionInterface
+abstract EdgeTriangulationSectionInterface <: TriangulationSectionOutputInterface
 
 immutable NoEdgeTriangulationSection <: EdgeTriangulationSectionInterface end
 
