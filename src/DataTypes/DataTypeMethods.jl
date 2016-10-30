@@ -16,6 +16,7 @@ function output(elem::Element, stream::IO)
   output(elem.points[1], stream)
   output(elem.points[2], stream)
   output(elem.points[3], stream)
+  output(elem.points[1], stream)
   write(stream, "\n")
 end
 

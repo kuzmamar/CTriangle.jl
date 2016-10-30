@@ -4,8 +4,7 @@ function createOutputEdgesTask(
   options::DisplayOptions
 )
   OutputEdgesTask(
-    triangulation, directory, outputNodes, outputEdges, outputElems,
-    fileNames, options
+    triangulation, directory, outputNodes, fileNames, options
   )
 end
 
@@ -15,8 +14,7 @@ function createOutputEdgesTask(
   options::DisplayOptions
 )
   OutputNoEdgesTask(
-    triangulation, directory, outputNodes, outputEdges, outputElems,
-    fileNames, options
+    triangulation, directory, outputNodes, fileNames, options
   )
 end
 
@@ -36,7 +34,7 @@ function createOutputElementsTask(
   directory::String, outputNodes::Function, outputEdges::Function,
   fileNames::OutputFileNames, options::DisplayOptions
 )
-  OutputElementsTask(
+  OutputNoElementsTask(
     triangulation, directory, outputNodes, outputEdges, fileNames, options
   )
 end
@@ -46,7 +44,7 @@ function createOutputSegmentsTask(
   directory::String, outputNodes::Function, outputEdges::Function,
   outputElems::Function, fileNames::OutputFileNames, options::DisplayOptions
 )
-OutputNoSegmentsTask(
+OutputSegmentsTask(
   triangulation, directory, outputNodes, outputEdges, outputElems,
   fileNames, options
 )

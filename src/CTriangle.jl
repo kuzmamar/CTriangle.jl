@@ -50,7 +50,8 @@ end
 
 function outputGraph(
 	triangulation::TriangulationInterface, directory::String,
-	fileNames::OutputFileNames, options::DisplayOptions
+	fileNames::OutputFileNames = OutputFileNames(),
+	options::DisplayOptions = DisplayOptions()
 )
 	output( # output of triangulation
 		output( # output of segments

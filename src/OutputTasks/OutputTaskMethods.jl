@@ -1,3 +1,20 @@
+function DisplayOptions(;
+  displayAxis = true,
+  nodesDisplayOptions = NODES_DEFAULT_DISPLAY_OPTIONS,
+  edgesDisplayOptions = EDGES_DEFAULT_DISPLAY_OPTIONS,
+  elemsDisplayOptions = ELEMS_DEFAULT_DISPLAY_OPTIONS,
+  segmentsDisplayOptions = SEGMENTS_DEFAULT_DISPLAY_OPTIONS
+)
+  DisplayOptions(
+    displayAxis, nodesDisplayOptions, edgesDisplayOptions,
+    elemsDisplayOptions, segmentsDisplayOptions
+  )
+end
+
+function output(writer::OutputWriter, stream::IO)
+  writer.f(stream, writer.fileName, writer.displayOptions)
+end
+
 function getNodesDataFilePath(fileNames::OutputFileNames, directory::String)
   getFilePath(directory, fileNames.nodesDataFileName, DATA_EXT)
 end
@@ -35,34 +52,22 @@ function getSegmentsDataFileName(fileNames::OutputFileNames)
 end
 
 function getNodeDisplayOptions(options::DisplayOptions)
-  if length(options.nodesDisplayOptions) == 0
-    ("only marks", "black")
-  else
-    options.nodesDisplayOptions
-  end
+  options.nodesDisplayOptions
 end
 
 function getEdgesDisplayOptions(options::DisplayOptions)
-  if length(options.edgesDisplayOptions) == 0
-    ("no markers", "black", "line join=round", "line cap=round")
-  else
-    options.edgesDisplayOptions
-  end
+  options.edgesDisplayOptions
 end
 
 function getElemsDisplayOptions(options::DisplayOptions)
-  if length(options.elemsDisplayOptions) == 0
-    ("no markers", "black", "line join=round", "line cap=round")
-  else
-    options.elemsDisplayOptions
-  end
+  options.elemsDisplayOptions
 end
-
-getDisplayAxisOption(options::DisplayOptions) = options.displayAxis
 
 function getSegmentsDisplayOptions(options::DisplayOptions)
   options.segmentsDisplayOptions
 end
+
+getDisplayAxisOption(options::DisplayOptions) = options.displayAxis
 
 function output(task::OutputNodesTask)
   fileStream::IO = open(
@@ -78,7 +83,7 @@ function output(task::OutputNodesTask)
 end
 
 function output(task::OutputEdgesTask)
-  fileStream::IO = open(getDataFilePath(
+  fileStream::IO = open(
     getEdgesDataFilePath(task.fileNames, task.directory), "w"
   )
   for edge::Edge in getEdges(task.triangulation)
@@ -99,7 +104,7 @@ function output(task::OutputNoEdgesTask)
 end
 
 function output(task::OutputElementsTask)
-  fileStream::IO = open(getDataFilePath(
+  fileStream::IO = open(
     getElemsDataFilePath(task.fileNames, task.directory), "w"
   )
   for elem::Element in getElements(task.triangulation)
@@ -149,22 +154,22 @@ function createOutputWrites(task::OutputTriangulationTask)
     OutputWriter(
       task.outputNodes,
       getNodesDataFileName(task.fileNames),
-      getNodeDisplayOptions(task.displayOptions)
+      getNodeDisplayOptions(task.options)
     ),
     OutputWriter(
       task.outputEdges,
       getEdgesDataFileName(task.fileNames),
-      getEdgesDisplayOptions(task.displayOptions)
+      getEdgesDisplayOptions(task.options)
     ),
     OutputWriter(
       task.outputElems,
       getElemsDataFileName(task.fileNames),
-      getElemsDisplayOptions(task.displayOptions)
+      getElemsDisplayOptions(task.options)
     ),
     OutputWriter(
       task.outputSegments,
       getSegmentsDataFileName(task.fileNames),
-      getSegmentsDisplayOptions(task.displayOptions)
+      getSegmentsDisplayOptions(task.options)
     )
   )
 end
@@ -174,7 +179,7 @@ function output(task::OutputTriangulationTask)
     getTriangulationFilePath(task.fileNames, task.directory), "w"
   )
   outputTriangulation(
-    fileStream, getDisplayAxisOption(task.displayOptions),
+    fileStream, getDisplayAxisOption(task.options),
     createOutputWrites(task)
   )
   close(fileStream)

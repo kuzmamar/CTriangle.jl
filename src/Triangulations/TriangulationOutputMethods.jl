@@ -3,7 +3,8 @@ function createOutputEdgesTask(
   outputNodes::Function, fileNames::OutputFileNames, options::DisplayOptions
 )
   createOutputEdgesTask(
-    triangulation.edgeSection, triangulation, directory, fileNames, options
+    triangulation.edgeSection, triangulation, directory, outputNodes, fileNames,
+    options
   )
 end
 

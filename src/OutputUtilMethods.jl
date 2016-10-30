@@ -11,7 +11,7 @@ function getFilePath(directory::String, fileName::String, extension::String)
 end
 
 function getFileName(fileName::String, extension::String)
-  addExtension(fileName, extension))
+  addExtension(fileName, extension)
 end
 
 function outputPlotStart(fileStream::IO)
@@ -47,7 +47,7 @@ function outputNodes(
   outputPlotData(fileStream, fileName)
 end
 
-function outputElements(
+function outputElems(
   fileStream::IO, fileName::String, displayOptions::Tuple{Vararg{String}}
 )
   outputPlotStart(fileStream)
@@ -75,15 +75,10 @@ function outputSegments(
 end
 
 function outputTriangulation(
-  fileStream::IO, displayAxis::bool,
+  fileStream::IO, displayAxis::Bool,
   outputWrites::Tuple{OutputWriter, OutputWriter, OutputWriter, OutputWriter}
 )
-  write(fileStream, "\\documentclass{standalone}\n
-                     \\usepackage{pgfplots}\n
-                     \\begin{document}\n
-                     \\begin{tikzpicture}\n
-                     \\begin{axis}"
-  )
+  write(fileStream, "\\documentclass{standalone}\n\\usepackage{pgfplots}\n\\begin{document}\n\\begin{tikzpicture}\n\\begin{axis}")
   if displayAxis == false
     write(fileStream, "[axis lines=none]")
   end
@@ -91,8 +86,5 @@ function outputTriangulation(
   for outputWriter::OutputWriter in outputWrites
     output(outputWriter, fileStream)
   end
-  write(fileStream, "\\end{axis}\n
-                     \\end{tikzpicture}\n
-                     \\end{document}\n"
-  )
+  write(fileStream, "\\end{axis}\n\\end{tikzpicture}\n\\end{document}\n")
 end

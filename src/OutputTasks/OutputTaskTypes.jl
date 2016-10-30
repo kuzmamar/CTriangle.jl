@@ -12,6 +12,20 @@ const SEGMENTS_OUTPUT_DATA_FILE_NAME = "segments"
 
 const TRIANGULATION_OUTPUT_FILE_NAME = "triangulation"
 
+const NODES_DEFAULT_DISPLAY_OPTIONS = ("only marks", "black");
+
+const EDGES_DEFAULT_DISPLAY_OPTIONS = (
+  "no markers", "black", "line join=round", "line cap=round"
+);
+
+const ELEMS_DEFAULT_DISPLAY_OPTIONS = (
+  "no markers", "black", "line join=round", "line cap=round"
+);
+
+const SEGMENTS_DEFAULT_DISPLAY_OPTIONS = (
+  "no markers", "red", "line join=round", "line cap=round"
+);
+
 immutable DisplayOptions
   displayAxis::Bool
   nodesDisplayOptions::Tuple{Vararg{String}}
@@ -24,17 +38,18 @@ immutable OutputFileNames
   nodesDataFileName::String
   edgesDataFileName::String
   elemsDataFileName::String
-  segmensDataFileName::String
+  segmentsDataFileName::String
+  triangulationFileName::String
   function OutputFileNames(
     nodesDataFileName::String = NODES_OUTPUT_DATA_FILE_NAME,
     edgesDataFileName::String = EDGES_OUTPUT_DATA_FILE_NAME,
     elemsDataFileName::String = ELEMS_OUTPUT_DATA_FILE_NAME,
-    segmensDataFileName::String = SEGMENTS_OUTPUT_DATA_FILE_NAME,
+    segmentsDataFileName::String = SEGMENTS_OUTPUT_DATA_FILE_NAME,
     triangulationFileName::String = TRIANGULATION_OUTPUT_FILE_NAME
   )
     new(
       nodesDataFileName, edgesDataFileName, elemsDataFileName,
-      segmensDataFileName, triangulationFileName
+      segmentsDataFileName, triangulationFileName
     )
   end
 end
