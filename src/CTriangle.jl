@@ -48,6 +48,25 @@ function triangulate(points::Matrix{Int}, options::String = "")
 	triangulate(convert(Matrix{Cdouble}, points), options)
 end
 
+function outputGraph(
+	triangulation::TriangulationInterface, directory::String,
+	fileNames::OutputFileNames, options::DisplayOptions
+)
+	output( # output of triangulation
+		output( # output of segments
+			output( # output of elements
+				output( # output of edges
+					output( # output of nodes
+						OutputNodesTask(
+							triangulation, directory, fileNames, options
+						)
+					)
+				)
+			)
+		)
+	)
+end
+
 export triangulate
 export getNode
 export getNodes
@@ -57,5 +76,9 @@ export getNeighbors
 export getSegments
 export getHoles
 export getEdges
+
+export outputGraph
+export OutputFileNames
+export DisplayOptions
 
 end

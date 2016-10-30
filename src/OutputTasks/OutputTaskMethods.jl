@@ -34,11 +34,29 @@ function getSegmentsDataFileName(fileNames::OutputFileNames)
   getFileName(fileNames.segmentsDataFileName, DATA_EXT)
 end
 
-getNodeDisplayOptions(options::DisplayOptions) = options.nodesDisplayOptions
+function getNodeDisplayOptions(options::DisplayOptions)
+  if length(options.nodesDisplayOptions) == 0
+    ("only marks", "black")
+  else
+    options.nodesDisplayOptions
+  end
+end
 
-getEdgesDisplayOptions(options::DisplayOptions) = options.edgesDisplayOptions
+function getEdgesDisplayOptions(options::DisplayOptions)
+  if length(options.edgesDisplayOptions) == 0
+    ("no markers", "black", "line join=round", "line cap=round")
+  else
+    options.edgesDisplayOptions
+  end
+end
 
-getElemsDisplayOptions(options::DisplayOptions) = options.elemsDisplayOptions
+function getElemsDisplayOptions(options::DisplayOptions)
+  if length(options.elemsDisplayOptions) == 0
+    ("no markers", "black", "line join=round", "line cap=round")
+  else
+    options.elemsDisplayOptions
+  end
+end
 
 getDisplayAxisOption(options::DisplayOptions) = options.displayAxis
 
@@ -55,7 +73,7 @@ function output(task::OutputNodesTask)
   end
   close(fileStream)
   createOutputEdgesTask(
-    triangulation, task.directory, outputNodes, task.fileNames, task.options
+    task.triangulation, task.directory, outputNodes, task.fileNames, task.options
   )
 end
 

@@ -1,18 +1,30 @@
-function outputGraph(
+function createOutputEdgesTask(
   triangulation::TriangulationInterface, directory::String,
-  fileNames::OutputFileNames, displayOptions::DisplayOptions
+  outputNodes::Function, fileNames::OutputFileNames, options::DisplayOptions
 )
-  output( # output of triangulation
-    output( # output of segments
-      output( # output of elements
-        output( # output of edges
-          output( # output of nodes
-            OutputNodesTask(
-              triangulation, directory, fileNames, displayOptions
-            )
-          )
-        )
-      )
-    )
+  createOutputEdgesTask(
+    triangulation.edgeSection, triangulation, directory, fileNames, options
+  )
+end
+
+function createOutputElementsTask(
+  triangulation::TriangulationInterface, directory::String,
+  outputNodes::Function, outputEdges::Function, fileNames::OutputFileNames,
+  options::DisplayOptions
+)
+  createOutputElementsTask(
+    triangulation.elementSection, triangulation, directory, outputNodes,
+    outputEdges, fileNames, options
+  )
+end
+
+function createOutputSegmentsTask(
+  triangulation::TriangulationInterface, directory::String,
+  outputNodes::Function, outputEdges::Function, outputElems::Function,
+  fileNames::OutputFileNames, options::DisplayOptions
+)
+  createOutputSegmentsTask(
+    triangulation.segmentSection, triangulation, directory, outputNodes,
+    outputEdges, outputElems, fileNames, options
   )
 end
