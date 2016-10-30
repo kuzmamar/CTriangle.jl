@@ -12,7 +12,7 @@ const SEGMENTS_OUTPUT_DATA_FILE_NAME = "segments"
 
 const TRIANGULATION_OUTPUT_FILE_NAME = "triangulation"
 
-const NODES_DEFAULT_DISPLAY_OPTIONS = ("only marks", "black");
+const NODES_DEFAULT_DISPLAY_OPTIONS = ("only marks", "black", "mark size=1pt");
 
 const EDGES_DEFAULT_DISPLAY_OPTIONS = (
   "no markers", "black", "line join=round", "line cap=round"
@@ -28,6 +28,7 @@ const SEGMENTS_DEFAULT_DISPLAY_OPTIONS = (
 
 immutable DisplayOptions
   displayAxis::Bool
+  displaySegments::Bool
   nodesDisplayOptions::Tuple{Vararg{String}}
   edgesDisplayOptions::Tuple{Vararg{String}}
   elemsDisplayOptions::Tuple{Vararg{String}}

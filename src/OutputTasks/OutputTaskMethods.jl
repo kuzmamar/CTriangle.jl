@@ -1,12 +1,13 @@
 function DisplayOptions(;
   displayAxis = true,
+  displaySegments = false,
   nodesDisplayOptions = NODES_DEFAULT_DISPLAY_OPTIONS,
   edgesDisplayOptions = EDGES_DEFAULT_DISPLAY_OPTIONS,
   elemsDisplayOptions = ELEMS_DEFAULT_DISPLAY_OPTIONS,
   segmentsDisplayOptions = SEGMENTS_DEFAULT_DISPLAY_OPTIONS
 )
   DisplayOptions(
-    displayAxis, nodesDisplayOptions, edgesDisplayOptions,
+    displayAxis, displaySegments, nodesDisplayOptions, edgesDisplayOptions,
     elemsDisplayOptions, segmentsDisplayOptions
   )
 end
@@ -68,6 +69,8 @@ function getSegmentsDisplayOptions(options::DisplayOptions)
 end
 
 getDisplayAxisOption(options::DisplayOptions) = options.displayAxis
+
+getDisplaySegmentsOption(options::DisplayOptions) = options.displaySegments
 
 function output(task::OutputNodesTask)
   fileStream::IO = open(

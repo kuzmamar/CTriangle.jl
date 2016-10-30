@@ -44,10 +44,17 @@ function createOutputSegmentsTask(
   directory::String, outputNodes::Function, outputEdges::Function,
   outputElems::Function, fileNames::OutputFileNames, options::DisplayOptions
 )
-OutputSegmentsTask(
-  triangulation, directory, outputNodes, outputEdges, outputElems,
-  fileNames, options
-)
+  if getDisplaySegmentsOption(options) == true
+    OutputSegmentsTask(
+      triangulation, directory, outputNodes, outputEdges, outputElems,
+      fileNames, options
+    )
+  else
+    OutputNoSegmentsTask(
+      triangulation, directory, outputNodes, outputEdges, outputElems,
+      fileNames, options
+    )
+  end
 end
 
 function createOutputSegmentsTask(
