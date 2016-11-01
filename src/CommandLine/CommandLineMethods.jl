@@ -1,16 +1,21 @@
 function createCommandLineOptions()
   options = Dict{String, Function}()
+
   options[CONSTRAINED] = function(options::String, index::Int,
     commandLine::CommandLine
   )
     commandLine.constrainedDelaunay = true
     commandLine.delaunay = false
+    CONSTRAINED
   end
+
   options[REFINEMENT] = function(options::String, index::Int,
     commandLine::CommandLine
   )
     commandLine.refinement = true
+    REFINEMENT
   end
+
   options[AREA] = function(options::String, index::Int,
     commandLine::CommandLine
   )
@@ -18,17 +23,34 @@ function createCommandLineOptions()
       commandLine.useAreas = true
       commandLine.useRegions = true
     end
+    AREA
   end
+
   options[ATTRIBUTE] = function(options::String, index::Int,
     commandLine::CommandLine
   )
     commandLine.useRegions = true
+    ATTRIBUTE
   end
+
   options[IGNORE_HOLES] = function(options::String, index::Int,
     commandLine::CommandLine
   )
     commandLine.useHoles = false
+    IGNORE_HOLES
   end
+
+  options[SECOND_ORDER_ELEMS_LETTER] = function(options::String, index::Int,
+    commandLine::CommandLine
+  )
+    if index < length(options) &&
+       string(options[index + 1]) == SECOND_ORDER_ELEMS_NUMBER
+       SECOND_ORDER_ELEMS_LETTER
+    else
+      ""
+    end
+  end
+
   options
 end
 
@@ -53,13 +75,15 @@ function parseOptions(commandLine::CommandLine, options::String)
     elseif in(strOption, extraOptions) === true
       parsedOptions[index] = strOption
     elseif haskey(commandLineOptions, strOption) === true
-      commandLineOptions[strOption](options, index, commandLine)
-      parsedOptions[index] = strOption
+      parsedOptions[index] = commandLineOptions[strOption](
+        options, index, commandLine
+      )
     else
       parsedOptions[index] = ""
     end
     index = index + 1
   end
+  println(join(parsedOptions, ""))
   join(parsedOptions, "")
 end
 

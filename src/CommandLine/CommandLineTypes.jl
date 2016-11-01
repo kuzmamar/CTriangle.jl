@@ -26,6 +26,10 @@ const STEINER = "S"
 
 const QUIET = "Q"
 
+const SECOND_ORDER_ELEMS_LETTER = "o"
+
+const SECOND_ORDER_ELEMS_NUMBER = "2"
+
 type CommandLine
   delaunay::Bool
   constrainedDelaunay::Bool
