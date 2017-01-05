@@ -212,6 +212,22 @@ function createNode(
 	)
 end
 
+function createRegion(regions::Vector{Cdouble}, index::Int)
+	areaIndex::Int = index * 4
+	firstIndex::Int = areaIndex - 3
+	size::Int = length(regions)
+	if (firstIndex > 0 && areaIndex > 0) &&
+		 (firstIndex <= size && areaIndex <= size)
+		 Region(
+				Point(index, regions[firstIndex], regions[firstIndex + 1]),
+				regions[areaIndex - 1],
+				regions[areaIndex]
+		 )
+	else
+		error("No region found on index \"$index\"")
+	end
+end
+
 function filterNeighbors(neighbors::Vector{Cint}, index::Int)
 	last::Int = index * 3
 	first::Int = last - 2
@@ -222,4 +238,20 @@ function filterNeighbors(neighbors::Vector{Cint}, index::Int)
 		end
 	end
 	filtered
+end
+
+function filterOptions(optionsToFilter::Vector{String}, options::String)
+	filteredOptions::Vector{String} = Vector{String}(length(options))
+	index::Int = 1
+	for option in options
+		for optionToFilter in optionsToFilter
+			if optionToFilter == option
+				filteredOptions[index] = ""
+			else
+				filteredOptions[index] = option
+			end
+		end
+		index = index + 1
+	end
+	join(filteredOptions, "")
 end

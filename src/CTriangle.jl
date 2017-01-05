@@ -32,8 +32,9 @@ end
 * `options::String = ""`: the available options for the triangulation.
 """
 function triangulate(points::Matrix{Cdouble}, options::String = "")
+	filteredOptions::String = filterOptions(["r", "p"], command.options)
 	execute(DelaunayUserCommand(
-		parseOptions(CommandLine(), options), vec(points))
+		parseOptions(CommandLine(), filterOptions), vec(points))
 	)
 end
 

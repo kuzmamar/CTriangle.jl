@@ -13,7 +13,7 @@ function getElements(
   elementSection::NoElementTriangulationSection,
   neighborSection::NeighborTriangulationSectionInterface
 )
-  ()
+  NoElementIterator()
 end
 
 function getElements(
@@ -114,7 +114,7 @@ function getSegments(
   nodeSection::NodeTriangulationSection,
   segmentSection::NoSegmentTriangulationSection
 )
-  ()
+  NoSegmentIterator()
 end
 
 function getSegments(
@@ -142,7 +142,7 @@ function createSegment(
   end
 end
 
-getHoles(::HoleTriangulationSectionInterface) = ()
+getHoles(::HoleTriangulationSectionInterface) = NoPointIterator()
 
 getHoles(section::HoleTriangulationSection) = PointIterator(section.holes)
 
@@ -150,7 +150,7 @@ function getEdges(
   nodeSection::NodeTriangulationSection,
   edgeSection::NoEdgeTriangulationSection
 )
-  ()
+  NoEdgeIterator()
 end
 
 function getEdges(
@@ -176,4 +176,12 @@ function createEdge(
   else
     error("No edge found on index \"$index\".")
   end
+end
+
+function getRegions(regionSection::NoRegionTriangulationSection)
+  NoRegionIterator()
+end
+
+function getRegions(regionSection::RegionTriangulationSection)
+  RegionIterator(regionSection.regions)
 end

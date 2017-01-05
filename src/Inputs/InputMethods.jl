@@ -28,73 +28,7 @@ end
 
 getOptions(input::InputInterface) = input.options
 
-function createTriangulation(
-	input::InputInterface, ioOut::OutputTriangulateIO,
-  voronoi::VoronoiTriangulateIO
-)
-	error("Implement createTriangulation method.")
-end
-
-function createTriangulation(
-	input::DelaunayInputInterface, ioOut::OutputTriangulateIO,
-  voronoi::VoronoiTriangulateIO
-)
-	DelaunayTriangulation(
-    createNodeSection(ioOut),
-    createSegmentSection(ioOut),
-    createElementSection(ioOut),
-    createEdgeSection(ioOut),
-    createNeighborSection(ioOut)
-  )
-end
-
-function createTriangulation(
-	input::ConstrainedDelaunayFileInput, ioOut::OutputTriangulateIO,
-  voronoi::VoronoiTriangulateIO
-)
-	ConstrainedDelaunayTriangulation(
-    createNodeSection(ioOut),
-    createSegmentSection(ioOut),
-    createHoleSection(ioOut),
-    createRegionSection(ioOut),
-    createElementSection(ioOut),
-    createEdgeSection(ioOut),
-    createNeighborSection(ioOut)
-  )
-end
-
-function createTriangulation(
-	input::DelaunayRefinementFileInput, ioOut::OutputTriangulateIO,
-  voronoi::VoronoiTriangulateIO
-)
-	DelaunayRefinementTriangulation(
-    createNodeSection(ioOut),
-    createSegmentSection(ioOut),
-    createRegionSection(ioOut),
-    createElementSection(ioOut),
-    createAreaSection(ioOut),
-    createEdgeSection(ioOut),
-    createNeighborSection(ioOut)
-  )
-end
-
-function createTriangulation(
-	input::ConstrainedDelaunayRefinementFileInput, ioOut::OutputTriangulateIO,
-  voronoi::VoronoiTriangulateIO
-)
-	DelaunayRefinementTriangulation(
-    createNodeSection(ioOut),
-    createSegmentSection(ioOut),
-    createHoleSection(ioOut),
-    createRegionSection(ioOut),
-    createElementSection(ioOut),
-    createAreaSection(ioOut),
-    createEdgeSection(ioOut),
-    createNeighborSection(ioOut)
-  )
-end
-
-function triangulate(input::InputInterface)
+function ctriangulate(input::InputInterface)
   ioIn = InputTriangulateIO()
   ioOut = OutputTriangulateIO()
   voronoi = VoronoiTriangulateIO()
@@ -105,5 +39,55 @@ function triangulate(input::InputInterface)
     Ref{OutputTriangulateIO}, Ref{VoronoiTriangulateIO}), options, Ref(ioIn),
     Ref(ioOut), Ref(voronoi)
   )
-  createTriangulation(input, ioOut, voronoi)
+
+  (ioOut, voronoi)
+end
+
+function triangulate(input::ConstrainedDelaunayRefinementFileInput)
+  result::Tuple{InputTriangulateIO, OutputTriangulateIO} = ctriangulate(input)
+  ConstrainedDelaunayRefinementTriangulation(
+    createNodeSection(result[1]),
+    createSegmentSection(result[1]),
+    createRegionSection(result[1]),
+    createElementSection(result[1]),
+    createAreaSection(result[1]),
+    createEdgeSection(result[1]),
+    createNeighborSection(result[1])
+  )
+end
+
+function triangulate(input::DelaunayRefinementFileInput)
+  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
+  DelaunayRefinementTriangulation(
+    createNodeSection(result[1]),
+    createSegmentSection(result[1]),
+    createElementSection(result[1]),
+    createAreaSection(result[1]),
+    createEdgeSection(result[1]),
+    createNeighborSection(result[1])
+  )
+end
+
+function triangulate(input::ConstrainedDelaunayFileInput)
+  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
+  ConstrainedDelaunayTriangulation(
+    createNodeSection(result[1]),
+    createSegmentSection(result[1]),
+    createHoleSection(result[1]),
+    createRegionSection(result[1]),
+    createElementSection(result[1]),
+    createEdgeSection(result[1]),
+    createNeighborSection(result[1])
+  )
+end
+
+function triangulate(input::DelaunayInputInterface)
+  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
+  DelaunayTriangulation(
+    createNodeSection(result[1]),
+    createSegmentSection(result[1]),
+    createElementSection(result[1]),
+    createEdgeSection(result[1]),
+    createNeighborSection(result[1])
+  )
 end

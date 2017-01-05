@@ -83,7 +83,6 @@ function parseOptions(commandLine::CommandLine, options::String)
     end
     index = index + 1
   end
-  println(join(parsedOptions, ""))
   join(parsedOptions, "")
 end
 

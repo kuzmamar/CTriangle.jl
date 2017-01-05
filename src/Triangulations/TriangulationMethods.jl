@@ -42,3 +42,7 @@ end
 function getEdges(triangulation::TriangulationInterface)
   getEdges(triangulation.nodeSection, triangulation.edgeSection)
 end
+
+function getRegions(triangulation::ConstrainedDelaunayTriangulation)
+  getRegions(triangulation.regionSection)
+end

@@ -30,3 +30,9 @@ immutable Edge
   secondPoint::Point
   marker::Cint
 end
+
+immutable Region
+  point::Point
+  attr::Cdouble
+  area::Cdouble
+end
