@@ -2,39 +2,18 @@ abstract TriangulationInterface
 
 abstract ConstrainedTriangulationInterface <: TriangulationInterface
 
-type DelaunayTriangulation <: TriangulationInterface
+immutable DelaunayTriangulation <: TriangulationInterface
   nodeSection::NodeTriangulationSection
   segmentSection::SegmentTriangulationSectionInterface
   elementSection::ElementTriangulationSectionInterface
   edgeSection::EdgeTriangulationSectionInterface
-  neighborSection::NeighborTriangulationSectionInterface
 end
 
-type ConstrainedDelaunayTriangulation <: ConstrainedTriangulationInterface
+immutable ConstrainedDelaunayTriangulation <: ConstrainedTriangulationInterface
   nodeSection::NodeTriangulationSection
   segmentSection::SegmentTriangulationSectionInterface
   holeSection::HoleTriangulationSectionInterface
   regionSection::RegionTriangulationSectionInterface
   elementSection::ElementTriangulationSectionInterface
   edgeSection::EdgeTriangulationSectionInterface
-  neighborSection::NeighborTriangulationSectionInterface
-end
-
-type DelaunayRefinementTriangulation <: TriangulationInterface
-  nodeSection::NodeTriangulationSection
-  segmentSection::SegmentTriangulationSectionInterface
-  elementSection::ElementTriangulationSectionInterface
-  areaSection::AreaTriangulationSectionInterface
-  edgeSection::EdgeTriangulationSectionInterface
-  neighborSection::NeighborTriangulationSectionInterface
-end
-
-type ConstrainedDelaunayRefinementTriangulation <: ConstrainedTriangulationInterface
-  nodeSection::NodeTriangulationSection
-  segmentSection::SegmentTriangulationSectionInterface
-  holeSection::HoleTriangulationSectionInterface
-  elementSection::ElementTriangulationSectionInterface
-  areaSection::AreaTriangulationSectionInterface
-  edgeSection::EdgeTriangulationSectionInterface
-  neighborSection::NeighborTriangulationSectionInterface
 end

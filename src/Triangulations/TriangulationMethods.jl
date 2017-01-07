@@ -3,18 +3,17 @@ function getNode(triangulation::TriangulationInterface, index::Int)
 end
 
 function getNodes(triangulation::TriangulationInterface)
-  getNodes(triangulation.nodeSection)
+  NodeIterator(triangulation.nodeSection)
 end
 
 function getElement(triangulation::TriangulationInterface, index::Int)
-  getElement(triangulation.nodeSection, triangulation.elementSection, triangulation.neighborSection, index)
+  getElement(triangulation.nodeSection, triangulation.elementSection, index)
 end
 
 function getElements(triangulation::TriangulationInterface)
-  getElements(
+  ElementIterator(
     triangulation.nodeSection,
-    triangulation.elementSection,
-    triangulation.neighborSection
+    triangulation.elementSection
   )
 end
 
@@ -32,17 +31,17 @@ function getNeighbors(
 end
 
 function getSegments(triangulation::TriangulationInterface)
-  getSegments(triangulation.nodeSection, triangulation.segmentSection)
+  SegmentIterator(triangulation.nodeSection, triangulation.segmentSection)
 end
 
 function getHoles(triangulation::ConstrainedTriangulationInterface)
-  getHoles(triangulation.holeSection)
+  HoleIterator(triangulation.holeSection)
 end
 
 function getEdges(triangulation::TriangulationInterface)
-  getEdges(triangulation.nodeSection, triangulation.edgeSection)
+  EdgeIterator(triangulation.nodeSection, triangulation.edgeSection)
 end
 
 function getRegions(triangulation::ConstrainedDelaunayTriangulation)
-  getRegions(triangulation.regionSection)
+  RegionIterator(triangulation.regionSection)
 end

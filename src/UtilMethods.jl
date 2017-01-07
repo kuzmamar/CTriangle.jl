@@ -81,7 +81,6 @@ function parseRegions(
 	start::Cint
 )
 	first = 4 * index - 3
-
 	regions[first] = parse(Cdouble, line[start])
 	regions[first + 1] = parse(Cdouble, line[start + 1])
 	if length(line) >= 5
@@ -149,13 +148,7 @@ function createAreaHandler(fileName::AreaNameInterface, useAreas::Bool)
 	AreaHandler(fileName, useAreas)
 end
 
-function createNodeFileSection(
-	points::Vector{Cdouble}, pointCnt::Cint, attrs::Vector{Cdouble}, attrCnt::Cint,
-	markers::Vector{Cint}
-)
-end
-
-function createPoint(points::Vector{Cdouble}, index::Int)
+function createPoint(points::Tuple{Vararg{Cdouble}}, index::Int)
 	secondIndex::Int = index * 2
 	firstIndex::Int = secondIndex - 1
 	size::Int = length(points)
@@ -167,7 +160,7 @@ function createPoint(points::Vector{Cdouble}, index::Int)
 	end
 end
 
-function createAttrs(attrs::Vector{Cdouble}, attrCnt::Cint, index::Int)
+function createAttrs(attrs::Tuple{Vararg{Cdouble}}, attrCnt::Cint, index::Int)
 	size::Int = attrCnt == 0 ? 0 : length(attrs) / attrCnt
 	if size == 0
 		return ()
@@ -187,7 +180,7 @@ function createAttrs(attrs::Vector{Cdouble}, attrCnt::Cint, index::Int)
 	end
 end
 
-function getMarker(markers::Vector{Cint}, index::Int)
+function getMarker(markers::Tuple{Vararg{Cint}}, index::Int)
 	size::Int = length(markers)
 	if size == 0
 		return Cint(0)
@@ -199,56 +192,30 @@ function getMarker(markers::Vector{Cint}, index::Int)
 	end
 end
 
-function createNode(
-	points::Vector{Cdouble},
-	attrs::Vector{Cdouble}, attrCnt::Cint,
-	markers::Vector{Cint},
-	index::Int
-)
-	Node(
-		createPoint(points, index),
-		createAttrs(attrs, attrCnt, index),
-		getMarker(markers, index)
-	)
-end
-
-function createRegion(regions::Vector{Cdouble}, index::Int)
-	areaIndex::Int = index * 4
-	firstIndex::Int = areaIndex - 3
-	size::Int = length(regions)
-	if (firstIndex > 0 && areaIndex > 0) &&
-		 (firstIndex <= size && areaIndex <= size)
-		 Region(
-				Point(index, regions[firstIndex], regions[firstIndex + 1]),
-				regions[areaIndex - 1],
-				regions[areaIndex]
-		 )
-	else
-		error("No region found on index \"$index\"")
-	end
-end
-
-function filterNeighbors(neighbors::Vector{Cint}, index::Int)
-	last::Int = index * 3
-	first::Int = last - 2
+function filterNeighbors(neighbors::Tuple{Vararg{Cint}}, index::Int)
 	filtered::Vector{Int} = Int[]
-	for i::Int in first:last
-		if neighbors[i] !== Cint(-1)
-			push!(filtered, Int(neighbors[i]))
+	if length(neighbors) > 0
+		last::Int = index * 3
+		first::Int = last - 2
+		for i::Int in first:last
+			if neighbors[i] !== Cint(-1)
+				push!(filtered, Int(neighbors[i]))
+			end
 		end
 	end
-	filtered
+	tuple(filtered...)
 end
 
 function filterOptions(optionsToFilter::Vector{String}, options::String)
 	filteredOptions::Vector{String} = Vector{String}(length(options))
 	index::Int = 1
 	for option in options
+		strOption::String = string(option)
 		for optionToFilter in optionsToFilter
-			if optionToFilter == option
+			if optionToFilter == strOption
 				filteredOptions[index] = ""
 			else
-				filteredOptions[index] = option
+				filteredOptions[index] = strOption
 			end
 		end
 		index = index + 1

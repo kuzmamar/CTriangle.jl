@@ -149,9 +149,13 @@ end
 init(::FileSectionInterface, ::InputTriangulateIO) = return
 
 function init(section::NodeFileSection, ioIn::InputTriangulateIO)
-  setPoints(ioIn, section.points)
-  setPointAttrs(ioIn, section.attrs, section.attrCnt)
-  setPointMarkers(ioIn, section.markers)
+  if length(section) < 3
+    error("Input must have at least three input vertices.")
+  else
+    setPoints(ioIn, section.points)
+    setPointAttrs(ioIn, section.attrs, section.attrCnt)
+    setPointMarkers(ioIn, section.markers)
+  end
 end
 
 function init(section::SegmentFileSection, ioIn::InputTriangulateIO)

@@ -1,51 +1,90 @@
 function getNode(section::NodeTriangulationSection, index::Int)
-  createNode(
-    section.points, section.attrs, section.attrCnt, section.markers, index
-  )
+  try
+    Node(
+  		createPoint(section.points, index),
+  		createAttrs(section.attrs, section.attrCnt, index),
+  		getMarker(section.markers, index)
+  	)
+  catch
+    error("No node found on index \"$index\".")
+  end
 end
 
-function getNodes(section::NodeTriangulationSection)
-  NodeIterator(section.points, section.attrs, section.attrCnt, section.markers)
-end
-
-function getElements(
+function getSegment(
   nodeSection::NodeTriangulationSection,
-  elementSection::NoElementTriangulationSection,
-  neighborSection::NeighborTriangulationSectionInterface
+  segmentSection::SegmentTriangulationSection,
+  index::Int
 )
-  NoElementIterator()
+  if index > 0 && index <= length(segmentSection)
+    second::Int = index * 2
+    try
+      Segment(
+        index,
+        createPoint(nodeSection.points, Int(segmentSection.segments[second - 1])),
+        createPoint(nodeSection.points, Int(segmentSection.segments[second])),
+        getMarker(segmentSection.markers, index)
+      )
+    catch
+      error("No segment found on index \"$index\".")
+    end
+  else
+    error("No segment found on index \"$index\".")
+  end
 end
 
-function getElements(
+function getSegment(
   nodeSection::NodeTriangulationSection,
-  elementSection::ElementTriangulationSection,
-  neighborSection::NeighborTriangulationSectionInterface
+  segmentSection::NoSegmentTriangulationSection,
+  index::Int
 )
-  ElementIterator(nodeSection, elementSection, neighborSection)
+  error("No segment found on index \"$index\".")
+end
+
+function getHole(section::HoleTriangulationSection, index::Int)
+  if index > 0 && index <= length(section)
+    try
+      createPoint(section.holes, Int(segmentSection.segments[index]))
+    catch
+      error("No hole found on index \"$index\".")
+    end
+  else
+    error("No hole found on index \"$index\".")
+  end
+end
+
+function getHole(section::NoHoleTriangulationSection, index::Int)
+  error("No hole found on index \"$index\".")
+end
+
+function getRegion(
+  regionSection::RegionTriangulationSection,
+  index::Int
+)
+  areaIndex::Int = index * 4
+  firstIndex::Int = areaIndex - 3
+  size::Int = length(regions)
+  if (firstIndex > 0 && areaIndex > 0) &&
+     (firstIndex <= size && areaIndex <= size)
+     Region(
+       Point(index, regions[firstIndex], regions[firstIndex + 1]),
+       regions[areaIndex - 1],
+       regions[areaIndex]
+    )
+  else
+    error("No region found on index \"$index\"")
+  end
+end
+
+function getRegion(
+  regionSection::NoRegionTriangulationSection,
+  index::Int
+)
+  error("No region found on index \"$index\"")
 end
 
 function getElement(
   nodeSection::NodeTriangulationSection,
-  elementSection::NoElementTriangulationSection,
-  neighborSection::NeighborTriangulationSectionInterface,
-  index::Int
-)
-  error("No element found on index \"$index\".")
-end
-
-function getElement(
-  nodeSection::NodeTriangulationSection,
   elementSection::ElementTriangulationSection,
-  neighborSection::NeighborTriangulationSectionInterface,
-  index::Int
-)
-  createElement(nodeSection, elementSection, neighborSection, index)
-end
-
-function createElement(
-  nodeSection::NodeTriangulationSection,
-  elementSection::ElementTriangulationSection,
-  neighborSection::NeighborTriangulationSectionInterface,
   index::Int
 )
   if index > 0 && index <= length(elementSection)
@@ -53,11 +92,19 @@ function createElement(
       index,
       createPoints(nodeSection, elementSection, index),
       createAttrs(elementSection, index),
-      createNeighbors(nodeSection, elementSection, neighborSection, index)
+      createNeighbors(nodeSection, elementSection, index)
     )
   else
     error("No element found on index \"$index\".")
   end
+end
+
+function getElement(
+  nodeSection::NodeTriangulationSection,
+  elementSection::NoElementTriangulationSection,
+  index::Int
+)
+  error("No element found on index \"$index\".")
 end
 
 function createPoints(
@@ -76,91 +123,39 @@ function createPoints(
   tuple(points...)
 end
 
+function createPoints(
+  nodeSection::NodeTriangulationSection,
+  elementSection::NoElementTriangulationSection,
+  index::Int
+)
+  error("No element found on index \"$index\".")
+end
+
 function createAttrs(section::ElementTriangulationSection, index::Int)
   createAttrs(section.attrs, section.attrCnt, index)
 end
 
-function createNeighbors(
-  nodeSection::NodeTriangulationSection,
-  elementSection::ElementTriangulationSection,
-  neighborSection::NeighborTriangulationSection,
-  index::Int
-)
-  tuple(filterNeighbors(neighborSection.neighbors, index)...)
+function createAttrs(section::NoElementTriangulationSection, index::Int)
+  error("No element found on index \"$index\".")
 end
 
 function createNeighbors(
   nodeSection::NodeTriangulationSection,
   elementSection::ElementTriangulationSection,
-  neighborSection::NoNeighborTriangulationSection,
   index::Int
 )
-  ()
+  filterNeighbors(elementSection.neighbors, index)
 end
 
-function Base.length(section::ElementTriangulationSection)
-  length(section.elems) / section.cornerCnt
-end
-
-function Base.length(section::SegmentTriangulationSection)
-  length(section.segments) / 2
-end
-
-function Base.length(section::EdgeTriangulationSection)
-  length(section.edges) / 2
-end
-
-function getSegments(
+function createNeighbors(
   nodeSection::NodeTriangulationSection,
-  segmentSection::NoSegmentTriangulationSection
-)
-  NoSegmentIterator()
-end
-
-function getSegments(
-  nodeSection::NodeTriangulationSection,
-  segmentSection::SegmentTriangulationSection
-)
-  SegmentIterator(nodeSection, segmentSection)
-end
-
-function createSegment(
-  nodeSection::NodeTriangulationSection,
-  segmentSection::SegmentTriangulationSection,
+  elementSection::NoElementTriangulationSection,
   index::Int
 )
-  if index > 0 && index <= length(segmentSection)
-    second::Int = index * 2
-    Segment(
-      index,
-      createPoint(nodeSection.points, Int(segmentSection.segments[second - 1])),
-      createPoint(nodeSection.points, Int(segmentSection.segments[second])),
-      getMarker(segmentSection.markers, index)
-    )
-  else
-    error("No segment found on index \"$index\".")
-  end
+  error("No element found on index \"$index\".")
 end
 
-getHoles(::HoleTriangulationSectionInterface) = NoPointIterator()
-
-getHoles(section::HoleTriangulationSection) = PointIterator(section.holes)
-
-function getEdges(
-  nodeSection::NodeTriangulationSection,
-  edgeSection::NoEdgeTriangulationSection
-)
-  NoEdgeIterator()
-end
-
-function getEdges(
-  nodeSection::NodeTriangulationSection,
-  edgeSection::EdgeTriangulationSection
-)
-  EdgeIterator(nodeSection, edgeSection)
-end
-
-function createEdge(
+function getEdge(
   nodeSection::NodeTriangulationSection,
   edgeSection::EdgeTriangulationSection,
   index::Int
@@ -178,10 +173,44 @@ function createEdge(
   end
 end
 
-function getRegions(regionSection::NoRegionTriangulationSection)
-  NoRegionIterator()
+function getEdge(
+  nodeSection::NodeTriangulationSection,
+  edgeSection::NoEdgeTriangulationSection,
+  index::Int
+)
+  error("No edge found on index \"$index\".")
 end
 
-function getRegions(regionSection::RegionTriangulationSection)
-  RegionIterator(regionSection.regions)
+function Base.length(section::NodeTriangulationSection)
+  length(section.points) / 2
+end
+
+Base.length(section::ElementTriangulationSectionInterface) = 0
+
+function Base.length(section::ElementTriangulationSection)
+  length(section.elems) / section.cornerCnt
+end
+
+Base.length(section::SegmentTriangulationSectionInterface) = 0
+
+function Base.length(section::SegmentTriangulationSection)
+  length(section.segments) / 2
+end
+
+Base.length(section::EdgeTriangulationSectionInterface) = 0
+
+function Base.length(section::EdgeTriangulationSection)
+  length(section.edges) / 2
+end
+
+Base.length(section::HoleTriangulationSectionInterface) = 0
+
+function Base.length(section::HoleTriangulationSection)
+  length(section.holes) / 2
+end
+
+Base.length(section::RegionTriangulationSectionInterface) = 0
+
+function Base.length(section::RegionTriangulationSection)
+  length(section.regions) / 4
 end

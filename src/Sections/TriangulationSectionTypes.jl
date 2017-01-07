@@ -1,10 +1,10 @@
 abstract TriangulationSectionOutputInterface
 
-type NodeTriangulationSection <: TriangulationSectionOutputInterface
-  points::Vector{Cdouble}
-  attrs::Vector{Cdouble}
+immutable NodeTriangulationSection <: TriangulationSectionOutputInterface
+  points::Tuple{Vararg{Cdouble}}
+  attrs::Tuple{Vararg{Cdouble}}
   attrCnt::Cint
-  markers::Vector{Cint}
+  markers::Tuple{Vararg{Cint}}
 end
 
 abstract SegmentTriangulationSectionInterface <: TriangulationSectionOutputInterface
@@ -12,17 +12,17 @@ abstract SegmentTriangulationSectionInterface <: TriangulationSectionOutputInter
 immutable NoSegmentTriangulationSection <: SegmentTriangulationSectionInterface
 end
 
-type SegmentTriangulationSection <: SegmentTriangulationSectionInterface
-  segments::Vector{Cint}
-  markers::Vector{Cint}
+immutable SegmentTriangulationSection <: SegmentTriangulationSectionInterface
+  segments::Tuple{Vararg{Cint}}
+  markers::Tuple{Vararg{Cint}}
 end
 
 abstract HoleTriangulationSectionInterface
 
 immutable NoHoleTriangulationSection <: HoleTriangulationSectionInterface end
 
-type HoleTriangulationSection <: HoleTriangulationSectionInterface
-  holes::Vector{Cdouble}
+immutable HoleTriangulationSection <: HoleTriangulationSectionInterface
+  holes::Tuple{Vararg{Cdouble}}
 end
 
 abstract RegionTriangulationSectionInterface
@@ -30,8 +30,8 @@ abstract RegionTriangulationSectionInterface
 immutable NoRegionTriangulationSection <: RegionTriangulationSectionInterface
 end
 
-type RegionTriangulationSection <: RegionTriangulationSectionInterface
-  regions::Vector{Cdouble}
+immutable RegionTriangulationSection <: RegionTriangulationSectionInterface
+  regions::Tuple{Vararg{Cdouble}}
 end
 
 abstract ElementTriangulationSectionInterface <: TriangulationSectionOutputInterface
@@ -39,35 +39,19 @@ abstract ElementTriangulationSectionInterface <: TriangulationSectionOutputInter
 immutable NoElementTriangulationSection <: ElementTriangulationSectionInterface
 end
 
-type ElementTriangulationSection <: ElementTriangulationSectionInterface
-  elems::Vector{Cint}
+immutable ElementTriangulationSection <: ElementTriangulationSectionInterface
+  elems::Tuple{Vararg{Cint}}
   cornerCnt::Cint
-  attrs::Vector{Cdouble}
+  attrs::Tuple{Vararg{Cdouble}}
   attrCnt::Cint
-end
-
-abstract AreaTriangulationSectionInterface
-
-immutable NoAreaTriangulationSection <: AreaTriangulationSectionInterface end
-
-type AreaTriangulationSection <: AreaTriangulationSectionInterface
-  areas::Vector{Cdouble}
+  neighbors::Tuple{Vararg{Cint}}
 end
 
 abstract EdgeTriangulationSectionInterface <: TriangulationSectionOutputInterface
 
 immutable NoEdgeTriangulationSection <: EdgeTriangulationSectionInterface end
 
-type EdgeTriangulationSection <: EdgeTriangulationSectionInterface
-  edges::Vector{Cint}
-  markers::Vector{Cint}
-end
-
-abstract NeighborTriangulationSectionInterface
-
-immutable NoNeighborTriangulationSection <: NeighborTriangulationSectionInterface
-end
-
-type NeighborTriangulationSection <: NeighborTriangulationSectionInterface
-  neighbors::Vector{Cint}
+immutable EdgeTriangulationSection <: EdgeTriangulationSectionInterface
+  edges::Tuple{Vararg{Cint}}
+  markers::Tuple{Vararg{Cint}}
 end

@@ -2,6 +2,10 @@ getStartIndex(file::NodeFile) = getStartIndex(file.nodeSection)
 
 getStartIndex(file::PolyFile) = getStartIndex(file.nodeSection)
 
+isEmpty(file::NodeFile) = isEmpty(file.nodeSection)
+
+isEmpty(file::PolyFile) = isEmpty(file.nodeSection)
+
 init(::FileInterface, ::InputTriangulateIO) = error("Implement init method.")
 
 function init(file::NodeFile, ioIn::InputTriangulateIO)

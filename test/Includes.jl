@@ -1,3 +1,5 @@
 include("FileTests/FileTests.jl")
 include("CommandLineTests/CommandLineTests.jl")
 include("CommandTests/CommandTests.jl")
+include("InputTests/InputTests.jl")
+include("TriangulationTests/TriangulationTests.jl")

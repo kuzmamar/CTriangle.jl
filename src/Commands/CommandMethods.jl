@@ -21,18 +21,27 @@ end
 
 function createInput(command::DelaunayRefinementFileCommand)
   nodeFile::NodeFile = read(createNodeHandler(command.nodeName))
-  eleHandler::EleHandler = createEleHandler(
-    command.eleName, getStartIndex(nodeFile)
-  )
-  areaHandler::AreaHandler = createAreaHandler(
-    command.areaName, command.useAreas
-  )
-  DelaunayRefinementFileInput(
-    command.options,
-    nodeFile,
-    read(eleHandler),
-    read(areaHandler)
-  )
+  if isEmpty(nodeFile) == true
+      DelaunayRefinementFileInput(
+        command.options,
+        nodeFile,
+        EleFile(NoElementFileSection()),
+        AreaFile(NoAreaFileSection())
+      )
+  else
+    eleHandler::EleHandler = createEleHandler(
+      command.eleName, getStartIndex(nodeFile)
+    )
+    areaHandler::AreaHandler = createAreaHandler(
+      command.areaName, command.useAreas
+    )
+    DelaunayRefinementFileInput(
+      command.options,
+      nodeFile,
+      read(eleHandler),
+      read(areaHandler)
+    )
+  end
 end
 
 function createInput(command::ConstrainedDelaunayRefinementFileCommand)
@@ -41,18 +50,27 @@ function createInput(command::ConstrainedDelaunayRefinementFileCommand)
       command.nodeName, command.polyName, command.useHoles, command.useRegions
     )
   )
-  eleHandler::EleHandler = createEleHandler(
-    command.eleName, getStartIndex(polyFile)
-  )
-  areaHandler::AreaHandler = createAreaHandler(
-    command.areaName, command.useAreas
-  )
-  ConstrainedDelaunayRefinementFileInput(
-    command.options,
-    polyFile,
-    read(eleHandler),
-    read(areaHandler)
-  )
+  if isEmpty(polyFile) == true
+    ConstrainedDelaunayRefinementFileInput(
+      command.options,
+      polyFile,
+      EleFile(NoElementFileSection()),
+      AreaFile(NoAreaFileSection())
+    )
+  else
+    eleHandler::EleHandler = createEleHandler(
+      command.eleName, getStartIndex(polyFile)
+    )
+    areaHandler::AreaHandler = createAreaHandler(
+      command.areaName, command.useAreas
+    )
+    ConstrainedDelaunayRefinementFileInput(
+      command.options,
+      polyFile,
+      read(eleHandler),
+      read(areaHandler)
+    )
+  end
 end
 
 function createInput(command::DelaunayUserCommand)

@@ -5,6 +5,8 @@ type FakeIO <: IO
   FakeIO(lines::Vector{String}) = new(lines, length(lines), 1)
 end
 
+type FakeOutputIO <: IO end
+
 type InputTriangulateIO
   pointlist::Ptr{Cdouble}
   pointattributelist::Ptr{Cdouble}

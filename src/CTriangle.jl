@@ -32,9 +32,9 @@ end
 * `options::String = ""`: the available options for the triangulation.
 """
 function triangulate(points::Matrix{Cdouble}, options::String = "")
-	filteredOptions::String = filterOptions(["r", "p"], command.options)
+	filteredOptions::String = filterOptions(["r", "p"], options)
 	execute(DelaunayUserCommand(
-		parseOptions(CommandLine(), filterOptions), vec(points))
+		parseOptions(CommandLine(), filteredOptions), vec(points))
 	)
 end
 
@@ -50,22 +50,25 @@ function triangulate(points::Matrix{Int}, options::String = "")
 end
 
 function outputGraph(
-	triangulation::TriangulationInterface, directory::String,
-	fileNames::OutputFileNames = OutputFileNames(),
-	options::DisplayOptions = DisplayOptions()
+	triangulation::TriangulationInterface, directory::String;
+	nodesDataFileName::String = NODES_OUTPUT_DATA_FILE_NAME,
+	edgesDataFileName::String = EDGES_OUTPUT_DATA_FILE_NAME,
+	elemesDataFileName::String = ELEMS_OUTPUT_DATA_FILE_NAME,
+	segmentsDataFileName::String = SEGMENTS_OUTPUT_DATA_FILE_NAME,
+	displayAxis::Bool = false,
+	displaySegments::Bool = false
 )
-	output( # output of triangulation
-		output( # output of segments
-			output( # output of elements
-				output( # output of edges
-					output( # output of nodes
-						OutputNodesTask(
-							triangulation, directory, fileNames, options
-						)
-					)
-				)
-			)
-		)
+	doOutputGraph(
+		triangulation,
+		Directory(
+			directory,
+			nodesDataFileName,
+			edgesDataFileName,
+			elemesDataFileName,
+			segmentsDataFileName,
+		),
+		displayAxis,
+		displaySegments
 	)
 end
 

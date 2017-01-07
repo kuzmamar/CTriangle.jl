@@ -1,69 +1,92 @@
 function createOutputEdgesTask(
-  section::EdgeTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, fileNames::OutputFileNames,
-  options::DisplayOptions
+  section::EdgeTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
   OutputEdgesTask(
-    triangulation, directory, outputNodes, fileNames, options
+    triangulation, directory, outputNodes, displayAxis, displaySegments
   )
 end
 
 function createOutputEdgesTask(
-  section::NoEdgeTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, fileNames::OutputFileNames,
-  options::DisplayOptions
+  section::NoEdgeTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
   OutputNoEdgesTask(
-    triangulation, directory, outputNodes, fileNames, options
+    triangulation, directory, outputNodes, displayAxis, displaySegments
   )
 end
 
-
 function createOutputElementsTask(
-  section::ElementTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, outputEdges::Function,
-  fileNames::OutputFileNames, options::DisplayOptions
+  section::ElementTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  outputEdges::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
   OutputElementsTask(
-    triangulation, directory, outputNodes, outputEdges, fileNames, options
+    triangulation, directory, outputNodes, outputEdges, displayAxis, displaySegments
   )
 end
 
 function createOutputElementsTask(
-  section::NoElementTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, outputEdges::Function,
-  fileNames::OutputFileNames, options::DisplayOptions
+  section::NoElementTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  outputEdges::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
   OutputNoElementsTask(
-    triangulation, directory, outputNodes, outputEdges, fileNames, options
+    triangulation, directory, outputNodes, outputEdges, displayAxis, displaySegments
   )
 end
 
 function createOutputSegmentsTask(
-  section::SegmentTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, outputEdges::Function,
-  outputElems::Function, fileNames::OutputFileNames, options::DisplayOptions
+  section::SegmentTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  outputEdges::Function,
+  outputElems::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
-  if getDisplaySegmentsOption(options) == true
+  if displaySegments == true
     OutputSegmentsTask(
       triangulation, directory, outputNodes, outputEdges, outputElems,
-      fileNames, options
+      displayAxis
     )
   else
     OutputNoSegmentsTask(
       triangulation, directory, outputNodes, outputEdges, outputElems,
-      fileNames, options
+      displayAxis
     )
   end
 end
 
 function createOutputSegmentsTask(
-  section::NoSegmentTriangulationSection, triangulation::TriangulationInterface,
-  directory::String, outputNodes::Function, outputEdges::Function,
-  outputElems::Function, fileNames::OutputFileNames, options::DisplayOptions
+  section::NoSegmentTriangulationSection,
+  triangulation::TriangulationInterface,
+  directory::DirectoryInterface,
+  outputNodes::Function,
+  outputEdges::Function,
+  outputElems::Function,
+  displayAxis::Bool,
+  displaySegments::Bool
 )
   OutputNoSegmentsTask(
     triangulation, directory, outputNodes, outputEdges, outputElems,
-    fileNames, options
+    displayAxis
   )
 end

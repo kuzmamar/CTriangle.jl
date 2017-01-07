@@ -1,56 +1,28 @@
 abstract VectorIteratorInterface
 
-abstract NodeIteratorInterface <: VectorIteratorInterface
-
-type NodeIterator <: NodeIteratorInterface
-  points::Vector{Cdouble}
-  attrs::Vector{Cdouble}
-  attrCnt::Cint
-  markers::Vector{Cint}
-end
-
-immutable NoNodeIterator <: NodeIteratorInterface end
-
-abstract ElementIteratorInterface <: VectorIteratorInterface
-
-type ElementIterator <: ElementIteratorInterface
+immutable NodeIterator <: VectorIteratorInterface
   nodeSection::NodeTriangulationSection
-  elementSection::ElementTriangulationSection
-  neighborSection::NeighborTriangulationSectionInterface
 end
 
-immutable NoElementIterator <: ElementIteratorInterface end
-
-abstract SegmentIteratorInterface <: VectorIteratorInterface
-
-type SegmentIterator <: SegmentIteratorInterface
+immutable ElementIterator <: VectorIteratorInterface
   nodeSection::NodeTriangulationSection
-  segmentSection::SegmentTriangulationSection
+  elementSection::ElementTriangulationSectionInterface
 end
 
-immutable NoSegmentIterator <: SegmentIteratorInterface end
-
-abstract PointIteratorInterface <: VectorIteratorInterface
-
-immutable NoPointIterator <: PointIteratorInterface end
-
-type PointIterator <: PointIteratorInterface
-  points::Vector{Cdouble}
-end
-
-abstract EdgeIteratorInterface <: VectorIteratorInterface
-
-immutable NoEdgeIterator <: EdgeIteratorInterface end
-
-type EdgeIterator <: EdgeIteratorInterface
+immutable SegmentIterator <: VectorIteratorInterface
   nodeSection::NodeTriangulationSection
-  edgeSection::EdgeTriangulationSection
+  segmentSection::SegmentTriangulationSectionInterface
 end
 
-abstract RegionIteratorInterface <: VectorIteratorInterface
+immutable HoleIterator <: VectorIteratorInterface
+  holeSection::HoleTriangulationSectionInterface
+end
 
-immutable NoRegionIterator <: RegionIteratorInterface end
+immutable EdgeIterator <: VectorIteratorInterface
+  nodeSection::NodeTriangulationSection
+  edgeSection::EdgeTriangulationSectionInterface
+end
 
-type RegionIterator <: RegionIteratorInterface
-  regions::Vector{Cdouble}
+immutable RegionIterator <: VectorIteratorInterface
+  regionSection::RegionTriangulationSectionInterface
 end

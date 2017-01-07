@@ -44,50 +44,44 @@ function ctriangulate(input::InputInterface)
 end
 
 function triangulate(input::ConstrainedDelaunayRefinementFileInput)
-  result::Tuple{InputTriangulateIO, OutputTriangulateIO} = ctriangulate(input)
-  ConstrainedDelaunayRefinementTriangulation(
+  result::Tuple{OutputTriangulateIO, VoronoiTriangulateIO} = ctriangulate(input)
+  ConstrainedDelaunayTriangulation(
     createNodeSection(result[1]),
     createSegmentSection(result[1]),
-    createRegionSection(result[1]),
+    NoRegionTriangulationSection(),
     createElementSection(result[1]),
-    createAreaSection(result[1]),
-    createEdgeSection(result[1]),
-    createNeighborSection(result[1])
+    createEdgeSection(result[1])
   )
 end
 
 function triangulate(input::DelaunayRefinementFileInput)
-  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
-  DelaunayRefinementTriangulation(
+  result::Tuple{OutputTriangulateIO, VoronoiTriangulateIO} = ctriangulate(input)
+  DelaunayTriangulation(
     createNodeSection(result[1]),
     createSegmentSection(result[1]),
     createElementSection(result[1]),
-    createAreaSection(result[1]),
-    createEdgeSection(result[1]),
-    createNeighborSection(result[1])
+    createEdgeSection(result[1])
   )
 end
 
 function triangulate(input::ConstrainedDelaunayFileInput)
-  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
+  result::Tuple{OutputTriangulateIO, VoronoiTriangulateIO} = ctriangulate(input)
   ConstrainedDelaunayTriangulation(
     createNodeSection(result[1]),
     createSegmentSection(result[1]),
     createHoleSection(result[1]),
     createRegionSection(result[1]),
     createElementSection(result[1]),
-    createEdgeSection(result[1]),
-    createNeighborSection(result[1])
+    createEdgeSection(result[1])
   )
 end
 
 function triangulate(input::DelaunayInputInterface)
-  result::Tuple{TriangulateIO, TriangulateIO} = ctriangulate(input)
+  result::Tuple{OutputTriangulateIO, VoronoiTriangulateIO} = ctriangulate(input)
   DelaunayTriangulation(
     createNodeSection(result[1]),
     createSegmentSection(result[1]),
     createElementSection(result[1]),
-    createEdgeSection(result[1]),
-    createNeighborSection(result[1])
+    createEdgeSection(result[1])
   )
 end

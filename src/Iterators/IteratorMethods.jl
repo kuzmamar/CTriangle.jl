@@ -10,61 +10,58 @@ Base.eltype(iterator::VectorIteratorInterface) = getElementType(iterator)
 
 Base.length(iterator::VectorIteratorInterface) = 0
 
-Base.length(iterator::NodeIterator) = length(iterator.points) / 2
+Base.length(iterator::NodeIterator) = length(iterator.nodeSection)
 
 Base.length(iterator::ElementIterator) = length(iterator.elementSection)
 
 Base.length(iterator::SegmentIterator) = length(iterator.segmentSection)
 
-Base.length(iterator::PointIterator) = length(iterator.points) / 2
+Base.length(iterator::HoleIterator) = length(iterator.holeSection)
 
 Base.length(iterator::EdgeIterator) = length(iterator.edgeSection)
 
-Base.length(iterator::RegionIterator) = length(iterator.regions) / 4
+Base.length(iterator::RegionIterator) = length(iterator.regionSection)
 
 function getElement(iterator::VectorIteratorInterface, index::Int)
   error("Element of type '$(getElementType(iterator))' not found on index '$(index).'")
 end
 
 function getElement(iterator::NodeIterator, index::Int)
-  createNode(
-    iterator.points, iterator.attrs, iterator.attrCnt, iterator.markers, index
-  )
+  getNode(iterator.nodeSection, index)
 end
 
 function getElement(iterator::ElementIterator, index::Int)
-  createElement(
+  getElement(
     iterator.nodeSection,
     iterator.elementSection,
-    iterator.neighborSection,
     index
   )
 end
 
 function getElement(iterator::SegmentIterator, index::Int)
-  createSegment(iterator.nodeSection, iterator.segmentSection, index)
+  getSegment(iterator.nodeSection, iterator.segmentSection, index)
 end
 
-function getElement(iterator::PointIterator, index::Int)
-  createPoint(iterator.points, index)
+function getElement(iterator::HoleIterator, index::Int)
+  getHole(iterator.holeSection, index)
 end
 
 function getElement(iterator::EdgeIterator, index::Int)
-  createEdge(iterator.nodeSection, iterator.edgeSection, index)
+  getEdge(iterator.nodeSection, iterator.edgeSection, index)
 end
 
 function getElement(iterator::RegionIterator, index::Int)
-  createRegion(iterator.regions, index)
+  getRegion(iterator.regionSection, index)
 end
 
-getElementType(::NodeIteratorInterface) = Node
+getElementType(::NodeIterator) = Node
 
-getElementType(::ElementIteratorInterface) = Element
+getElementType(::ElementIterator) = Element
 
-getElementType(::SegmentIteratorInterface) = Segment
+getElementType(::SegmentIterator) = Segment
 
-getElementType(::PointIteratorInterface) = Point
+getElementType(::HoleIterator) = Point
 
-getElementType(::EdgeIteratorInterface) = Edge
+getElementType(::EdgeIterator) = Edge
 
-getElementType(::RegionIteratorInterface) = Region
+getElementType(::RegionIterator) = Region
