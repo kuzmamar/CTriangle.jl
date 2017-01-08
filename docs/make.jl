@@ -18,7 +18,7 @@ makedocs(
   #  "Animation"               => "animation.md",
   #  "More examples"           => "moreexamples.md",
   #  "Index"                   => "functionindex.md"
-  #  ]
+  ]
 )
 
 deploydocs(
