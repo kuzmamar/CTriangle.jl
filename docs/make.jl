@@ -19,6 +19,7 @@ makedocs(
   #  "More examples"           => "moreexamples.md",
   #  "Index"                   => "functionindex.md"
   ]
+  
 )
 
 deploydocs(
