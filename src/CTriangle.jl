@@ -10,13 +10,6 @@ end
 
 include("Includes.jl")
 
-"""
-    triangulate(fileName::String, options::String = "")
-
-# Arguments
-* `fileName::String`: the path to the file with or without extension.
-* `options::String = ""`: the available options for the triangulations.
-"""
 function triangulate(fileName::String, options::String = "")
 	commandLine::CommandLine = CommandLine()
 	execute(
@@ -24,13 +17,6 @@ function triangulate(fileName::String, options::String = "")
 	)
 end
 
-"""
-    triangulate(points::Matrix{Cdouble}, options::String = "")
-
-# Arguments
-* `points::Matrix{Cdouble}`: points to be triangulated.
-* `options::String = ""`: the available options for the triangulation.
-"""
 function triangulate(points::Matrix{Cdouble}, options::String = "")
 	filteredOptions::String = filterOptions(["r", "p"], options)
 	execute(DelaunayUserCommand(
@@ -38,13 +24,6 @@ function triangulate(points::Matrix{Cdouble}, options::String = "")
 	)
 end
 
-"""
-    triangulate(points::Matrix{Int}, options::String = "")
-
-# Arguments
-* `points::Matrix{Int}`: points to be triangulated.
-* `options::String = ""`: the available options for the triangulation.
-"""
 function triangulate(points::Matrix{Int}, options::String = "")
 	triangulate(convert(Matrix{Cdouble}, points), options)
 end

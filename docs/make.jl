@@ -4,8 +4,8 @@ makedocs(
   modules = [CTriangle],
   format = :html,
   sitename = "CTriangle",
-  #pages    = Any[
-  #  "Introduction to Luxor"   => "index.md",
+  pages    = Any[
+    "Introduction to CTriangle"   => "index.md",
   #  "A few examples"          => "examples.md",
   #  "Basic graphics"          => "basics.md",
   #  "Styling"                 => "styling.md",
