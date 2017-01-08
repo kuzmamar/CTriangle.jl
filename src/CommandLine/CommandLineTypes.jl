@@ -30,6 +30,8 @@ const SECOND_ORDER_ELEMS_LETTER = "o"
 
 const SECOND_ORDER_ELEMS_NUMBER = "2"
 
+const HELP = "h"
+
 type CommandLine
   delaunay::Bool
   constrainedDelaunay::Bool

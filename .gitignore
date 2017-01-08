@@ -1,8 +1,9 @@
 *.jl.cov
 *.jl.*.cov
 *.jl.mem
-/docs/build
-/deps/src
-/deps/usr
-/deps/deps.jl
-/test/test_files
+docs/build
+docs/site/
+deps/src
+deps/usr
+deps/deps.jl
+test/test_files

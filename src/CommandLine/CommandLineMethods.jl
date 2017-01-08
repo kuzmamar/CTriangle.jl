@@ -58,7 +58,7 @@ function createExtraOptions()
   return Set{String}(
     String[
       QUALITY, CONVEX, DELAUNAY, JETTISON, EDGE, NEIGHBOR, NO_MARKERS, STEINER,
-      QUIET
+      QUIET, HELP
     ]
   )
 end
