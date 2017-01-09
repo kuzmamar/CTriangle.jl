@@ -34,8 +34,8 @@ function outputGraph(
 	edgesDataFileName::String = EDGES_OUTPUT_DATA_FILE_NAME,
 	elemesDataFileName::String = ELEMS_OUTPUT_DATA_FILE_NAME,
 	segmentsDataFileName::String = SEGMENTS_OUTPUT_DATA_FILE_NAME,
-	displayAxis::Bool = false,
-	displaySegments::Bool = false
+	triangulationFileName::String = TRIANGULATION_OUTPUT_FILE_NAME,
+	displayAxis::Bool = false
 )
 	doOutputGraph(
 		triangulation,
@@ -45,9 +45,10 @@ function outputGraph(
 			edgesDataFileName,
 			elemesDataFileName,
 			segmentsDataFileName,
+			triangulationFileName
 		),
 		displayAxis,
-		displaySegments
+		true
 	)
 end
 
