@@ -6,7 +6,7 @@ makedocs(
   sitename = "CTriangle",
   pages    = Any[
     "Introduction to CTriangle"   => "index.md",
-  #  "A few examples"          => "examples.md",
+    "Examples"          => "examples.md",
   #  "Basic graphics"          => "basics.md",
   #  "Styling"                 => "styling.md",
   #  "Polygons"                => "polygons.md",
@@ -19,7 +19,7 @@ makedocs(
   #  "More examples"           => "moreexamples.md",
   #  "Index"                   => "functionindex.md"
   ]
-  
+
 )
 
 deploydocs(

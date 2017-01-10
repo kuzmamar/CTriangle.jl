@@ -32,6 +32,20 @@ const SECOND_ORDER_ELEMS_NUMBER = "2"
 
 const HELP = "h"
 
+const VERBOSE = "V"
+
+const CONSISTENCY = "C"
+
+const SPLIT = "s"
+
+const VERTICAL = "l"
+
+const SWEEP = "F"
+
+const ITER = "i"
+
+const NO_STEINER = "Y"
+
 type CommandLine
   delaunay::Bool
   constrainedDelaunay::Bool
