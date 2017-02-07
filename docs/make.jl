@@ -24,9 +24,5 @@ makedocs(
 
 deploydocs(
     repo = "github.com/kuzmamar/CTriangle.jl.git",
-    target = "build",
-    julia  = "0.5",
-    osname = "linux",
-    deps = nothing,
-    make = nothing,
+    julia  = "0.5"
 )
