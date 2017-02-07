@@ -7,17 +7,6 @@ makedocs(
   pages    = Any[
     "Introduction to CTriangle"   => "index.md",
     "Examples"          => "examples.md",
-  #  "Basic graphics"          => "basics.md",
-  #  "Styling"                 => "styling.md",
-  #  "Polygons"                => "polygons.md",
-  #  "Text"                    => "text.md",
-  #  "Transforms and matrices" => "transforms.md",
-  #  "Clipping"                => "clipping.md",
-  #  "Images"                  => "images.md",
-  #  "Turtle graphics"         => "turtle.md",
-  #  "Animation"               => "animation.md",
-  #  "More examples"           => "moreexamples.md",
-  #  "Index"                   => "functionindex.md"
   ]
 
 )

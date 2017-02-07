@@ -20,6 +20,8 @@ Install the package as follows:
 
 ```
 Pkg.clone("https://github.com/kuzmamar/CTriangle.jl")
+Pkg.build("CTriangle.jl")
+Pkg.test("CTriangle.jl")
 ```
 
 and to use it:
