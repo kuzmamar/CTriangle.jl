@@ -4,7 +4,7 @@ Let's say we want a Delaunay triangulation of the following spiral.
 
 !["spiral"](assets/graphs/spiral.png)
 
-To do taht, we create a file with .node extension (for eample [spiral.node](assets/files/spiral.node)), that represents the spiral. We can now compute a Delaunay triangulation of the spiral and generate it's graph.
+To do that, we create a file with .node extension (for eample [spiral.node](assets/files/spiral.node)), that represents the spiral. We can now compute a Delaunay triangulation of the spiral and generate it's graph.
 
 ```julia
 using CTriangle
