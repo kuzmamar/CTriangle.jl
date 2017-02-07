@@ -1,7 +1,10 @@
 # Examples
 
-The folowing example will generate Delaunay triangulation from [spiral.node](assets/files/spiral.node) file.
-It then outputs the graph in a "triangulation.tex" file in the "/home/martin/spiral" directory. Note that the directory must exist.
+Let's say we want a Delaunay triangulation of the following spiral.
+
+!["spiral"](assets/graphs/spiral.png)
+
+To do taht, we create a file with .node extension (for eample [spiral.node](assets/files/spiral.node)), that represents the spiral. We can now compute a Delaunay triangulation of the spiral and generate it's graph.
 
 ```julia
 using CTriangle
@@ -13,12 +16,12 @@ outputGraph(t, "/home/martin/spiral")
 Run the following command form command line if you want to see the graph. It will store a "triangulation.pdf" in the current working directory.
 
 ```bash
-pdflatex /home/martin/spiral
+pdflatex /home/martin/spiral/triangulation.tex
 ```
 
 The graph from the example above:
 
-!["spiral"](assets/graphs/spiral.png)
+!["spiral"](assets/graphs/spiral-dt.png)
 
 Next example shows how we can refine an existing mesh. Let's say we have the mesh stored in [box.node](assets/files/box.node) and [ele.node](assets/files/ele.node).
 The following image shows the mesh.
