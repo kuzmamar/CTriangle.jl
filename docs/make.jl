@@ -1,17 +1,12 @@
 using Documenter, CTriangle
 
 makedocs(
-  modules = [CTriangle],
-  format = :html,
-  sitename = "CTriangle",
-  pages    = Any[
-    "Introduction to CTriangle"   => "index.md",
-    "Examples"          => "examples.md",
-  ]
-
+  modules=[CTriagle]
 )
 
 deploydocs(
-    repo = "github.com/kuzmamar/CTriangle.jl.git",
-    julia  = "0.5"
+  deps   = Deps.pip("mkdocs", "python-markdown-math"),
+  repo   = "github.com/kuzmamar/CTriangle.jl.git",
+  julia  = "0.5",
+  osname = "linux"
 )
