@@ -1,7 +1,7 @@
 using Documenter, CTriangle
 
 makedocs(
-  modules=[CTriagle]
+  modules=[CTriangle]
 )
 
 deploydocs(
