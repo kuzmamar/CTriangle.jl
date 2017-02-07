@@ -105,7 +105,9 @@
               
                 <p><a id='Examples-1'></a></p>
 <h1 id="examples">Examples</h1>
-<p>The folowing example will generate Delaunay triangulation from <a href="../assets/files/spiral.node">spiral.node</a> file. It then outputs the graph in a "triangulation.tex" file in the "/home/martin/spiral" directory. Note that the directory must exist.</p>
+<p>Let's say we want a Delaunay triangulation of the following spiral.</p>
+<p><img alt="&quot;spiral&quot;" src="../assets/graphs/spiral.png" /></p>
+<p>To do taht, we create a file with .node extension (for eample <a href="../assets/files/spiral.node">spiral.node</a>), that represents the spiral. We can now compute a Delaunay triangulation of the spiral and generate it's graph.</p>
 <pre class="codehilite"><code class="language-julia">using CTriangle
 
 t = triangulate(&quot;spiral.node&quot;)
@@ -113,11 +115,11 @@ outputGraph(t, &quot;/home/martin/spiral&quot;)</code></pre>
 
 
 <p>Run the following command form command line if you want to see the graph. It will store a "triangulation.pdf" in the current working directory.</p>
-<pre class="codehilite"><code class="language-bash">pdflatex /home/martin/spiral</code></pre>
+<pre class="codehilite"><code class="language-bash">pdflatex /home/martin/spiral/triangulation.tex</code></pre>
 
 
 <p>The graph from the example above:</p>
-<p><img alt="&quot;spiral&quot;" src="../assets/graphs/spiral.png" /></p>
+<p><img alt="&quot;spiral&quot;" src="../assets/graphs/spiral-dt.png" /></p>
 <p>Next example shows how we can refine an existing mesh. Let's say we have the mesh stored in <a href="../assets/files/box.node">box.node</a> and <a href="../assets/files/ele.node">ele.node</a>. The following image shows the mesh.</p>
 <p><img alt="&quot;example2&quot;" src="../assets/graphs/example2.png" /></p>
 <p>Now imagine that we want one particular triangle to have area not bigger than 0.2. For this we create <a href="../assets/files/box.area">box.area</a> file. Now it can be refined in CTriangle:</p>
