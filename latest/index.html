@@ -146,17 +146,17 @@ Pkg.test(&quot;CTriangle.jl&quot;)</code></pre>
 
 
 <p>First argument is a path to input file. Second argument is a list of command line switches. Returns desired triangulation.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/CTriangle.jl#L13-L19' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/CTriangle.jl#L13-L19' class='documenter-source'>source</a><br></p>
 <pre class="codehilite"><code>triangulate(points::Matrix{Cdouble}, options::String = &quot;&quot;)</code></pre>
 
 
 <p>First argument is a matrix of vertices. First row of the matrix are x-cordinates. Second row stores y-coordinates. Returns Delaunay triangulation.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/CTriangle.jl#L27-L32' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/CTriangle.jl#L27-L32' class='documenter-source'>source</a><br></p>
 <pre class="codehilite"><code>triangulate(points::Matrix{Int}, options::String = &quot;&quot;)</code></pre>
 
 
 <p>First argument is a matrix of vertices. First row of the matrix are x-cordinates. Second row stores y-coordinates. Second argument are command line switches. Returns Delaunay triangulation.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/CTriangle.jl#L40-L46' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/CTriangle.jl#L40-L46' class='documenter-source'>source</a><br></p>
 <p><a id='Interface-for-outputing-a-graph-1'></a></p>
 <h2 id="interface-for-outputing-a-graph">Interface for outputing a graph</h2>
 <p><a id='CTriangle.outputGraph' href='#CTriangle.outputGraph'>#</a>
@@ -174,7 +174,7 @@ Pkg.test(&quot;CTriangle.jl&quot;)</code></pre>
 
 <p>First argument is a triangulation returned form triangulate function. Second argument is a path to a directory where we want to store the graph in .tex file. Optionally you can specify name for each .dat file and resulting .tex file.</p>
 <p>Argument nodesDataFileName is a name for vertices .dat file. Argument edgesDataFileName is a name for edges .dat file. Argument elemesDataFileName is a name for elements (triangles) .dat file. Argument segmentsDataFileName is a name for segments .dat file. Argument triangulationFileName is a name for graph .tex file. Argument displayAxis tells if we want to display axis around the graph. All .dat files and .tex file will be stored in the given directory.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/CTriangle.jl#L51-L73' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/CTriangle.jl#L51-L73' class='documenter-source'>source</a><br></p>
 <p><a id='Triangulation-interface-1'></a></p>
 <h2 id="triangulation-interface">Triangulation interface</h2>
 <p>Each triangulation implements following functions.</p>
@@ -184,49 +184,49 @@ Pkg.test(&quot;CTriangle.jl&quot;)</code></pre>
 
 
 <p>Returns a vertex with a given index.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L1-L5' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L1-L5' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getNodes' href='#CTriangle.getNodes'>#</a>
 <strong><code>CTriangle.getNodes</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getNodes(triangulation::TriangulationInterface)</code></pre>
 
 
 <p>Returns an iterator to a list of vertices.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L10-L14' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L10-L14' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getSegments' href='#CTriangle.getSegments'>#</a>
 <strong><code>CTriangle.getSegments</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getSegments(triangulation::TriangulationInterface)</code></pre>
 
 
 <p>Returns an iterator to a list of segments.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L58-L62' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L58-L62' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getElement' href='#CTriangle.getElement'>#</a>
 <strong><code>CTriangle.getElement</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getElement(triangulation::TriangulationInterface, index::Int)</code></pre>
 
 
 <p>Returns a triangle with a given index.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L19-L23' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L19-L23' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getElements' href='#CTriangle.getElements'>#</a>
 <strong><code>CTriangle.getElements</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getElements(triangulation::TriangulationInterface)</code></pre>
 
 
 <p>Returns an iterator to a list of triangles.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L28-L32' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L28-L32' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getEdges' href='#CTriangle.getEdges'>#</a>
 <strong><code>CTriangle.getEdges</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getEdges(triangulation::TriangulationInterface)</code></pre>
 
 
 <p>Returns an iterator to a list of edges.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L76-L80' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L76-L80' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getNeighbors' href='#CTriangle.getNeighbors'>#</a>
 <strong><code>CTriangle.getNeighbors</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getNeighbors(triangulation::TriangulationInterface, element::Element)</code></pre>
 
 
 <p>Returns list of triangles that are neighbors to the given triangle.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L40-L44' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L40-L44' class='documenter-source'>source</a><br></p>
 <p>Constrained Delaunay triangulations implement also these functions.</p>
 <p><a id='CTriangle.getHoles' href='#CTriangle.getHoles'>#</a>
 <strong><code>CTriangle.getHoles</code></strong> &mdash; <em>Function</em>.</p>
@@ -234,14 +234,14 @@ Pkg.test(&quot;CTriangle.jl&quot;)</code></pre>
 
 
 <p>Returns an iterator to a list of holes.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L67-L71' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L67-L71' class='documenter-source'>source</a><br></p>
 <p><a id='CTriangle.getRegions' href='#CTriangle.getRegions'>#</a>
 <strong><code>CTriangle.getRegions</code></strong> &mdash; <em>Function</em>.</p>
 <pre class="codehilite"><code>getRegions(triangulation::ConstrainedDelaunayTriangulation)</code></pre>
 
 
 <p>Returns an iterator to a list of regions.</p>
-<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/cb26fc118d79260d510ab17f4892334166bf06c7/src/Triangulations/TriangulationMethods.jl#L85-L89' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/kuzmamar/CTriangle.jl/tree/5a957de65acc92e59c89e11905b08372489f087b/src/Triangulations/TriangulationMethods.jl#L85-L89' class='documenter-source'>source</a><br></p>
               
             </div>
           </div>
@@ -292,5 +292,5 @@ Pkg.test(&quot;CTriangle.jl&quot;)</code></pre>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-02-07 16:55:42
+Build Date UTC : 2017-02-07 17:24:21
 -->
