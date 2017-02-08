@@ -13,6 +13,7 @@ t = triangulate("spiral.node")
 outputGraph(t, "/home/martin/spiral")
 ```
 
+The function outputGraph wil generate .tex file with the triangulation [triangulation.tex](assets/files/triangulation.tex) and two .dat files [nodes.dat](assets/files/nodes.dat), [elements.dat](assets/files/elements.dat).
 Run the following command form command line if you want to see the graph. It will store a "triangulation.pdf" in the current working directory.
 
 ```bash

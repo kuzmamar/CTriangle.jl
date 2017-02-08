@@ -1,0 +1,10 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[axis lines=none]
+	\addplot[only marks, black, mark size=1pt] table {nodes.dat};
+	\addplot[no markers, black, line join=round, line cap=round] table {elements.dat};
+\end{axis}
+\end{tikzpicture}
+\end{document}
