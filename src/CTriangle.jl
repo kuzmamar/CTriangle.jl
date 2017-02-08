@@ -50,7 +50,7 @@ end
 
 """
 	outputGraph(
-		riangulation::TriangulationInterface, directory::String;
+		triangulation::TriangulationInterface, directory::String;
 		nodesDataFileName::String = NODES_OUTPUT_DATA_FILE_NAME,
 		edgesDataFileName::String = EDGES_OUTPUT_DATA_FILE_NAME,
 		elemesDataFileName::String = ELEMS_OUTPUT_DATA_FILE_NAME,
